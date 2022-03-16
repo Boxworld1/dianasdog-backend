@@ -15,7 +15,7 @@ var cxt = context.Background()
 * params: do not need in-params,
 * return: a pointer of redis.client while the redis is the default one
  */
-func connect_to_redis() *redis.Client {
+func connectToRedis() *redis.Client {
 	var opt = redis.Options{
 		Addr:     "redis.DianasDog.secoder.local:6379",
 		Password: "",
@@ -30,7 +30,7 @@ func connect_to_redis() *redis.Client {
 * return: a bool value. true means the insertion is successful; false means error generates in the insertion process no
 * matter the error will shut the program or not.
  */
-func set_to_redis(client *redis.Client, key string, value string) bool {
+func setToRedis(client *redis.Client, key string, value string) bool {
 	err := client.Set(cxt, key, value, 0).Err()
 	if err != nil {
 		fmt.Println(err)
@@ -45,7 +45,7 @@ func set_to_redis(client *redis.Client, key string, value string) bool {
 * return: two params. the first is the value corresponding to your key. the second is a bool value, true means the get
 * operation is successful, false means error generates in the get process.
  */
-func get_from_redis(client *redis.Client, key string) (string, bool) {
+func getFromRedis(client *redis.Client, key string) (string, bool) {
 	str, err := client.Get(cxt, key).Result()
 	if err != nil {
 		fmt.Println(err)
@@ -60,7 +60,7 @@ func get_from_redis(client *redis.Client, key string) (string, bool) {
 * return: a bool value. true means the deletion is successful; false means error generates in the deletion process no
 * matter the error will shut the program or not.
  */
-func delete_from_redis(client *redis.Client, key string) bool {
+func deleteFromRedis(client *redis.Client, key string) bool {
 	err := client.Del(cxt, key).Err()
 	if err != nil {
 		fmt.Println(err)
@@ -75,7 +75,7 @@ func delete_from_redis(client *redis.Client, key string) bool {
 * return: two bool values. the first represents the key's existence in the redis, the second represents this process
 * is successful or not.
  */
-func exist_in_redis(client *redis.Client, key string) (bool, bool) {
+func existInRedis(client *redis.Client, key string) (bool, bool) {
 	exist, err := client.Do(cxt, "EXISTS", key).Bool()
 	if err != nil {
 		fmt.Println(err)
