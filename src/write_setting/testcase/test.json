@@ -1,0 +1,20 @@
+{
+    "Resource": "demo_resource",
+    "write_setting": {
+        "a.b.c": {
+            "dump_digest": "true",
+            "dump_invert_idx": "false",
+            "dump_dict": "true"
+        },
+        "b.g": {
+            "dump_digest": "true",
+            "dump_invert_idx": "true",
+            "dump_dict": "true"
+        },
+        "红豆词1.a": {
+            "dump_digest": "true",
+            "dump_invert_idx": "false",
+            "dump_dict": "true"
+        }
+    }
+}
