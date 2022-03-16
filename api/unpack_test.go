@@ -11,7 +11,7 @@ func TestUnpack(t *testing.T) {
 	resources = append(resources, "poems")
 
 	for i := 0; i < len(resources); i++ {
-		filesPath, err := GetFiles("../" + resources[i])
+		filesPath, err := GetFiles("../testcase/" + resources[i])
 		if err != nil {
 			//if (err.Error() != "open ../" + resources[i] + ": The system cannot find the file specified.") {
 			t.Error(err)
