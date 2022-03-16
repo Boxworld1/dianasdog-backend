@@ -15,6 +15,11 @@
             "dump_digest": "true",
             "dump_invert_idx": "false",
             "dump_dict": "true"
+        },
+        "a.e": {
+            "dump_digest": "false",
+            "dump_invert_idx": "false",
+            "dump_dict": "true"
         }
     }
 }

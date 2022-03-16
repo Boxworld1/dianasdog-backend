@@ -3,7 +3,7 @@
 // @auth		ryl				2022/3/16		21:00
 // @param		target_resource	string			特型卡片类型（如 "诗词" 和 "车" 等）
 // @param		target_key		string			欲查找的键值
-// @returns		ItemSettings	[]ItemSetting	此键值下所有需要写入数据库的数据
+// @return		ItemSettings	[]ItemSetting	此键值下所有需要写入数据库的数据
 // @return		err				error			错误值
 
 package write_setting
