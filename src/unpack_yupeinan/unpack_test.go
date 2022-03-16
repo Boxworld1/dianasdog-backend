@@ -13,9 +13,9 @@ func TestUnpack(t *testing.T) {
 	for i := 0; i < len(resources); i++ {
 		filesPath, err := GetFiles("../" + resources[i])
 		if err != nil {
-			if (err.Error() != "open ../" + resources[i] + ": The system cannot find the file specified.") {
-				t.Error(err)
-			}
+			//if (err.Error() != "open ../" + resources[i] + ": The system cannot find the file specified.") {
+			t.Error(err)
+			//}
 		} else {
 			for j := 0; j < len(filesPath); j++ {
 				err = Unpack(filesPath[j], resources[i])
@@ -25,8 +25,5 @@ func TestUnpack(t *testing.T) {
 			}
 		}
 	}
-
-
-
 
 }
