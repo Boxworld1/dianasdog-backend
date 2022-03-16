@@ -6,18 +6,18 @@
             "dump_invert_idx": "false",
             "dump_dict": "true"
         },
+        "a.e": {
+            "dump_digest": "false",
+            "dump_invert_idx": "false",
+            "dump_dict": "true"
+        },
         "b.g": {
             "dump_digest": "true",
             "dump_invert_idx": "true",
             "dump_dict": "true"
         },
-        "红豆词1.a": {
+        "f.a": {
             "dump_digest": "true",
-            "dump_invert_idx": "false",
-            "dump_dict": "true"
-        },
-        "a.e": {
-            "dump_digest": "false",
             "dump_invert_idx": "false",
             "dump_dict": "true"
         }
