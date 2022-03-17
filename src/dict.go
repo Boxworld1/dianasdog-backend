@@ -16,7 +16,7 @@ import (
 // @param	table_name   string             the name of the table to be created
 // @return  err          error              nil when the table has been created successfully
 func CreateTable(table_name string) error {
-	db, err := sql.Open("sqlite3", "./dict.db")
+	db, err := sql.Open("sqlite3", "opt/app/data/dict.db")
 	if err != nil {
 		return err
 	}
@@ -37,7 +37,7 @@ func CreateTable(table_name string) error {
 //			table_name   string             the name of the target table
 // @return  err          error              nil when the word has been inserted into the table successfully
 func Insert(word string, table_name string) error {
-	db, err := sql.Open("sqlite3", "./dict.db")
+	db, err := sql.Open("sqlite3", "opt/app/data/dict.db")
 	if err != nil {
 		return err
 	}
@@ -70,7 +70,7 @@ func Insert(word string, table_name string) error {
 // @return  word		 string				the name of the word if it is in the table else "None"
 //			err          error              nil when the word is in the table
 func Search(word_name string, table_name string) (string, error) {
-	db, err := sql.Open("sqlite3", "dict.db")
+	db, err := sql.Open("sqlite3", "opt/app/data/dict.db")
 	if err != nil {
 		return "None", err
 	}
@@ -103,7 +103,7 @@ func Search(word_name string, table_name string) (string, error) {
 //			table_name   string             the name of the target table
 // @return  err          error              nil when the word has been deleted from the table successfully
 func Delete(word string, table_name string) error {
-	db, err := sql.Open("sqlite3", "dict.db")
+	db, err := sql.Open("sqlite3", "opt/app/data/dict.db")
 	if err != nil {
 		return err
 	}
