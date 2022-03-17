@@ -10,13 +10,13 @@ import (
 	"strings"
 )
 
-// @title   getXMLFiles
+// @title   GetXMLFiles
 // @description  get XML files from a certain folder
 // @auth    于沛楠     2022/3/16
 // @param	dirPath    string       name of folder which contains XML files
 // @return  filePath   []string   	path array of XML files under dirPath
 //		    err        error        non-nil when dirPath is wrong
-func getXMLFiles(dirPath string) (filesPath []string, err error) {
+func GetXMLFiles(dirPath string) (filesPath []string, err error) {
 	dir, err := ioutil.ReadDir(dirPath)
 	if err != nil {
 		return nil, err

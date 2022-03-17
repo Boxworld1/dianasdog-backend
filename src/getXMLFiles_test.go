@@ -10,7 +10,7 @@ import (
 
 // test for function: getFiles
 func TestGetXMLFiles(t *testing.T) {
-	filesPath, err := getXMLFiles("./car")
+	filesPath, err := GetXMLFiles("./car")
 	if err != nil {
 		t.Error(err)
 	}
@@ -18,8 +18,8 @@ func TestGetXMLFiles(t *testing.T) {
 		t.Error("getFile函数读取错误")
 	}
 
-	_, err = getXMLFiles("./cars")
-	if err != nil && err.Error() != "open ./cars: no such file or directory" { //wrong error content
-		t.Error(err)
+	_, err = GetXMLFiles("./cars")
+	if err == nil { //wrong error content
+		t.Error("read wrong dirpath but not send error")
 	}
 }
