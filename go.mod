@@ -14,4 +14,6 @@ require (
 	github.com/onsi/gomega v1.18.1 // indirect
 	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
 	gopkg.in/yaml.v2 v2.4.0
+	gopkg.in/yaml.v2 v2.2.4
+	github.com/beevik/etree v1.1.0
 )
