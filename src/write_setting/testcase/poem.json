@@ -1,12 +1,12 @@
 {
     "Resource": "demo_resource",
     "write_setting": {
-        "item.key": {
+        "key": {
             "dump_digest": "true",
             "dump_invert_idx": "true",
             "dump_dict": "true"
         },
-        "item.display.title": {
+        "display.title": {
             "dump_digest": "false",
             "dump_invert_idx": "false",
             "dump_dict": "true"

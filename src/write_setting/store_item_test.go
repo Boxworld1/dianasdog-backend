@@ -25,7 +25,7 @@ func TestStoreItem(t *testing.T) {
 	// 插入不存在的特型卡类型
 	testItem := root.FindElement("item")
 	if testItem != nil {
-		myErr := StoreItem(testItem, "apple", "delete")
+		myErr := StoreItem(testItem, "apple", "delete", 0)
 		if myErr == nil {
 			t.Error("无法检测问题，错误！")
 		}
@@ -33,7 +33,7 @@ func TestStoreItem(t *testing.T) {
 
 	// 插入正常数据
 	for _, item := range root.SelectElements("item") {
-		err := StoreItem(item, "poem", "insert")
+		err := StoreItem(item, "poem", "insert", 0)
 		if err != nil {
 			t.Error(err)
 		}
