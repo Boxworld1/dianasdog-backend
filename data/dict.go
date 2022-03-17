@@ -16,7 +16,7 @@ import (
 // @param	table_name   string             the name of the table to be created
 // @return  err          error              nil when the table has been created successfully
 func CreateTable(table_name string) error {
-	db, err := sql.Open("sqlite3", "./data/dict.db")
+	db, err := sql.Open("sqlite3", "./dict.db")
 	if err != nil {
 		return err
 	}
