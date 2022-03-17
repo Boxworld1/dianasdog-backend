@@ -23,11 +23,11 @@ func CreateTable(tableName string) error {
 		return err
 	}
 	//set the table
-	sql_table := `CREATE TABLE IF NOT EXISTS ` + tableName + `(
+	sqlTable := `CREATE TABLE IF NOT EXISTS ` + tableName + `(
 		word VARCHAR(64) PRIMARY KEY NULL
 	);
 	`
-	db.Exec(sql_table)
+	db.Exec(sqlTable)
 	db.Close()
 	return nil
 }
@@ -50,8 +50,8 @@ func Insert(word string, tableName string) error {
 	} else {
 
 		//insert word into table
-		insert_task := "INSERT INTO " + tableName + "(word) values(?)"
-		stmt, err := db.Prepare(insert_task)
+		insertTask := "INSERT INTO " + tableName + "(word) values(?)"
+		stmt, err := db.Prepare(insertTask)
 		if err != nil {
 			return err
 		}
@@ -77,8 +77,8 @@ func Search(wordName string, tableName string) (string, error) {
 		return "None", err
 	}
 	//search word in table
-	search_task := "SELECT * FROM " + tableName
-	rows, err := db.Query(search_task)
+	searchTask := "SELECT * FROM " + tableName
+	rows, err := db.Query(searchTask)
 	if err != nil {
 		return "None", err
 	}
@@ -110,8 +110,8 @@ func Delete(word string, tableName string) error {
 		return err
 	}
 	//delete word from table
-	delete_task := "delete from " + tableName + " where word=?"
-	stmt, err := db.Prepare(delete_task)
+	deleteTask := "delete from " + tableName + " where word=?"
+	stmt, err := db.Prepare(deleteTask)
 	if err != nil {
 		return err
 	}
