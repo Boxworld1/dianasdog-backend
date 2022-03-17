@@ -1,8 +1,8 @@
 // @title		GetConfig
 // @description	此函数的用途为，根据数据 "类型"，在配置文件中找出对应的 "写入行为"，并反馈相关数据到数据处理函数中。
-// @auth		ryl				2022/3/16		23:30
+// @auth		ryl				2022/3/17		10:00
 // @param		targetResource	string			特型卡片类型（如 "诗词" 和 "车" 等）
-// @return		ItemSettings	[]ItemSetting	此键值下所有需要写入数据库的数据
+// @return		itemSettings	[]ItemSetting	此键值下所有需要写入数据库的数据
 // @return		err				error			错误值
 
 package write_setting
@@ -33,7 +33,7 @@ func GetConfig(targetResource string) ([]ItemSetting, error) {
 	json := string(file)
 	settings := gjson.Get(json, "write_setting|@pretty")
 
-	var ItemSettings = make([]ItemSetting, 0)
+	var itemSettings = make([]ItemSetting, 0)
 
 	// 在配置文件中查找可能的配置
 	settings.ForEach(func(key, value gjson.Result) bool {
@@ -55,10 +55,10 @@ func GetConfig(targetResource string) ([]ItemSetting, error) {
 		})
 
 		// 更新配置数组
-		ItemSettings = append(ItemSettings, item)
+		itemSettings = append(itemSettings, item)
 		return true
 	})
 
 	// 查找成功，返回数组
-	return ItemSettings, nil
+	return itemSettings, nil
 }
