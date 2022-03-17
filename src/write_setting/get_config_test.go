@@ -11,7 +11,13 @@ import (
 
 func TestGetConfig(t *testing.T) {
 
-	itemSettings, err := GetConfig("car")
+	// 查找不存在的文件
+	itemSettings, err := GetConfig("apple")
+	if err == nil {
+		t.Error(err)
+	}
+
+	itemSettings, err = GetConfig("car")
 	// 测试时出错
 	if err != nil {
 		t.Error(err)
