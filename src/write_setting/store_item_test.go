@@ -1,6 +1,6 @@
 // @title		TestStoreItem
 // @description	此函数的用途为检查 StoreItem 函数的正确性
-// @auth		ryl				2022/3/17		10:30
+// @auth		ryl				2022/3/17		11:05
 // @param		t				*testing.T		testing 用参数
 
 package write_setting
@@ -24,9 +24,11 @@ func TestStoreItem(t *testing.T) {
 
 	// 插入不存在的特型卡类型
 	testItem := root.FindElement("item")
-	myErr := StoreItem(testItem, "apple", "delete")
-	if myErr == nil {
-		t.Error("无法检测问题，错误！")
+	if testItem != nil {
+		myErr := StoreItem(testItem, "apple", "delete")
+		if myErr == nil {
+			t.Error("无法检测问题，错误！")
+		}
 	}
 
 	// 插入正常数据
