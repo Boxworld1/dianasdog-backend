@@ -16,7 +16,7 @@ type Doc struct {
 }
 
 func Insert(docId string, content string) (string, error) {
-	client, err := elastic.NewClient(elastic.SetURL("http://elasticsearch.DianasDog.secoder.local:9200"))
+	client, err := elastic.NewClient(elastic.SetSniff(false),elastic.SetURL("http://elasticsearch.DianasDog.secoder.local:9200"))
 	if err != nil {
 		// Handle error
 		panic(err)
@@ -36,7 +36,7 @@ func Insert(docId string, content string) (string, error) {
 }
 
 func Update(docId string, newContent string) (string, error) {
-	client, err := elastic.NewClient(elastic.SetURL("http://elasticsearch.DianasDog.secoder.local:9200"))
+	client, err := elastic.NewClient(elastic.SetSniff(false),elastic.SetURL("http://elasticsearch.DianasDog.secoder.local:9200"))
 	//下面是更新项目的函数，需要传入docid，对数据进行改变
 	put2, err := client.Update().
 		Index("document").
@@ -52,7 +52,7 @@ func Update(docId string, newContent string) (string, error) {
 }
 
 func Search(content string) ([]Doc, error) { //按照内容去查找，不是精确查找，只要有匹配词就可以
-	client, _ := elastic.NewClient(elastic.SetURL("http://elasticsearch.DianasDog.secoder.local:9200"))
+	client, _ := elastic.NewClient(elastic.SetSniff(false),elastic.SetURL("http://elasticsearch.DianasDog.secoder.local:9200"))
 	var typ Doc
 	var err error
 	var put4 *elastic.SearchResult
@@ -71,7 +71,7 @@ func Search(content string) ([]Doc, error) { //按照内容去查找，不是精
 }
 
 func FetchAll() ([]Doc, error) { //拿到类型document里的所有数据
-	client, _ := elastic.NewClient(elastic.SetURL("http://elasticsearch.DianasDog.secoder.local:9200"))
+	client, _ := elastic.NewClient(elastic.SetSniff(false),elastic.SetURL("http://elasticsearch.DianasDog.secoder.local:9200"))
 	var put3 *elastic.SearchResult
 	var err error
 	//取所有
@@ -91,7 +91,7 @@ func FetchAll() ([]Doc, error) { //拿到类型document里的所有数据
 }
 
 func Delete(docId string) { //指定想要删除的文档的docId
-	client, _ := elastic.NewClient(elastic.SetURL("http://elasticsearch.DianasDog.secoder.local:9200"))
+	client, _ := elastic.NewClient(elastic.SetSniff(false),elastic.SetURL("http://elasticsearch.DianasDog.secoder.local:9200"))
 	var err error
 	res, err := client.Delete().Index("document").
 		Id(docId).
