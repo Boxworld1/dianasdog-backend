@@ -5,7 +5,7 @@ go 1.17
 require github.com/go-redis/redis/v8 v8.11.4
 
 require (
-	github.com/olivere/elastic/v7 v7.17.1
+	github.com/olivere/elastic/v7 v7.0.1
 	github.com/tidwall/gjson v1.14.0
 )
 
