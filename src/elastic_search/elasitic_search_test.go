@@ -19,7 +19,7 @@ func TestUpdate(t *testing.T) {
 }
 
 func TestSearch(t *testing.T) {
-	_, err := Search("柯尼塞格")
+	_, err := Search("桑塔纳")
 	if err != nil {
 		t.Error(err)
 	}
