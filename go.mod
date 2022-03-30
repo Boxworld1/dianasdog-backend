@@ -3,6 +3,7 @@ module github.com/limjcst/riviere
 go 1.17
 
 require github.com/go-redis/redis/v8 v8.11.4
+require github.com/go-sql-driver/mysql v1.6.0
 
 require (
 	github.com/olivere/elastic/v7 v7.0.1

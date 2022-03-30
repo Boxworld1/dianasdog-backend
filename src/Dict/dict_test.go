@@ -1,14 +1,10 @@
-// @Title  dict
-// @Description  construct the local dictionary and support the insert, search and delete operations
-// @Author  蒋政
-// @Update  2022/3/16
 package dict
 
 import (
 	"testing"
 )
 
-// test for function: create_table
+// test for function: createTable
 func TestCreateTable(t *testing.T) {
 	err := CreateTable("car")
 	if err != nil {
@@ -18,15 +14,15 @@ func TestCreateTable(t *testing.T) {
 
 // test for function: insert
 func TestInsert(t *testing.T) {
-	err := Insert("奔驰", "car")
+	err := Insert("car", "奔驰")
 	if err != nil {
 		t.Error(err)
 	}
-	err = Insert("奔驰", "car")
+	err = Insert("car", "奔驰")
 	if err != nil {
 		t.Error(err)
 	}
-	err = Insert("宝马", "flower")
+	err = Insert("flower", "宝马")
 	if err == nil {
 		t.Error("禁止向不存在的表中插入数据")
 	}
@@ -34,13 +30,13 @@ func TestInsert(t *testing.T) {
 
 // test for function: search
 func TestSearch(t *testing.T) {
-	tmp, _ := Search("flower", "car")
+	tmp, _ := Search("car", "flower")
 	if tmp == "flower" {
 		t.Error("flower is not in car")
 	}
-	tmp, err := Search("奔驰", "car")
+	tmp, err := Search("car", "奔驰")
 	if tmp != "奔驰" {
-		t.Error("返回错误")
+		t.Error("查询失败")
 	}
 	if err != nil {
 		t.Error(err)
@@ -50,12 +46,20 @@ func TestSearch(t *testing.T) {
 
 // test for function: delete
 func TestDelete(t *testing.T) {
-	err := Delete("奔驰", "car")
+	err := Delete("car", "奔驰")
 	if err != nil {
 		t.Error(err)
 	}
-	err = Delete("宝马", "flower")
+	err = Delete("flower", "宝马")
 	if err == nil {
 		t.Error("禁止向不存在的表中删除数据")
+	}
+}
+
+// test for function: deleteTable
+func TestDeleteTable(t *testing.T) {
+	err := DeleteTable("car")
+	if err != nil {
+		t.Error(err)
 	}
 }
