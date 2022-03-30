@@ -36,7 +36,8 @@ func TestSearch(t *testing.T) {
 	}
 	tmp, err := Search("car", "奔驰")
 	if tmp != "奔驰" {
-		t.Error("返回错误")
+		res := tmp + "不是查询的单词"
+		t.Error(res)
 	}
 	if err != nil {
 		t.Error(err)
