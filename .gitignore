@@ -17,3 +17,5 @@
 
 # Dependencies installed by dep
 vendor/
+
+.DS_Store
