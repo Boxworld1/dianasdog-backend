@@ -13,7 +13,7 @@ import (
 
 var db *sql.DB
 
-var dataSourceName string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql.DianasDog.secoder.local:3306)/dict?charset=utf8mb4"
+var dataSourceName string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql.DianasDog.secoder.local:3306)/dict?charset=utf8"
 
 // @title:	init
 // @description: connect to the default database
@@ -34,7 +34,7 @@ func init() {
 func CreateTable(tableName string) error {
 	createTask := `CREATE TABLE IF NOT EXISTS ` + tableName + `(
 		word VARCHAR(64) PRIMARY KEY NULL
-	);
+	)DEFAULT CHARSET=utf8;
 	`
 	_, err := db.Exec(createTask)
 	return err
