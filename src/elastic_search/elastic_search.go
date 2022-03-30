@@ -103,17 +103,3 @@ func Delete(docId string) { //指定想要删除的文档的docId
 	fmt.Printf("delete result %s\n", res.Result)
 }
 
-func main() {
-	Insert("1", "宝马760")
-
-	//下面是更新项目的函数，需要传入docid，对数据进行改变
-
-	Update("1", "奔驰e系")
-
-	//	下面是搜索功能
-	FetchAll()
-	//删除一条数据,只需要它的index和id
-	//Delete("1")
-	//搜索
-	Search("桑塔纳")
-}
