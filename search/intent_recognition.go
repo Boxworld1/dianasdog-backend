@@ -3,7 +3,7 @@
 // @auth		ryl				2022/3/24		11:00
 // @param		targetString	string			目标句
 
-package search_service
+package search
 
 import "fmt"
 

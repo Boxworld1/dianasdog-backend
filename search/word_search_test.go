@@ -3,7 +3,7 @@
 // @auth		ryl				2022/3/24		11:00
 // @param		t				*testing.T		testing 用参数
 
-package search_service
+package search
 
 import (
 	"testing"

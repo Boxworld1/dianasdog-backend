@@ -7,7 +7,7 @@
 // @param		docid			int				item 编号
 // @return		err				error			错误值
 
-package write_setting
+package setup
 
 import (
 	"fmt"
@@ -25,6 +25,9 @@ func StoreItem(data *etree.Element, resourceName string, operation string, docid
 	if err != nil {
 		return err
 	}
+
+	// 开启数据库
+	// radis := matianyu.connectToRedis()
 
 	// 根据配置信息写入数据库
 	for _, itemSetting := range itemSettings {

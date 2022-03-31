@@ -1,13 +1,13 @@
-package matianyu
+package database
 
 import "testing"
 
 func TestRedisOperationInterface(t *testing.T) {
-	var client = connectToRedis()
+	var client = ConnectToRedis()
 	if client == nil {
 		t.Error("connectToRedis function get a nil pointer for client")
-	} else if setToRedis(client, "name", "matianyu") {
-		value, succ := getFromRedis(client, "name")
+	} else if SetToRedis(client, "name", "matianyu") {
+		value, succ := GetFromRedis(client, "name")
 		if !succ {
 			t.Error("getFromRedis function generates error")
 		} else {
@@ -15,8 +15,8 @@ func TestRedisOperationInterface(t *testing.T) {
 				t.Errorf("Expected value is matianyu, but %s got", value)
 			}
 		}
-		if deleteFromRedis(client, "name") {
-			exist, succ := existInRedis(client, "name")
+		if DeleteFromRedis(client, "name") {
+			exist, succ := ExistInRedis(client, "name")
 			if !succ {
 				t.Error("existInRedis function generates error")
 			} else {

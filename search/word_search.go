@@ -3,7 +3,7 @@
 // @auth		ryl				2022/3/24		11:00
 // @param		targetResource	string			特型卡片类型
 
-package search_service
+package search
 
 func WordSearch(targetString string) []string {
 	var result = make([]string, 0)

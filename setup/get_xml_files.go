@@ -2,7 +2,7 @@
 // @Description  Read XML files in folder and unpack them
 // @Author  于沛楠
 // @Update  2022/3/16
-package unpackfile
+package setup
 
 import (
 	"io/ioutil"

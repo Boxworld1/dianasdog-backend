@@ -2,19 +2,22 @@
 // @Description  Read XML files in folder and unpack them
 // @Author  于沛楠
 // @Update  2022/3/16
-package unpackfile
+package setup
 
 import (
+	"fmt"
 	"testing"
 )
 
 // test for function: getFiles
 func TestGetXMLFiles(t *testing.T) {
-	filesPath, err := GetXMLFiles("./car")
+	filesPath, err := GetXMLFiles("./testcase")
 	if err != nil {
 		t.Error(err)
 	}
-	if len(filesPath) != 1 || filesPath[0] != "./car/car_test.xml" { // wrong return value
+	fmt.Println(filesPath)
+
+	if len(filesPath) != 2 || filesPath[0] != "./testcase/car_test.xml" { // wrong return value
 		t.Error("getFile函数读取错误")
 	}
 

@@ -1,4 +1,4 @@
-module github.com/limjcst/riviere
+module dianasdog
 
 go 1.17
 
