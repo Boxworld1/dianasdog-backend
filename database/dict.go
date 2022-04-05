@@ -19,7 +19,7 @@ var dataSourceName string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql.Dia
 // @description: connect to the default database
 // @param: do not need in-params
 // @return: do not need a return-value
-func DictInit() {
+func init() {
 	database, err := sql.Open("mysql", dataSourceName)
 	if err != nil {
 		fmt.Println(err)
