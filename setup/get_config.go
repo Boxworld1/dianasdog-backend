@@ -24,7 +24,7 @@ type ItemSetting struct {
 func GetConfig(targetResource string) ([]ItemSetting, error) {
 
 	// 查找对应类型的 config 文档路径
-	filepath := "./testcase/" + targetResource + ".json"
+	filepath := "../config/" + targetResource + ".json"
 	file, err := ioutil.ReadFile(filepath)
 	if err != nil {
 		return nil, err

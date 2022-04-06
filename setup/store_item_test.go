@@ -12,7 +12,7 @@ import (
 )
 
 func TestStoreItem(t *testing.T) {
-	path := "./testcase/test.xml"
+	path := "../config/testcase_xml.xml"
 	doc := etree.NewDocument()
 
 	// 读入文件错误
@@ -33,7 +33,7 @@ func TestStoreItem(t *testing.T) {
 
 	// 插入正常数据
 	for _, item := range root.SelectElements("item") {
-		err := StoreItem(item, "poem", "insert", 0)
+		err := StoreItem(item, "testcase_poem", "insert", 0)
 		if err != nil {
 			t.Error(err)
 		}
