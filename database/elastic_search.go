@@ -18,7 +18,8 @@ type Doc struct {
 func ConnectToEs() (*elastic.Client, error) {
 	return elastic.NewClient(
 		elastic.SetSniff(false),
-		elastic.SetURL("elasticsearch.DianasDog.secoder.local:9200"),
+		elastic.SetURL("http://elasticsearch.DianasDog.secoder.local:9200"),
+		// elastic.SetURL("http://localhost:9200"),
 	)
 }
 
