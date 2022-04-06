@@ -4,29 +4,29 @@ import (
 	"testing"
 )
 
-func TestInsertToEs(t *testing.T) {
-	_, err := InsertToEs("100", "布加迪威龙")
+func TestInsert(t *testing.T) {
+	_, err := Insert("100", "布加迪威龙")
 	if err != nil {
 		t.Error(err)
 	}
 }
 
-func TestUpdateToEs(t *testing.T) {
-	_, err := UpdateToEs("100", "柯尼塞格")
+func TestUpdate(t *testing.T) {
+	_, err := Update("100", "柯尼塞格")
 	if err != nil {
 		t.Error(err)
 	}
 }
 
-func TestSearchFromEs(t *testing.T) {
-	_, err := SearchFromEs("柯尼塞格")
+func TestSearch(t *testing.T) {
+	_, err := Search("柯尼塞格")
 	if err != nil {
 		t.Error(err)
 	}
 }
 
-func TestFetchAllFromEs(t *testing.T) {
-	_, err := FetchAllFromEs()
+func TestFetchAll(t *testing.T) {
+	_, err := FetchAll()
 	if err != nil {
 		t.Error(err)
 	}
