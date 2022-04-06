@@ -15,14 +15,14 @@ type Doc struct {
 	Content string `json:"content"`
 }
 
-func InsertToEs(docId string, content string) (string, error) {
-	client, err := elastic.NewClient(elastic.SetSniff(false), elastic.SetURL("http://elasticsearch.DianasDog.secoder.local:9200"))
-	if err != nil {
-		// Handle error
-		// panic(err)
-		print(err.Error())
-	}
-	fmt.Println("connect to es success")
+func ConnectToEs() (*elastic.Client, error) {
+	return elastic.NewClient(
+		elastic.SetSniff(false),
+		elastic.SetURL("elasticsearch.DianasDog.secoder.local:9200"),
+	)
+}
+
+func InsertToEs(client *elastic.Client, docId string, content string) (string, error) {
 	doc := Doc{DocID: docId, Content: content}
 	put1, err := client.Index().
 		Index("document").
@@ -36,8 +36,7 @@ func InsertToEs(docId string, content string) (string, error) {
 	return put1.Id, err
 }
 
-func UpdateToEs(docId string, newContent string) (string, error) {
-	client, err := elastic.NewClient(elastic.SetSniff(false), elastic.SetURL("http://elasticsearch.DianasDog.secoder.local:9200"))
+func UpdateToEs(client *elastic.Client, docId string, newContent string) (string, error) {
 	//下面是更新项目的函数，需要传入docid，对数据进行改变
 	put2, err := client.Update().
 		Index("document").
@@ -52,8 +51,7 @@ func UpdateToEs(docId string, newContent string) (string, error) {
 	return put2.Result, err
 }
 
-func SearchFromEs(content string) ([]Doc, error) { //按照内容去查找，不是精确查找，只要有匹配词就可以
-	client, _ := elastic.NewClient(elastic.SetSniff(false), elastic.SetURL("http://elasticsearch.DianasDog.secoder.local:9200"))
+func SearchFromEs(client *elastic.Client, content string) ([]Doc, error) { //按照内容去查找，不是精确查找，只要有匹配词就可以
 	var typ Doc
 	var err error
 	var put4 *elastic.SearchResult
@@ -71,8 +69,7 @@ func SearchFromEs(content string) ([]Doc, error) { //按照内容去查找，不
 	return result, err
 }
 
-func FetchAllFromEs() ([]Doc, error) { //拿到类型document里的所有数据
-	client, _ := elastic.NewClient(elastic.SetSniff(false), elastic.SetURL("http://elasticsearch.DianasDog.secoder.local:9200"))
+func FetchAllFromEs(client *elastic.Client) ([]Doc, error) { //拿到类型document里的所有数据
 	var put3 *elastic.SearchResult
 	var err error
 	//取所有
@@ -91,8 +88,7 @@ func FetchAllFromEs() ([]Doc, error) { //拿到类型document里的所有数据
 	return result, err
 }
 
-func DeleteFromES(docId string) { //指定想要删除的文档的docId
-	client, _ := elastic.NewClient(elastic.SetSniff(false), elastic.SetURL("http://elasticsearch.DianasDog.secoder.local:9200"))
+func DeleteFromES(client *elastic.Client, docId string) { //指定想要删除的文档的docId
 	var err error
 	res, err := client.Delete().Index("document").
 		Id(docId).
