@@ -1,5 +1,5 @@
 # First stage, build the executable
-FROM golang:1.13
+FROM golang:1.17
 
 ENV GOPROXY=https://goproxy.cn
 ENV HOME=/opt/app
@@ -19,9 +19,9 @@ RUN GOOS=linux GOARCH=amd64 go build -a -ldflags "-linkmode external -extldflags
 FROM scratch
 
 # Copy executable from the first stage
-COPY --from=0 /opt/app/riviere /riviere
+COPY --from=0 /opt/app/dianasdog /dianasdog
 COPY config.yml swagger.json /
 
 EXPOSE 80
 
-CMD ["/riviere", "-host", "0.0.0.0", "-port", "80"]
+CMD ["/dianasdog", "-host", "0.0.0.0", "-port", "80"]

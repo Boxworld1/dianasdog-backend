@@ -17,5 +17,7 @@
 
 # Dependencies installed by dep
 vendor/
+.vscode/
 
 .DS_Store
+.gitkeep
