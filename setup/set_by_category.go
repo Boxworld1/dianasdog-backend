@@ -15,11 +15,10 @@ func SetByCategory() error {
 	var category []string
 
 	// 得到此文件的绝对路径
-	abspath, _ := os.Getwd()
-	fmt.Println(abspath)
+	abspath, _ := GetAbsPath()
 
 	// 以文件形式读入特型卡类型
-	catfile, err := os.Open(abspath + "/../config/category.txt")
+	catfile, err := os.Open(abspath + "config/category.txt")
 
 	// 出现错误则退出
 	if err != nil {
@@ -39,7 +38,7 @@ func SetByCategory() error {
 	// 遍历特型卡名字文档
 	for _, cat := range category {
 		// 设置相对路径
-		path := abspath + "/../data/"
+		path := abspath + "data/"
 		// 调用增加数据接口
 		err := AddData(path+cat+"/", cat)
 		if err != nil {

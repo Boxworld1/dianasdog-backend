@@ -16,8 +16,9 @@ func TestAddData(t *testing.T) {
 		t.Error("读入错误文件")
 	}
 
-	// 读入测试文件（是否有误由下层函数判断）
-	err = AddData("../data/testcase/", "test")
+	// 读入测试文件（是否有误由下层函数判断
+	abspath, _ := GetAbsPath()
+	err = AddData(abspath+"data/testcase/", "test")
 	if err != nil {
 		t.Error(err)
 	}
