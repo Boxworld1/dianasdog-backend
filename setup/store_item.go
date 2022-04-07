@@ -40,7 +40,7 @@ func StoreItem(data *etree.Element, resourceName string, operation string, docid
 			// 数据写入摘要(Radis)
 			if itemSetting.dumpDigest {
 				fmt.Println("insert to redis: ", value.Text())
-				//database.SetToRedis(redis, resourceName, value.Text())
+				//database.SetToRedis(redis, docid, value.Text())
 			}
 
 			// 数据写入倒排引擎(Es)
