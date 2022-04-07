@@ -10,11 +10,13 @@ import (
 )
 
 func TestAddData(t *testing.T) {
+	// 读入错误/无文件路径
 	err := AddData("test", "test")
 	if err == nil {
 		t.Error("读入错误文件")
 	}
 
+	// 读入测试文件（是否有误由下层函数判断）
 	err = AddData("../data/testcase/", "test")
 	if err != nil {
 		t.Error(err)

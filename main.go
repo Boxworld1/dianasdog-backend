@@ -6,9 +6,12 @@ package main
 
 import (
 	"dianasdog/communication"
+	"dianasdog/setup"
 )
 
 func main() {
 	router := communication.SetupRouter()
 	router.Run(":8080")
+
+	setup.SetByCategory()
 }
