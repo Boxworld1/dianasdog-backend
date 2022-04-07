@@ -1,5 +1,5 @@
 {
-    "Resource": "demo_resource",
+    "Resource": "testcase_poem",
     "write_setting": {
         "key": {
             "dump_digest": "true",

@@ -11,7 +11,7 @@ import (
 
 // test for function: unpackXMLFile
 func TestUnpackXMLFile(t *testing.T) {
-	itemList, itemCount, _, resourceName, err := UnpackXMLFile("../config/testcase_car.xml", "car")
+	itemList, itemCount, _, resourceName, err := UnpackXMLFile("../data/testcase/testcase_car.xml", "car")
 	carKey := []string{"集度汽车新能源", "indi新能源", "北京汽车新能源", "蓝旗亚新能源", "wayray新能源"}
 
 	if err != nil { //wrong error
