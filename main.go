@@ -7,11 +7,14 @@ package main
 import (
 	"dianasdog/communication"
 	"dianasdog/setup"
+	"fmt"
 )
 
 func main() {
 	router := communication.SetupRouter()
-	router.Run(":8080")
-
+	err := router.Run(":8080")
+	if err != nil {
+		fmt.Println(err)
+	}
 	setup.SetByCategory()
 }

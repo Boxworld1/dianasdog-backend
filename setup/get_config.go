@@ -8,7 +8,9 @@
 package setup
 
 import (
+	"fmt"
 	"io/ioutil"
+	"os"
 
 	"github.com/tidwall/gjson"
 )
@@ -23,8 +25,16 @@ type ItemSetting struct {
 
 func GetConfig(targetResource string) ([]ItemSetting, error) {
 
+	// 得到此文件的绝对路径
+	abspath, err := os.Getwd()
+	fmt.Println(abspath)
+	if err != nil {
+		return nil, err
+	}
+
 	// 查找对应类型的 config 文档路径
-	filepath := "../config/" + targetResource + ".json"
+	filepath := abspath + "/../config/" + targetResource + ".json"
+	fmt.Println(filepath)
 	file, err := ioutil.ReadFile(filepath)
 	if err != nil {
 		return nil, err

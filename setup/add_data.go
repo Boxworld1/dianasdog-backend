@@ -7,6 +7,8 @@
 
 package setup
 
+import "fmt"
+
 func AddData(path string, targetResource string) error {
 
 	// 临时以文件形式读入
@@ -18,6 +20,7 @@ func AddData(path string, targetResource string) error {
 	// 遍历路径下所有 XML 文件
 	for _, file := range filesPath {
 		// 解码
+		fmt.Println("reading " + file)
 		itemList, _, _, _, err := UnpackXMLFile(file, targetResource)
 		if err != nil {
 			return err
