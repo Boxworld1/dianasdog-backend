@@ -1,0 +1,31 @@
+{
+    "Resource": "car",
+    "write_setting": {
+        "aliaskey": {
+            "dump_digest": "false",
+            "dump_invert_idx": "false",
+            "dump_dict": "true"
+        },
+        "key": {
+            "dump_digest": "false",
+            "dump_invert_idx": "false",
+            "dump_dict": "true"
+        },
+        "display.title": {
+            "dump_digest": "false",
+            "dump_invert_idx": "false",
+            "dump_dict": "true"
+        },
+        "display.pc_brand_url": {
+            "dump_digest": "true",
+            "dump_invert_idx": "true",
+            "dump_dict": "false"
+        },
+        "display.lightappid_brand_url": {
+            "dump_digest": "true",
+            "dump_invert_idx": "false",
+            "dump_dict": "false"
+        }
+        
+    }
+}
