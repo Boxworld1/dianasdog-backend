@@ -8,6 +8,7 @@
 package setup
 
 import (
+	"fmt"
 	"io/ioutil"
 
 	"github.com/tidwall/gjson"
@@ -16,15 +17,19 @@ import (
 // ItemSetting	保存 存入数据库的数据在文件中的路径 和 需要储入的数据库
 type ItemSetting struct {
 	itemPath      string // 存入数据库的资料路径
-	dumpDigest    bool   // 本字段是否需要 dump 摘要
-	dumpInvertIdx bool   // 本字段是否需要 dump 倒排
-	dumpDict      bool   // 本字段是否需要 dump 词表
+	dumpDigest    bool   // 本字段是否需要 dump 摘要 (Redis)
+	dumpInvertIdx bool   // 本字段是否需要 dump 倒排 (ES)
+	dumpDict      bool   // 本字段是否需要 dump 词表 (Dict)
 }
 
 func GetConfig(targetResource string) ([]ItemSetting, error) {
 
+	// 得到此文件的绝对路径
+	abspath, _ := GetAbsPath()
+
 	// 查找对应类型的 config 文档路径
-	filepath := "./testcase/" + targetResource + ".json"
+	filepath := abspath + "config/" + targetResource + ".json"
+	fmt.Println(filepath)
 	file, err := ioutil.ReadFile(filepath)
 	if err != nil {
 		return nil, err

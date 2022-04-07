@@ -1,5 +1,5 @@
 {
-    "Resource": "demo_resource",
+    "Resource": "testcase_car",
     "write_setting": {
         "a.b.c": {
             "dump_digest": "true",

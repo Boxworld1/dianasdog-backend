@@ -1,6 +1,6 @@
 // @title		SetupRouter
 // @description	后端与前端交互之接口
-// @auth		ryl				2022/3/30		22:30
+// @auth		ryl				2022/4/6		23:30
 
 package communication
 
@@ -27,16 +27,14 @@ func GoSearch(context *gin.Context) {
 
 	query := body.Query
 	fmt.Println(query)
-	// result := search_service.SearchFunction(query)
+	// result := search.IntentRecognition(query)
 	context.JSON(200, gin.H{
-		// "content": result,
-		"content": query,
+		"content": query, //result,
 	})
 }
 
 func SetupRouter() *gin.Engine {
 	router := gin.Default()
-	router.GET("/search", GoSearch)
-	// router.Run()
+	router.POST("/search", GoSearch)
 	return router
 }

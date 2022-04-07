@@ -11,13 +11,14 @@ import (
 
 // test for function: getFiles
 func TestGetXMLFiles(t *testing.T) {
-	filesPath, err := GetXMLFiles("./testcase")
+	abspath, _ := GetAbsPath()
+	filesPath, err := GetXMLFiles(abspath + "data/testcase")
 	if err != nil {
 		t.Error(err)
 	}
 	fmt.Println(filesPath)
 
-	if len(filesPath) != 2 || filesPath[0] != "./testcase/car_test.xml" { // wrong return value
+	if len(filesPath) != 2 || filesPath[0] != abspath+"data/testcase/testcase_car.xml" { // wrong return value
 		t.Error("getFile函数读取错误")
 	}
 

@@ -27,7 +27,7 @@ func Test_helloHandler(t *testing.T) {
 	for _, testcase := range tests {
 		// mock一个HTTP请求
 		req := httptest.NewRequest(
-			"GET",                             // 请求方法
+			"POST",                            // 请求方法
 			"/search",                         // 请求URL
 			strings.NewReader(testcase.param), // 请求参数
 		)

@@ -12,12 +12,12 @@ import (
 func TestGetConfig(t *testing.T) {
 
 	// 查找不存在的文件
-	_, err := GetConfig("apple")
+	_, err := GetConfig("testcase_apple")
 	if err == nil {
 		t.Error(err)
 	}
 
-	itemSettings, err := GetConfig("car")
+	itemSettings, err := GetConfig("testcase_car")
 	// 测试时出错
 	if err != nil {
 		t.Error(err)
