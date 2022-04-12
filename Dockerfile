@@ -19,10 +19,9 @@ RUN GOOS=linux GOARCH=amd64 go build -a -ldflags "-linkmode external -extldflags
 FROM scratch
 
 # Copy executable from the first stage
-COPY --from=0 /opt/app/dianasdog /dianasdog
+COPY --from=0 /opt/app/riviere /riviere
 COPY config.yml swagger.json /
 
 EXPOSE 80
 
-CMD go run main.go
-# ["/dianasdog", "-host", "0.0.0.0", "-port", "80"]
+CMD ["/riviere", "-host", "0.0.0.0", "-port", "80"]
