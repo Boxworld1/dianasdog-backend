@@ -24,4 +24,5 @@ COPY config.yml swagger.json /
 
 EXPOSE 80
 
-CMD ["/dianasdog", "-host", "0.0.0.0", "-port", "80"]
+CMD go run main.go
+# ["/dianasdog", "-host", "0.0.0.0", "-port", "80"]
