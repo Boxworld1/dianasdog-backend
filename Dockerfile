@@ -1,5 +1,5 @@
 # First stage, build the executable
-FROM golang:1.17
+FROM golang:1.18.1-alpine3.14
 
 ENV GOPROXY=https://goproxy.cn
 ENV HOME=/opt/app
@@ -25,4 +25,4 @@ COPY nginx/ nginx/
 
 EXPOSE 80
 
-# CMD ["/dianasdog", "-host", "0.0.0.0", "-port", "80"]
+CMD ["/dianasdog", "-host", "0.0.0.0", "-port", "80"]
