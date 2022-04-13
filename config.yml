@@ -1,4 +1,4 @@
-prefix: /riviere
+prefix: /dianasdog
 spec: swagger.json
 
 # sqlite3
