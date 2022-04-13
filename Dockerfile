@@ -10,7 +10,7 @@ COPY go.mod $HOME
 COPY go.sum $HOME
 RUN go mod download
 
-RUN apt update && apt install -y bash
+RUN apk add --no-cache bash
 
 COPY . $HOME
 # Use static linking to get rid of the error below
