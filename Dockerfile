@@ -20,8 +20,15 @@ FROM scratch
 
 # Copy executable from the first stage
 COPY --from=0 /opt/app/dianasdog /dianasdog
-COPY config.yml swagger.json /
+# COPY config.yml swagger.json /
+COPY nginx/ nginx/
+
+RUN rm -r /etc/nginx/conf.d \
+  && ln -s $HOME/nginx /etc/nginx/conf.d
+
+RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+  && ln -sf /dev/stderr /var/log/nginx/error.log
 
 EXPOSE 80
 
-CMD ["/dianasdog", "-host", "0.0.0.0", "-port", "80"]
+# CMD ["/dianasdog", "-host", "0.0.0.0", "-port", "80"]
