@@ -21,6 +21,7 @@ FROM scratch
 # Copy executable from the first stage
 COPY --from=0 /opt/app/dianasdog /dianasdog
 COPY config.yml swagger.json /
+# COPY nginx/ nginx/
 
 EXPOSE 80
 

@@ -7,6 +7,7 @@ package communication
 import (
 	"fmt"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -33,8 +34,25 @@ func GoSearch(context *gin.Context) {
 	})
 }
 
+func PostData(context *gin.Context) {
+
+}
+
+func GetConfig(context *gin.Context) {
+
+}
+
+func GetSetting(context *gin.Context) {
+
+}
+
 func SetupRouter() *gin.Engine {
 	router := gin.Default()
+	router.Use(cors.Default())
+
 	router.POST("/search", GoSearch)
+	router.POST("/data", PostData)
+	router.POST("/pattern", GetConfig)
+	router.POST("/setting", GetSetting)
 	return router
 }
