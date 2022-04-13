@@ -36,7 +36,7 @@ func GetConfig(targetResource string) ([]ItemSetting, error) {
 	}
 
 	json := string(file)
-	settings := gjson.Get(json, "write_setting|@pretty")
+	settings := gjson.Get(json, "@pretty")
 
 	var itemSettings = make([]ItemSetting, 0)
 

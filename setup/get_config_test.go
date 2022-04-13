@@ -25,7 +25,7 @@ func TestGetConfig(t *testing.T) {
 
 	// 配置数量错误
 	if len(itemSettings) != 4 {
-		t.Error("配置数量有误")
+		t.Error("配置数量有误", len(itemSettings))
 	} else {
 		item0 := itemSettings[0]
 		item1 := itemSettings[1]
