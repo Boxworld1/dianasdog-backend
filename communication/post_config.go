@@ -10,7 +10,8 @@ import (
 )
 
 type ConfigBody struct {
-	Type string `json:"type" binding:"required"`
+	Resource string                 `json:"resource" binding:"required"`
+	Data     map[string]interface{} `json:"data" binding:"required"`
 }
 
 func PostConfig(context *gin.Context) {
@@ -23,9 +24,9 @@ func PostConfig(context *gin.Context) {
 		return
 	}
 
-	query := body.Type
-	// result := search.IntentRecognition(query)
+	res := body.Resource
+
 	context.JSON(200, gin.H{
-		"content": query, //result,
+		"content": res, //result,
 	})
 }

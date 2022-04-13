@@ -14,12 +14,15 @@ import (
 
 func Test_helloHandler(t *testing.T) {
 	// 定义测试用例
+	// 分別记录了正确的返回码和内容
 	tests := []struct {
-		id    int
-		param string
+		result []int
+		param  string
 	}{
-		{0, `{"query": "apple"}`},
-		{1, `{
+		{[]int{200, 400, 400, 400}, `{
+			"query": "apple"
+		}`},
+		{[]int{400, 200, 400, 400}, `{
 			"resource": "testcase_car",
 			"write_setting": {
 				"a.b.c": {
@@ -44,20 +47,32 @@ func Test_helloHandler(t *testing.T) {
 				}
 			}
 		}`},
-		{2, `{"type": "insert", "resource":"car"}`},
-		{3, `{"resource": "car", "data":""}`},
-		{4, "{}"},
+		{[]int{400, 400, 200, 200}, `{
+			"type": "insert", 
+			"resource": "testcase_car",
+			"file": "testcase_car.xml",
+			"data": {
+
+			}
+		}`},
+		{[]int{400, 400, 400, 200}, `{
+			"resource": "testcase_car", 
+			"data": {
+
+			}
+		}`},
+		{[]int{400, 400, 400, 400}, "{}"},
 	}
 
-	// 定义接口
+	// 定义要调用的接口
 	methods := []struct {
 		method string
 		url    string
 	}{
 		{"POST", "/search"},
 		{"POST", "/setting"},
-		// {"POST", "/data"},
-		// {"POST", "/pattern"},
+		{"POST", "/data"},
+		{"POST", "/pattern"},
 	}
 	router := SetupRouter()
 
@@ -77,8 +92,8 @@ func Test_helloHandler(t *testing.T) {
 			router.ServeHTTP(w, req)
 
 			// 校验状态码是否符合预期
-			if (testcase.id == key && w.Code != 200) || (testcase.id != key && w.Code != 400) {
-				fmt.Println(testcase.id, w.Code)
+			if testcase.result[key] != w.Code {
+				fmt.Println(key, w.Code)
 				t.Error("状态码错误")
 			}
 		}

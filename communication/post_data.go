@@ -10,10 +10,10 @@ import (
 )
 
 type DataBody struct {
-	Type string `json:"type" binding:"required"`
-	Word string `json:"word" binding:"required"`
-	File string `json:"file" binding:"required"`
-	Data string `json:"data" binding:"required"`
+	Type     string                 `json:"type" binding:"required"`
+	Resource string                 `json:"resource" binding:"required"`
+	File     string                 `json:"file" binding:"required"`
+	Data     map[string]interface{} `json:"data" binding:"required"`
 }
 
 func PostData(context *gin.Context) {
@@ -26,9 +26,8 @@ func PostData(context *gin.Context) {
 		return
 	}
 
-	query := body.Type
-	// result := search.IntentRecognition(query)
+	typ := body.Type
 	context.JSON(200, gin.H{
-		"content": query, //result,
+		"content": typ, //result,
 	})
 }
