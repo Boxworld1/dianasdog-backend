@@ -32,5 +32,8 @@ func TestEsInterface(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
+
+		// Test delete function of es
+		DeleteFromES(client, "100")
 	}
 }
