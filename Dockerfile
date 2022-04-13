@@ -1,5 +1,5 @@
 # First stage, build the executable
-FROM golang:1.18.1-alpine3.14
+FROM golang:1.17
 
 ENV GOPROXY=https://goproxy.cn
 ENV HOME=/opt/app
