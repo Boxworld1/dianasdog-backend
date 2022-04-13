@@ -1,6 +1,6 @@
-// @title	GoSearch
+// @title	PostData
 // @description	后端接收数据用接口
-// @auth	ryl		2022/4/13		13:30
+// @auth	ryl		2022/4/13		17:30
 // @param	context	*gin.Context
 
 package communication

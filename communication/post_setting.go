@@ -1,16 +1,20 @@
-// @title	GoSearch
+// @title	GoSetting
 // @description	后端接收写入行为之接口
-// @auth	ryl		2022/4/13		13:30
+// @auth	ryl		2022/4/13		17:30
 // @param	context	*gin.Context
 
 package communication
 
 import (
+	"dianasdog/setup"
+	"encoding/json"
+
 	"github.com/gin-gonic/gin"
 )
 
 type SettingBody struct {
-	Type string `json:"type" binding:"required"`
+	Resource string                 `json:"resource" binding:"required"`
+	Setting  map[string]interface{} `json:"write_setting" binding:"required"`
 }
 
 func PostSetting(context *gin.Context) {
@@ -23,9 +27,21 @@ func PostSetting(context *gin.Context) {
 		return
 	}
 
-	query := body.Type
-	// result := search.IntentRecognition(query)
+	res := body.Resource
+	content := body.Setting
+
+	str, err := json.Marshal(content)
+
+	if err != nil {
+		context.JSON(400, gin.H{
+			"err": err.Error(),
+		})
+		return
+	}
+
+	setup.SetConfig(res, str)
+
 	context.JSON(200, gin.H{
-		"content": query, //result,
+		"message": "successful!", //result,
 	})
 }

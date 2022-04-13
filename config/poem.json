@@ -1,5 +1,5 @@
 {
-    "Resource": "poem",
+    "resource": "poem",
     "write_setting": {
         "key": {
             "dump_digest": "false",

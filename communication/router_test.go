@@ -1,7 +1,7 @@
-// @title		SetupRouter
+// @title	SetupRouter
 // @description	此函数的用途为检查 SetupRouter 函数的正确性
-// @auth		ryl				2022/3/30		22:00
-// @param		t				*testing.T		testing 用参数
+// @auth	ryl		2022/4/13	18:00
+// @param	t		*testing.T	testing 用参数
 
 package communication
 
@@ -19,9 +19,33 @@ func Test_helloHandler(t *testing.T) {
 		param string
 	}{
 		{0, `{"query": "apple"}`},
-		{1, `{"type": "insert", "resource":"car"}`},
-		{2, `{"resource": "car", "data":""}`},
-		{3, `{"resource": "poem"}`},
+		{1, `{
+			"resource": "testcase_car",
+			"write_setting": {
+				"a.b.c": {
+					"dump_digest": "true",
+					"dump_invert_idx": "false",
+					"dump_dict": "true"
+				},
+				"a.e": {
+					"dump_digest": "false",
+					"dump_invert_idx": "false",
+					"dump_dict": "true"
+				},
+				"b.g": {
+					"dump_digest": "true",
+					"dump_invert_idx": "true",
+					"dump_dict": "true"
+				},
+				"f.a": {
+					"dump_digest": "true",
+					"dump_invert_idx": "false",
+					"dump_dict": "true"
+				}
+			}
+		}`},
+		{2, `{"type": "insert", "resource":"car"}`},
+		{3, `{"resource": "car", "data":""}`},
 		{4, "{}"},
 	}
 
@@ -31,9 +55,9 @@ func Test_helloHandler(t *testing.T) {
 		url    string
 	}{
 		{"POST", "/search"},
+		{"POST", "/setting"},
 		// {"POST", "/data"},
 		// {"POST", "/pattern"},
-		// {"POST", "/setting"},
 	}
 	router := SetupRouter()
 
