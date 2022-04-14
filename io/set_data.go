@@ -11,6 +11,7 @@ package io
 import (
 	"dianasdog/setup"
 	"io/ioutil"
+	"os"
 )
 
 func SetData(resource string, filename string, content []byte) error {
@@ -18,11 +19,15 @@ func SetData(resource string, filename string, content []byte) error {
 	// 得到此文件的绝对路径
 	abspath, _ := setup.GetAbsPath()
 
-	// 查找对应类型的文件路径
+	// 查找对应类型的文件路径（先记为 .txt）
+	tmppath := abspath + "data/" + resource + "/1.txt"
 	filepath := abspath + "data/" + resource + "/" + filename
 
 	// 写入配置
-	err := ioutil.WriteFile(filepath, content, 0644)
+	err := ioutil.WriteFile(tmppath, content, 0644)
+
+	// 写入后改回 .xml
+	os.Rename(tmppath, filepath)
 
 	// 无论正确与否都返回 err 的内容
 	return err
