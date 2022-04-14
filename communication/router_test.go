@@ -1,4 +1,4 @@
-// @title	SetupRouter
+// @title	TestRouter
 // @description	此函数的用途为检查 SetupRouter 函数的正确性
 // @auth	ryl		2022/4/13	18:00
 // @param	t		*testing.T	testing 用参数
@@ -12,7 +12,7 @@ import (
 	"testing"
 )
 
-func Test_helloHandler(t *testing.T) {
+func TestRouter(t *testing.T) {
 	// 定义测试用例
 	// 分別记录了正确的返回码和内容
 	tests := []struct {
@@ -47,18 +47,28 @@ func Test_helloHandler(t *testing.T) {
 				}
 			}
 		}`},
-		{[]int{400, 400, 200, 200}, `{
+		{[]int{400, 400, 200, 400}, `{
 			"type": "insert", 
 			"resource": "testcase_car",
 			"file": "testcase_car.xml",
-			"data": {
-
-			}
+			"data": " "
+		}`},
+		{[]int{400, 400, 200, 400}, `{
+			"type": "delete", 
+			"resource": "testcase_car",
+			"file": "testcase_car.xml",
+			"data": " "
+		}`},
+		{[]int{400, 400, 200, 400}, `{
+			"type": "update", 
+			"resource": "testcase_car",
+			"file": "testcase_car.xml",
+			"data": " "
 		}`},
 		{[]int{400, 400, 400, 200}, `{
 			"resource": "testcase_car", 
 			"data": {
-
+				
 			}
 		}`},
 		{[]int{400, 400, 400, 400}, "{}"},
