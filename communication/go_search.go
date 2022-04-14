@@ -1,14 +1,11 @@
 // @title	GoSearch
 // @description	后端搜索接口
-// @auth	ryl		2022/4/13	13:30
+// @auth	ryl		2022/4/14	10:30
 // @param	context	*gin.Context
 
 package communication
 
 import (
-	"dianasdog/setup"
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,8 +15,11 @@ type SearchBody struct {
 
 func GoSearch(context *gin.Context) {
 	var body SearchBody
-	fmt.Println(body)
+
+	// 检查收到信息的格式是否正确
 	err := context.ShouldBindJSON(&body)
+
+	// 若不是，则返回错误
 	if err != nil {
 		context.JSON(400, gin.H{
 			"err": err.Error(),
@@ -27,10 +27,13 @@ func GoSearch(context *gin.Context) {
 		return
 	}
 
+	// 取得 query 字段
 	query := body.Query
-	fmt.Println(query)
-	query, _ = setup.GetAbsPath()
+
+	// 开始搜索流程
 	// result := search.IntentRecognition(query)
+
+	// 返回结果
 	context.JSON(200, gin.H{
 		"content": query, //result,
 	})

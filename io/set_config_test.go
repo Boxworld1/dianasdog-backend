@@ -3,10 +3,10 @@
 // @auth	ryl		2022/4/13	10:00
 // @param	t		*testing.T	testing 用参数
 
-package setup
+package io
 
 import (
-	"fmt"
+	"dianasdog/setup"
 	"io/ioutil"
 	"testing"
 )
@@ -14,11 +14,12 @@ import (
 func TestSetConfig(t *testing.T) {
 
 	// 得到此文件的绝对路径
-	abspath, _ := GetAbsPath()
+	abspath, _ := setup.GetAbsPath()
 
 	// 取得测试文件
 	filepath := abspath + "config/testcase_car.json"
-	fmt.Println(filepath)
+
+	// 读入文件
 	file, err := ioutil.ReadFile(filepath)
 	if err != nil {
 		t.Error(err)

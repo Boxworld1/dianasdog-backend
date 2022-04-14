@@ -6,7 +6,7 @@
 package communication
 
 import (
-	"dianasdog/setup"
+	"dianasdog/io"
 	"encoding/json"
 
 	"github.com/gin-gonic/gin"
@@ -19,7 +19,11 @@ type SettingBody struct {
 
 func PostSetting(context *gin.Context) {
 	var body SettingBody
+
+	// 检查收到信息的格式是否正确
 	err := context.ShouldBindJSON(&body)
+
+	// 若不是，则返回错误
 	if err != nil {
 		context.JSON(400, gin.H{
 			"err": err.Error(),
@@ -27,11 +31,14 @@ func PostSetting(context *gin.Context) {
 		return
 	}
 
+	// 取得特型卡 ID 及对应内容
 	res := body.Resource
 	content := body.Setting
 
+	// 将内容转化为 []byte 方便写入文件
 	str, err := json.Marshal(content)
 
+	// 若转换失败则返回错误
 	if err != nil {
 		context.JSON(400, gin.H{
 			"err": err.Error(),
@@ -39,8 +46,10 @@ func PostSetting(context *gin.Context) {
 		return
 	}
 
-	setup.SetConfig(res, str)
+	// 否则写入文件
+	io.SetConfig(res, str)
 
+	// 返回对应值
 	context.JSON(200, gin.H{
 		"message": "successful!", //result,
 	})
