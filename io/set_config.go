@@ -5,16 +5,17 @@
 // @param	content		[]ItemSetting	需要写入配置文件的数据
 // @return	err			error			错误值
 
-package setup
+package io
 
 import (
+	"dianasdog/setup"
 	"io/ioutil"
 )
 
 func SetConfig(resource string, content []byte) error {
 
 	// 得到此文件的绝对路径
-	abspath, _ := GetAbsPath()
+	abspath, _ := setup.GetAbsPath()
 
 	// 查找对应类型的 config 文档路径
 	filepath := abspath + "config/" + resource + ".json"

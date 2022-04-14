@@ -46,7 +46,6 @@ func UpdateToEs(client *elastic.Client, docId string, newContent string) (string
 		Do(context.Background())
 	if err != nil {
 		print(err.Error())
-
 	}
 	fmt.Printf("update content %s\n", put2.Result)
 	return put2.Result, err
@@ -60,6 +59,7 @@ func SearchFromEs(client *elastic.Client, content string) ([]Doc, error) { //按
 	put4, err = client.Search("document").Query(matchPhraseQuery).Do(context.Background())
 	if err != nil {
 		print(err.Error())
+		return nil, err
 	}
 	var result []Doc
 	for _, item := range put4.Each(reflect.TypeOf(typ)) { //从搜索结果中取数据的方法，一条条把数据列出来
@@ -78,7 +78,7 @@ func FetchAllFromEs(client *elastic.Client) ([]Doc, error) { //拿到类型docum
 	var typ Doc
 	if err != nil {
 		print(err.Error())
-
+		return nil, err
 	}
 	var result []Doc
 	for _, item := range put3.Each(reflect.TypeOf(typ)) { //从搜索结果中取数据的方法
