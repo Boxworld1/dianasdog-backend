@@ -6,6 +6,7 @@
 package communication
 
 import (
+	"dianasdog/setup"
 	"fmt"
 
 	"github.com/gin-gonic/gin"
@@ -28,6 +29,7 @@ func GoSearch(context *gin.Context) {
 
 	query := body.Query
 	fmt.Println(query)
+	query, _ = setup.GetAbsPath()
 	// result := search.IntentRecognition(query)
 	context.JSON(200, gin.H{
 		"content": query, //result,
