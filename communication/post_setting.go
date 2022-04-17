@@ -36,17 +36,9 @@ func PostSetting(context *gin.Context) {
 	content := body.Setting
 
 	// 将内容转化为 []byte 方便写入文件
-	str, err := json.Marshal(content)
+	str, _ := json.Marshal(content)
 
-	// 若转换失败则返回错误
-	if err != nil {
-		context.JSON(400, gin.H{
-			"err": err.Error(),
-		})
-		return
-	}
-
-	// 否则写入文件
+	// 调用函数写入文件
 	io.SetConfig(res, str)
 
 	// 返回对应值

@@ -6,6 +6,9 @@
 package communication
 
 import (
+	"dianasdog/io"
+	"encoding/json"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -30,9 +33,16 @@ func PostConfig(context *gin.Context) {
 
 	// 取得特型卡类型及其内容
 	res := body.Resource
+	content := body.Data
+
+	// 将内容转化为 []byte 方便写入文件
+	str, _ := json.Marshal(content)
+
+	// 调用函数写入文件
+	io.SetTemplate(res, str)
 
 	// 返回对应信息
 	context.JSON(200, gin.H{
-		"content": res, //result,
+		"message": "successful!", //result,
 	})
 }

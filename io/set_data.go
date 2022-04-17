@@ -1,6 +1,6 @@
 // @title	SetData
-// @description	此函数的用途为，根据数据 "类型"，在配置文件中找出对应的 "写入行为"，并反馈相关数据到数据处理函数中。
-// @auth	ryl			2022/4/13		16:00
+// @description	将前端传来的写入行为描述存储在文件中
+// @auth	ryl			2022/4/17		17:00
 // @param	resource	string			特型卡片类型（如 "诗词" 和 "车" 等）
 // @param	filename	string			文件名
 // @param	content		[]ItemSetting	需要写入配置文件的数据
