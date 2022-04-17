@@ -20,39 +20,43 @@ type DataBody struct {
 
 func PostData(context *gin.Context) {
 	var body DataBody
+	var err error
 
 	// 检查收到信息的格式是否正确
-	err := context.ShouldBindJSON(&body)
+	err = context.ShouldBindJSON(&body)
 
-	// 若不是，则返回错误
-	if err != nil {
-		context.JSON(400, gin.H{
-			"err": err.Error(),
-		})
-		return
-	}
+	// 若无错误，则继续
+	if err == nil {
+		typ := body.Type
+		res := body.Resource
+		filename := body.File
+		content := body.Data
 
-	typ := body.Type
-	res := body.Resource
-	filename := body.File
-	content := body.Data
-
-	// 否则按照操作类型进行操作
-	switch typ {
-	// 写入文件
-	case "insert":
-		// 将内容转化为 []byte 方便写入文件
-		io.SetData(res, filename, []byte(content))
-	// 删除条目
-	case "delete":
-
-	// 更新条目
-	case "update":
+		// 按照操作类型进行操作
+		switch typ {
+		// 写入文件
+		case "insert":
+			// 将内容转化为 []byte 方便写入文件
+			err = io.SetData(res, filename, []byte(content))
+		// 删除条目
+		case "delete":
+			err = nil
+		// 更新条目
+		case "update":
+			err = nil
+		}
 
 	}
 
 	// 返回对应值
-	context.JSON(200, gin.H{
-		"message": "successful!", //result,
-	})
+	if err != nil {
+		context.JSON(400, gin.H{
+			"err": err.Error(),
+		})
+	} else {
+		context.JSON(200, gin.H{
+			"message": "successful!", //result,
+		})
+	}
+
 }
