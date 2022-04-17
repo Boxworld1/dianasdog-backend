@@ -54,5 +54,6 @@ func PostData(context *gin.Context) {
 	// 返回对应值
 	context.JSON(200, gin.H{
 		"message": "successful!", //result,
+		"data":    content,
 	})
 }
