@@ -7,14 +7,13 @@ package communication
 
 import (
 	"dianasdog/io"
-	"encoding/json"
 
 	"github.com/gin-gonic/gin"
 )
 
 type SettingBody struct {
-	Resource string                 `json:"resource" binding:"required"`
-	Setting  map[string]interface{} `json:"write_setting" binding:"required"`
+	Resource string `json:"resource" binding:"required"`
+	Setting  string `json:"write_setting" binding:"required"`
 }
 
 func PostSetting(context *gin.Context) {
@@ -35,11 +34,8 @@ func PostSetting(context *gin.Context) {
 	res := body.Resource
 	content := body.Setting
 
-	// 将内容转化为 []byte 方便写入文件
-	str, _ := json.Marshal(content)
-
 	// 调用函数写入文件
-	io.SetConfig(res, str)
+	io.SetConfig(res, []byte(content))
 
 	// 返回对应值
 	context.JSON(200, gin.H{

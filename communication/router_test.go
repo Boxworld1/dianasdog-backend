@@ -23,43 +23,22 @@ func TestRouter(t *testing.T) {
 			"query": "apple"
 		}`},
 		{[]int{400, 200, 400, 400}, `{
-			"resource": "testcase_car",
-			"write_setting": {
-				"a.b.c": {
-					"dump_digest": "true",
-					"dump_invert_idx": "false",
-					"dump_dict": "true"
-				},
-				"a.e": {
-					"dump_digest": "false",
-					"dump_invert_idx": "false",
-					"dump_dict": "true"
-				},
-				"b.g": {
-					"dump_digest": "true",
-					"dump_invert_idx": "true",
-					"dump_dict": "true"
-				},
-				"f.a": {
-					"dump_digest": "true",
-					"dump_invert_idx": "false",
-					"dump_dict": "true"
-				}
-			}
+			"resource": "testcase_car2",
+			"write_setting": "{}"
 		}`},
-		{[]int{400, 400, 200, 400}, `{
+		{[]int{400, 400, 200, 200}, `{
 			"type": "insert", 
 			"resource": "testcase_car",
 			"file": "testcase_car.xml",
 			"data": " "
 		}`},
-		{[]int{400, 400, 200, 400}, `{
+		{[]int{400, 400, 200, 200}, `{
 			"type": "delete", 
 			"resource": "testcase_car",
 			"file": "testcase_car.xml",
 			"data": " "
 		}`},
-		{[]int{400, 400, 200, 400}, `{
+		{[]int{400, 400, 200, 200}, `{
 			"type": "update", 
 			"resource": "testcase_car",
 			"file": "testcase_car.xml",
@@ -67,9 +46,7 @@ func TestRouter(t *testing.T) {
 		}`},
 		{[]int{400, 400, 400, 200}, `{
 			"resource": "testcase_car", 
-			"data": {
-				
-			}
+			"data": " "
 		}`},
 		{[]int{400, 400, 400, 400}, "{}"},
 	}
