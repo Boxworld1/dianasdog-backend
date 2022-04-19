@@ -8,7 +8,6 @@ package communication
 import (
 	"dianasdog/io"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"mime/multipart"
 	"strconv"
@@ -30,10 +29,10 @@ type SettingJson struct {
 func PostSetting(context *gin.Context) {
 	var body SettingBody
 	var err error
+	var msg string
 
 	// 检查收到信息的格式是否正确
 	err = context.ShouldBind(&body)
-	fmt.Println(body)
 
 	// 若不是，则返回错误
 	if err != nil {
@@ -60,11 +59,13 @@ func PostSetting(context *gin.Context) {
 		err = json.Unmarshal([]byte(str), &jsonContent)
 
 		// 若不正确，则返回错误
+
 		if err != nil {
-			context.JSON(400, gin.H{
-				"err": err.Error(),
-			})
-			return
+			msg = err.Error()
+		}
+
+		if jsonContent.Setting == nil {
+			msg = "json data error: wrong parameters!"
 		}
 
 		data, _ = json.Marshal(jsonContent)
@@ -74,18 +75,19 @@ func PostSetting(context *gin.Context) {
 		fileContent, _ := body.File.Open()
 		data, err = ioutil.ReadAll(fileContent)
 
+		if err != nil {
+			msg = err.Error()
+		}
+
 	} else {
 		// 若没有传输数据，则错误
-		context.JSON(401, gin.H{
-			"err": "wrong parameters!",
-		})
-		return
+		msg = "form data error: wrong parameters!"
 	}
 
 	// 若过程中出现错误
-	if err != nil {
-		context.JSON(402, gin.H{
-			"err": err.Error(),
+	if len(msg) > 0 {
+		context.JSON(400, gin.H{
+			"err": msg,
 		})
 		return
 	}

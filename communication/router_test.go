@@ -36,36 +36,39 @@ func TestRouter(t *testing.T) {
 			{"data", "{\"resource\":\"testcase_car\",\"write_setting\":{\"a.b.c\":{\"dump_digest\":\"true\",\"dump_invert_idx\":\"false\",\"dump_dict\":\"true\"},\"a.e\":{\"dump_digest\":\"false\",\"dump_invert_idx\":\"false\",\"dump_dict\":\"true\"},\"b.g\":{\"dump_digest\":\"true\",\"dump_invert_idx\":\"true\",\"dump_dict\":\"true\"},\"f.a\":{\"dump_digest\":\"true\",\"dump_invert_idx\":\"false\",\"dump_dict\":\"true\"}}}"},
 		}},
 		{[]int{400, 400, 200, 400}, []MapStruct{
+			{"resource", "testcase_car"},
+			{"data", "{\"resource\":\"hi\",\"data\":{}}"},
+		}},
+		{[]int{400, 400, 400, 200}, []MapStruct{
 			{"type", "insert"},
 			{"resource", "testcase_car"},
 			{"file", "testcase_car.xml"},
 			{"data", "no"},
 		}},
-		{[]int{400, 400, 200, 400}, []MapStruct{
+		{[]int{400, 400, 400, 200}, []MapStruct{
 			{"type", "delete"},
 			{"resource", "testcase_car"},
 			{"file", "testcase_car.xml"},
 			{"data", "nod"},
 		}},
-		{[]int{400, 400, 200, 400}, []MapStruct{
+		{[]int{400, 400, 400, 200}, []MapStruct{
 			{"type", "update"},
 			{"resource", "testcase_car"},
 			{"file", "testcase_car.xml"},
 			{"data", "nod"},
 		}},
+		{[]int{400, 400, 400, 400}, []MapStruct{}},
 		{[]int{400, 400, 400, 400}, []MapStruct{
 			{"resource", "testcase_car"},
-			{"data", "nods"},
 		}},
-		{[]int{400, 400, 400, 400}, []MapStruct{}},
 	}
 
 	// 定义要测试的接口
 	methods := []MapStruct{
 		{"POST", "/search"},
 		{"POST", "/setting"},
+		{"POST", "/pattern"},
 		// {"POST", "/data"},
-		// {"POST", "/pattern"},
 	}
 
 	// 开启 router
