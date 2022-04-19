@@ -36,6 +36,7 @@ func StoreItem(data *etree.Element, resource string, operation string, docid str
 	// 开启数据库
 	redis := database.ConnectToRedis()
 	es, _ := database.ConnectToEs()
+	// db, _ := database.CreateDatabase("dict")
 
 	// 提取配置路径并在数据库中新增对应的表
 	// for _, itemSetting := range itemSettings {
@@ -66,7 +67,7 @@ func StoreItem(data *etree.Element, resource string, operation string, docid str
 			// 数据写入词典(Dict)
 			if itemSetting.dumpDict {
 				fmt.Println("insert to dict", value.Text())
-				//database.InsertToDict(resource, value.Text())
+				// database.InsertToDict(resource, value.Text())
 			}
 		}
 
