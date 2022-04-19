@@ -15,6 +15,8 @@ var db *sql.DB
 
 var dataSourceName string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql.DianasDog.secoder.local:3306)/dict?charset=utf8"
 
+// var dataSourceName string = "root:eelariucie5Tabi8eizioQueineph8la@tcp(localhost:3306)/dict?charset=utf8"
+
 // @title:	init
 // @description: connect to the default database
 // @param: do not need in-params
