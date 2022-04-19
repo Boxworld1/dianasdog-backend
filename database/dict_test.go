@@ -63,7 +63,7 @@ func TestInsertToDict(t *testing.T) {
 // test for function: search
 func TestSearchFromDict(t *testing.T) {
 	tmp, _ := SearchFromDict("car", "test2")
-	if tmp[0] == "test2" {
+	if len(tmp) != 0 {
 		t.Error("test2 is not in car")
 	}
 	tmp, err := SearchFromDict("car", "test0")
@@ -73,7 +73,6 @@ func TestSearchFromDict(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-
 }
 
 //test for function QueryColumn

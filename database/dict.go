@@ -138,19 +138,28 @@ func InsertToDict(tableName string, words []string) error {
 // @return: res         []string  the result of the search
 //          err         error     nil when the word is in the table
 func SearchFromDict(tableName string, id string) ([]string, error) {
-	selectTask := "select id from " + tableName + " where id=?"
+	//selectTask := "select id from " + tableName + " where id=?"
 	columns, _ := ShowColumnsInTable(tableName)
+	selectTask := "select id"
+	for i := 1; i < len(columns); i++ {
+		selectTask += ", " + columns[i]
+	}
+	selectTask += " from " + tableName + " where id=?"
+	fmt.Println(selectTask)
 	var interfaceSlice []interface{} = make([]interface{}, len(columns))
-	var res []string = make([]string, len(columns))
-	for i, d := range res {
-		interfaceSlice[i] = &d
+	var tmp [10]string
+	for i := 0; i < len(columns); i++ {
+		interfaceSlice[i] = &tmp[i]
 	}
 	err := db.QueryRow(selectTask, id).Scan(interfaceSlice...)
-	if err == nil && res[0] == id {
-		return res, err
-	} else {
+	if tmp[0] != id {
 		return nil, err
 	}
+	var res []string = make([]string, len(columns))
+	for i := 0; i < len(columns); i++ {
+		res[i] = tmp[i]
+	}
+	return res, err
 }
 
 // @title: DeleteFromDict
