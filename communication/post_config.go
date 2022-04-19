@@ -8,20 +8,28 @@ package communication
 import (
 	"dianasdog/io"
 	"encoding/json"
+	"fmt"
+	"mime/multipart"
 
 	"github.com/gin-gonic/gin"
 )
 
 type ConfigBody struct {
-	Resource string                 `json:"resource" binding:"required"`
-	Data     map[string]interface{} `json:"data" binding:"required"`
+	Resource string                `form:"resource" binding:"required"`
+	Data     string                `form:"data" binding:"-"`
+	File     *multipart.FileHeader `form:"file" binding:"-"`
+}
+
+type ConfigJson struct {
+	Resource string                 `form:"resource" binding:"required"`
+	Data     map[string]interface{} `form:"write_setting" binding:"required"`
 }
 
 func PostConfig(context *gin.Context) {
 	var body ConfigBody
 
 	// 检查收到信息的格式是否正确
-	err := context.ShouldBindJSON(&body)
+	err := context.ShouldBind(&body)
 
 	// 若不是，则返回错误
 	if err != nil {
@@ -35,11 +43,19 @@ func PostConfig(context *gin.Context) {
 	res := body.Resource
 	content := body.Data
 
-	// 将内容转化为 []byte 方便写入文件
-	str, _ := json.Marshal(content)
+	var jsonContent ConfigJson
+	err = json.Unmarshal([]byte(content), &jsonContent)
+	fmt.Println(jsonContent)
+
+	if err != nil {
+		context.JSON(400, gin.H{
+			"err": err.Error(),
+		})
+		return
+	}
 
 	// 调用函数写入文件
-	io.SetTemplate(res, str)
+	io.SetTemplate(res, []byte(content))
 
 	// 返回对应信息
 	context.JSON(200, gin.H{
