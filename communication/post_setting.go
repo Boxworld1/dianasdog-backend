@@ -8,6 +8,7 @@ package communication
 import (
 	"dianasdog/io"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"mime/multipart"
 	"strconv"
@@ -32,6 +33,7 @@ func PostSetting(context *gin.Context) {
 
 	// 检查收到信息的格式是否正确
 	err = context.ShouldBind(&body)
+	fmt.Println(body)
 
 	// 若不是，则返回错误
 	if err != nil {

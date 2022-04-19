@@ -6,10 +6,12 @@
 package communication
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"strconv"
 	"strings"
 	"testing"
 )
@@ -58,10 +60,10 @@ func TestRouter(t *testing.T) {
 		{[]int{400, 400, 400, 400}, []MapStruct{}},
 	}
 
-	// 定义要调用的接口
+	// 定义要测试的接口
 	methods := []MapStruct{
 		{"POST", "/search"},
-		// {"POST", "/setting"},
+		{"POST", "/setting"},
 		// {"POST", "/data"},
 		// {"POST", "/pattern"},
 	}
@@ -86,13 +88,24 @@ func TestRouter(t *testing.T) {
 				// 根据测试用例加入参数
 				form := url.Values{}
 				for _, value := range testcase.param {
-					form.Add(value.key, value.value)
+					// 去掉前端多余的引号
+					if value.key == "data" {
+						tarstr, _ := json.Marshal(value.value)
+						form.Add(value.key, string(tarstr))
+					} else {
+						form.Add(value.key, value.value)
+					}
+
 				}
+
 				req = httptest.NewRequest(
 					method.key,                       // 请求方法
 					method.value,                     // 请求 URL
 					strings.NewReader(form.Encode()), // 请求参数
 				)
+
+				req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+				req.Header.Add("Content-Length", strconv.Itoa(len(form.Encode())))
 			}
 
 			// mock 一个响应记录器
