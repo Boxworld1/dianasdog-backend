@@ -6,7 +6,7 @@ import (
 
 // test for function: createTable
 func TestCreateTableFromDict(t *testing.T) {
-	d := []string{"key", "title"}
+	d := []string{"id", "title"}
 	err := CreateTableFromDict("car", d)
 	if err != nil {
 		t.Error(err)
@@ -37,7 +37,7 @@ func TestShowColumnsInTable(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	if dict[0] != "key" || dict[1] != "title" {
+	if dict[0] != "id" || dict[1] != "title" {
 		t.Error("返回错误")
 	}
 }

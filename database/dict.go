@@ -13,8 +13,9 @@ import (
 
 var db *sql.DB
 
-//var dataSourceName string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql.DianasDog.secoder.local:3306)/dict?charset=utf8"
-var dataSourceName string = "root:root@tcp(0.0.0.0:49153)/dict?charset=utf8"
+var dataSourceName string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql.DianasDog.secoder.local:3306)/dict?charset=utf8"
+
+//var dataSourceName string = "root:root@tcp(0.0.0.0:49153)/dict?charset=utf8"
 
 // @title: init
 // @description: connect to the default database
@@ -36,11 +37,11 @@ func init() {
 //         columns      []string  the name of the columns to be created in the table
 // @return: err         error     nil when the table has been created successfully
 func CreateTableFromDict(tableName string, columns []string) error {
-	createTask := `CREATE TABLE IF NOT EXISTS ` + tableName + `(`
-	for i := 0; i < len(columns); i++ {
-		createTask += columns[i] + ` VARCHAR(64) NULL, `
+	createTask := `CREATE TABLE IF NOT EXISTS ` + tableName + `( id VARCHAR(64) PRIMARY KEY NULL`
+	for i := 1; i < len(columns); i++ {
+		createTask += `,` + columns[i] + ` VARCHAR(64) NULL`
 	}
-	createTask += `PRIMARY KEY(key) )DEFAULT CHARSET=utf8;`
+	createTask += `)DEFAULT CHARSET=utf8;`
 	_, err := db.Exec(createTask)
 	return err
 }
@@ -84,7 +85,7 @@ func ShowTablesInDict() ([]string, error) {
 // @return: columns     []string  store the name of all the columns
 //		    err         error     nil when the table has been deleted successfully
 func ShowColumnsInTable(tableName string) ([]string, error) {
-	task := "select group_concat(column_name) from information_schema.COLUMNS where table_name=" + tableName + " and table_schema='dict'"
+	task := "select column_name from information_schema.COLUMNS where table_name='" + tableName + "' and table_schema='dict'"
 	rows, err := db.Query(task)
 	if err != nil {
 		return nil, err
@@ -107,10 +108,10 @@ func ShowColumnsInTable(tableName string) ([]string, error) {
 //         words        []string    the word to be inserted
 // @return: err         error     nil when the word has been inserted into the table successfully
 func InsertToDict(tableName string, words []string) error {
-	insertTask := "INSERT IGNORE INTO " + tableName + "("
+	insertTask := "INSERT IGNORE INTO " + tableName + "(id"
 	columns, _ := ShowColumnsInTable(tableName)
-	for i := 0; i < len(columns); i++ {
-		insertTask += columns[i] + ","
+	for i := 1; i < len(columns); i++ {
+		insertTask += "," + columns[i]
 	}
 	insertTask += ") values(?"
 	for i := 0; i < len(columns)-1; i++ {
@@ -136,16 +137,16 @@ func InsertToDict(tableName string, words []string) error {
 //         key          string    the key of the data to be searched
 // @return: res         []string  the result of the search
 //          err         error     nil when the word is in the table
-func SearchFromDict(tableName string, key string) ([]string, error) {
-	selectTask := "select key from " + tableName + " where key=?"
+func SearchFromDict(tableName string, id string) ([]string, error) {
+	selectTask := "select id from " + tableName + " where id=?"
 	columns, _ := ShowColumnsInTable(tableName)
 	var interfaceSlice []interface{} = make([]interface{}, len(columns))
 	var res []string = make([]string, len(columns))
 	for i, d := range res {
 		interfaceSlice[i] = &d
 	}
-	err := db.QueryRow(selectTask, key).Scan(interfaceSlice...)
-	if err == nil && res[0] == key {
+	err := db.QueryRow(selectTask, id).Scan(interfaceSlice...)
+	if err == nil && res[0] == id {
 		return res, err
 	} else {
 		return nil, err
@@ -157,9 +158,9 @@ func SearchFromDict(tableName string, key string) ([]string, error) {
 // @param: tableName    string    the name of the target table
 //         key         string    the key of the data to be deleted
 // @return:err         error     nil when the word has been deleted from the table successfully
-func DeleteFromDict(tableName string, key string) error {
-	deleteTask := "delete from " + tableName + " where key=?"
-	_, err := db.Exec(deleteTask, key)
+func DeleteFromDict(tableName string, id string) error {
+	deleteTask := "delete from " + tableName + " where id=?"
+	_, err := db.Exec(deleteTask, id)
 	if err != nil {
 		return err
 	}
