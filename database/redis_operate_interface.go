@@ -18,11 +18,9 @@ var cxt = context.Background()
  */
 func ConnectToRedis() *redis.Client {
 	var opt = redis.Options{
-		Addr: "redis.DianasDog.secoder.local:6379",
-		// Addr: "localhost:6379",
+		Addr:     "redis.DianasDog.secoder.local:6379",
 		Password: "",
-		// Password: "0",
-		DB: 0}
+		DB:       0}
 	var client = redis.NewClient(&opt)
 	return client
 }
