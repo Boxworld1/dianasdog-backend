@@ -42,19 +42,19 @@ func TestRouter(t *testing.T) {
 		{[]int{400, 400, 400, 200}, []MapStruct{
 			{"type", "insert"},
 			{"resource", "testcase_car"},
-			{"file", "testcase_car.xml"},
+			{"filename", "testcase_car.xml"},
 			{"data", "no"},
 		}},
 		{[]int{400, 400, 400, 200}, []MapStruct{
 			{"type", "delete"},
 			{"resource", "testcase_car"},
-			{"file", "testcase_car.xml"},
+			{"filename", "testcase_car.xml"},
 			{"data", "nod"},
 		}},
 		{[]int{400, 400, 400, 200}, []MapStruct{
 			{"type", "update"},
 			{"resource", "testcase_car"},
-			{"file", "testcase_car.xml"},
+			{"filename", "testcase_car.xml"},
 			{"data", "nod"},
 		}},
 		{[]int{400, 400, 400, 400}, []MapStruct{}},
@@ -68,7 +68,7 @@ func TestRouter(t *testing.T) {
 		{"POST", "/search"},
 		{"POST", "/setting"},
 		{"POST", "/pattern"},
-		// {"POST", "/data"},
+		{"POST", "/data"},
 	}
 
 	// 开启 router
