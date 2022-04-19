@@ -66,7 +66,7 @@ func StoreItem(data *etree.Element, resource string, operation string, docid str
 			// 数据写入词典(Dict)
 			if itemSetting.dumpDict {
 				fmt.Println("insert to dict", value.Text())
-				database.InsertToDict(resource, value.Text())
+				//database.InsertToDict(resource, value.Text())
 			}
 		}
 
