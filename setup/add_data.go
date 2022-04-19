@@ -27,7 +27,9 @@ func AddData(path string, targetResource string) error {
 		}
 		// 将每一条数据放入数据库中
 		for _, item := range itemList {
-			StoreItem(item, targetResource, "insert", "docid")
+			docid := GetDocid(item, targetResource)
+			//StoreItem(item, targetResource, "insert", "docid")
+			StoreItem(item, targetResource, "insert", docid)
 		}
 	}
 
