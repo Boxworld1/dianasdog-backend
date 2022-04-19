@@ -15,8 +15,6 @@ var db *sql.DB
 
 var dataSourceName string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql.DianasDog.secoder.local:3306)/dict?charset=utf8"
 
-//var dataSourceName string = "root:root@tcp(0.0.0.0:49153)/dict?charset=utf8"
-
 // @title: init
 // @description: connect to the default database
 // @param: do not need a param
@@ -60,7 +58,7 @@ func DeleteTableFromDict(tableName string) error {
 // @description: get all the tablenames in the dict
 // @param: No param is needed.
 // @return: tables      []string  store the name of all the tables
-//		    err         error     nil when the table has been deleted successfully
+//		    err         error     nil when the name of the tables has been read successfully
 func ShowTablesInDict() ([]string, error) {
 	task := "select table_name from information_schema.tables where table_schema = 'dict'"
 	rows, err := db.Query(task)
@@ -83,7 +81,7 @@ func ShowTablesInDict() ([]string, error) {
 // @description: get all the columnnames in the table
 // @param: tableName    string    the name of the table to be searched
 // @return: columns     []string  store the name of all the columns
-//		    err         error     nil when the table has been deleted successfully
+//		    err         error     nil when the name of the columns has been read successfully
 func ShowColumnsInTable(tableName string) ([]string, error) {
 	task := "select column_name from information_schema.COLUMNS where table_name='" + tableName + "' and table_schema='dict'"
 	rows, err := db.Query(task)
@@ -105,7 +103,7 @@ func ShowColumnsInTable(tableName string) ([]string, error) {
 // @title: InsertToDict
 // @description: insert word into table
 // @param: tableName    string    the name of the target table
-//         words        []string    the word to be inserted
+//         words        []string  the word to be inserted
 // @return: err         error     nil when the word has been inserted into the table successfully
 func InsertToDict(tableName string, words []string) error {
 	insertTask := "INSERT IGNORE INTO " + tableName + "(id"
@@ -134,9 +132,9 @@ func InsertToDict(tableName string, words []string) error {
 // @title: SearchFromDict
 // @description: search word from table
 // @param: tableName    string    the name of the target table
-//         key          string    the key of the data to be searched
+//         id          string    the id of the data to be searched
 // @return: res         []string  the result of the search
-//          err         error     nil when the word is in the table
+//          err         error     nil when the word has been successfully searched in the table
 func SearchFromDict(tableName string, id string) ([]string, error) {
 	//selectTask := "select id from " + tableName + " where id=?"
 	columns, _ := ShowColumnsInTable(tableName)
@@ -164,9 +162,9 @@ func SearchFromDict(tableName string, id string) ([]string, error) {
 
 // @title: DeleteFromDict
 // @description: delete word from table
-// @param: tableName    string    the name of the target table
-//         key         string    the key of the data to be deleted
-// @return:err         error     nil when the word has been deleted from the table successfully
+// @param: tableName  string    the name of the target table
+//         id         string    the id of the data to be deleted
+// @return:err        error     nil when the word has been deleted from the table successfully
 func DeleteFromDict(tableName string, id string) error {
 	deleteTask := "delete from " + tableName + " where id=?"
 	_, err := db.Exec(deleteTask, id)
