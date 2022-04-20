@@ -15,7 +15,8 @@ import (
 var DictClient *sql.DB
 
 func GenUrl(name string) string {
-	var url string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql.DianasDog.secoder.local:3306)/"
+	var url string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql-DianasDog.app.secoder.net)/"
+	// var url string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql.DianasDog.secoder.local:3306)/"
 	// var url string = "root:eelariucie5Tabi8eizioQueineph8la@tcp(localhost:3306)/"
 	return url + name + "?charset=utf8"
 }
