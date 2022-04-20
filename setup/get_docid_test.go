@@ -1,12 +1,13 @@
 package setup
 
 import (
+	"dianasdog/path"
 	"fmt"
 	"testing"
 )
 
 func TestGetDocid(t *testing.T) {
-	abspath, _ := GetAbsPath()
+	abspath, _ := path.GetAbsPath()
 	filesPath, err := GetXMLFiles(abspath + "data/testcase")
 	if err != nil {
 		t.Error(err)

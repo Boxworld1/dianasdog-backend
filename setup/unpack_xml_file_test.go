@@ -5,6 +5,7 @@
 package setup
 
 import (
+	"dianasdog/path"
 	"strconv"
 	"testing"
 )
@@ -12,7 +13,7 @@ import (
 // test for function: unpackXMLFile
 func TestUnpackXMLFile(t *testing.T) {
 	// 得到此文件的绝对路径
-	abspath, _ := GetAbsPath()
+	abspath, _ := path.GetAbsPath()
 
 	itemList, itemCount, _, resourceName, err := UnpackXMLFile(abspath+"data/testcase/testcase_car.xml", "car")
 	carKey := []string{"集度汽车新能源", "indi新能源", "北京汽车新能源", "蓝旗亚新能源", "wayray新能源"}

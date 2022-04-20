@@ -4,7 +4,7 @@
 // @return		path			string			绝对路径
 // @return		err				error			错误值
 
-package setup
+package path
 
 import (
 	"os"

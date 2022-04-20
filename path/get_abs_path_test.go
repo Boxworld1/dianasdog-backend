@@ -3,7 +3,7 @@
 // @auth		ryl				2022/4/7		12:00
 // @param		t				*testing.T		testing 用参数
 
-package setup
+package path
 
 import (
 	"fmt"

@@ -6,6 +6,7 @@
 package setup
 
 import (
+	"dianasdog/path"
 	"testing"
 
 	"github.com/beevik/etree"
@@ -13,7 +14,7 @@ import (
 
 func TestStoreItem(t *testing.T) {
 	// 得到此文件的绝对路径
-	abspath, _ := GetAbsPath()
+	abspath, _ := path.GetAbsPath()
 
 	path := abspath + "data/testcase/testcase_normal.xml"
 	doc := etree.NewDocument()

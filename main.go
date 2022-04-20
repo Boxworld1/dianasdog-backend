@@ -6,12 +6,10 @@ package main
 
 import (
 	"dianasdog/communication"
-	"dianasdog/setup"
 	"fmt"
 )
 
 func main() {
-	setup.SetByCategory()
 	router := communication.SetupRouter()
 	err := router.Run(":80")
 	if err != nil {

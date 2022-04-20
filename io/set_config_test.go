@@ -6,7 +6,7 @@
 package io
 
 import (
-	"dianasdog/setup"
+	"dianasdog/path"
 	"io/ioutil"
 	"testing"
 )
@@ -14,7 +14,7 @@ import (
 func TestSetConfig(t *testing.T) {
 
 	// 得到此文件的绝对路径
-	abspath, _ := setup.GetAbsPath()
+	abspath, _ := path.GetAbsPath()
 
 	// 取得测试文件
 	filepath := abspath + "config/testcase_car.json"
