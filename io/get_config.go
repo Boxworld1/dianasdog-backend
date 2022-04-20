@@ -8,7 +8,9 @@
 package io
 
 import (
-	"dianasdog/database"
+	"dianasdog/path"
+	"fmt"
+	"io/ioutil"
 
 	"github.com/tidwall/gjson"
 )
@@ -22,8 +24,17 @@ type ItemSetting struct {
 }
 
 func GetConfig(targetResource string) ([]ItemSetting, error) {
-	// 读取配置文件
-	file, err := database.GetFile(database.ConfigClient, "file", targetResource)
+
+	// 得到此文件的绝对路径
+	abspath, _ := path.GetAbsPath()
+
+	// 查找对应类型的 config 文档路径
+	filepath := abspath + "config/" + targetResource + ".json"
+	fmt.Println(filepath)
+	file, err := ioutil.ReadFile(filepath)
+
+	// // 读取配置文件
+	// file, err := database.GetFile(database.ConfigClient, "file", targetResource)
 
 	// 读取错误
 	if err != nil {
