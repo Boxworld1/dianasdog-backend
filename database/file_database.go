@@ -50,7 +50,7 @@ func CreateFileTable(db *sql.DB, tableName string) error {
 
 // 插入文件
 func InsertFile(db *sql.DB, tableName string, filename string, data []byte) error {
-	task := "INSERT IGNORE INTO " + tableName + " VALUES(?,?)"
+	task := "REPLACE INTO " + tableName + " VALUES(?,?)"
 	_, err := db.Exec(task, filename, data)
 	return err
 }
