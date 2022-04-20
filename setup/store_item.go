@@ -12,7 +12,6 @@ package setup
 import (
 	"dianasdog/database"
 	"dianasdog/io"
-	"fmt"
 	"strings"
 
 	"github.com/beevik/etree"
@@ -37,7 +36,7 @@ func StoreItem(data *etree.Element, resource string, operation string, docid str
 	// 开启数据库
 	redis := database.RedisClient
 	es := database.EsClient
-	// db, _ := database.CreateDatabase("dict")
+	dict := database.DictClient
 
 	// 提取配置路径并在数据库中新增对应的表
 	// for _, itemSetting := range itemSettings {
@@ -55,20 +54,20 @@ func StoreItem(data *etree.Element, resource string, operation string, docid str
 		for _, value := range data.FindElements(path) {
 			// 数据写入摘要(Radis)
 			if itemSetting.DumpDigest {
-				fmt.Println("insert to redis: ", value.Text())
+				// fmt.Println("insert to redis: ", value.Text())
 				database.SetToRedis(redis, docid, value.Text())
 			}
 
 			// 数据写入倒排引擎(Es)
 			if itemSetting.DumpInvertIdx {
-				fmt.Println("inesrt to es: ", value.Text())
+				// fmt.Println("inesrt to es: ", value.Text())
 				database.InsertToEs(es, docid, value.Text())
 			}
 
 			// 数据写入词典(Dict)
 			if itemSetting.DumpDict {
-				fmt.Println("insert to dict", value.Text())
-				// database.InsertToDict(resource, value.Text())
+				// fmt.Println("insert to dict", value.Text())
+				database.InsertToDict(dict, resource, []string{docid, value.Text()})
 			}
 		}
 

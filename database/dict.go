@@ -11,22 +11,35 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
+// 词典和文件对应的数据库
 var DictClient *sql.DB
+var DataClient *sql.DB
+var ConfigClient *sql.DB
+var TemplateClient *sql.DB
 
-var dataSourceName string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql.DianasDog.secoder.local:3306)/dict?charset=utf8"
+func GenUrl(name string) string {
+	var url string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql.DianasDog.secoder.local:3306)/"
+	// var url string = "root:eelariucie5Tabi8eizioQueineph8la@tcp(localhost:3306)/"
+	return url + name + "?charset=utf8"
+}
 
 // @title: init
 // @description: connect to the default database
 // @param: do not need a param
 // @return: do not need a return-value
 func init() {
-	database, err := sql.Open("mysql", dataSourceName)
-	if err != nil {
-		fmt.Println(err)
-	}
-	DictClient = database
+	// 开启数据库
+	DictClient, _ = sql.Open("mysql", GenUrl("dict"))
+	DataClient, _ = sql.Open("mysql", GenUrl("data"))
+	ConfigClient, _ = sql.Open("mysql", GenUrl("config"))
+	TemplateClient, _ = sql.Open("mysql", GenUrl("template"))
+
+	// 改变字符类型
 	inittask := `SET NAMES utf8 `
 	DictClient.Exec(inittask)
+	DataClient.Exec(inittask)
+	ConfigClient.Exec(inittask)
+	TemplateClient.Exec(inittask)
 }
 
 // @title: CreateTableFromDict

@@ -24,6 +24,8 @@ var RedisClient *redis.Client
  */
 func init() {
 	var opt = redis.Options{
+		// Addr:     "localhost:6379",
+		// Password: "0",
 		Addr:     "redis.DianasDog.secoder.local:6379",
 		Password: "",
 		DB:       0}
