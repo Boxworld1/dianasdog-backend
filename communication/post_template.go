@@ -23,8 +23,8 @@ type TemplateBody struct {
 }
 
 type TemplateJson struct {
-	Resource string                 `form:"resource" binding:"required"`
-	Data     map[string]interface{} `form:"data" binding:"required"`
+	Resource string                 `json:"resource" binding:"required"`
+	Data     map[string]interface{} `json:"rule_recall_setting_list" binding:"required"`
 }
 
 func PostTemplate(context *gin.Context) {
