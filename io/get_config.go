@@ -1,6 +1,6 @@
 // @title		GetConfig
 // @description	此函数的用途为，根据数据 "类型"，在配置文件中找出对应的 "写入行为"，并反馈相关数据到数据处理函数中。
-// @auth		ryl				2022/3/17		10:00
+// @auth		ryl				2022/4/20		17:00
 // @param		targetResource	string			特型卡片类型（如 "诗词" 和 "车" 等）
 // @return		itemSettings	[]ItemSetting	此键值下所有需要写入数据库的数据
 // @return		err				error			错误值
@@ -32,10 +32,16 @@ func GetConfig(targetResource string) ([]ItemSetting, error) {
 	filepath := abspath + "config/" + targetResource + ".json"
 	fmt.Println(filepath)
 	file, err := ioutil.ReadFile(filepath)
+
+	// // 读取配置文件
+	// file, err := database.GetFile(database.ConfigClient, "file", targetResource)
+
+	// 读取错误
 	if err != nil {
 		return nil, err
 	}
 
+	// 若成功则将其 json 化
 	json := string(file)
 	settings := gjson.Get(json, "write_setting|@pretty")
 

@@ -9,6 +9,7 @@
 package io
 
 import (
+	"dianasdog/database"
 	"dianasdog/path"
 	"io/ioutil"
 	"os"
@@ -31,6 +32,9 @@ func SetData(resource string, filename string, content []byte) error {
 
 	// 写入后改回 .xml
 	os.Rename(tmppath, filepath+filename)
+
+	database.CreateFileTable(database.DataClient, resource)
+	database.InsertFile(database.DataClient, resource, filename, content)
 
 	// 无论正确与否都返回 err 的内容
 	return err
