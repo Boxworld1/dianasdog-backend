@@ -61,6 +61,10 @@ func TestRouter(t *testing.T) {
 		{[]int{400, 400, 400, 400}, []MapStruct{
 			{"resource", "testcase_car"},
 		}},
+		{[]int{400, 400, 400, 400}, []MapStruct{
+			{"type", "update"},
+			{"resource", "testcase_car"},
+		}},
 	}
 
 	// 定义要测试的接口

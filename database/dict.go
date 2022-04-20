@@ -15,8 +15,9 @@ import (
 var DictClient *sql.DB
 
 func GenUrl(name string) string {
-	var url string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql-DianasDog.app.secoder.net)/"
-	// var url string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql.DianasDog.secoder.local:3306)/"
+	// var url string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql-DianasDog.app.secoder.net)/"
+
+	var url string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql.DianasDog.secoder.local:3306)/"
 	// var url string = "root:eelariucie5Tabi8eizioQueineph8la@tcp(localhost:3306)/"
 	return url + name + "?charset=utf8"
 }
@@ -108,7 +109,7 @@ func ShowColumnsInTable(db *sql.DB, tableName string) ([]string, error) {
 //         words        []string  the word to be inserted
 // @return: err         error     nil when the word has been inserted into the table successfully
 func InsertToDict(db *sql.DB, tableName string, words []string) error {
-	insertTask := "INSERT IGNORE INTO " + tableName + "(id"
+	insertTask := "REPLACE INTO " + tableName + "(id"
 	columns, _ := ShowColumnsInTable(db, tableName)
 	for i := 1; i < len(columns); i++ {
 		insertTask += "," + columns[i]
