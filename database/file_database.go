@@ -20,7 +20,7 @@ func init() {
 	ConfigClient, _ = sql.Open("mysql", GenUrl("config"))
 	TemplateClient, _ = sql.Open("mysql", GenUrl("template"))
 
-	inittask := `SET NAMES utf8 `
+	inittask := "SET NAMES utf8 "
 
 	// 生成特型卡词典
 	CategoryClient.Exec(inittask)
@@ -38,9 +38,19 @@ func init() {
 	CreateFileTable(TemplateClient, "file")
 }
 
+type FileStruct struct {
+	Filename string `json:filename`
+	Data     []byte `json:data`
+}
+
 // 新建文件表格（含文件名和内容）
 func CreateFileTable(db *sql.DB, tableName string) error {
-	createTask := `CREATE TABLE IF NOT EXISTS ` + tableName + ` (filename VARCHAR(64) PRIMARY KEY NULL, data LONGBLOB NULL) DEFAULT CHARSET=utf8;`
-	_, err := db.Exec(createTask)
+	task := "CREATE TABLE IF NOT EXISTS " + tableName + " (filename VARCHAR(64) PRIMARY KEY NULL, data LONGBLOB NULL) DEFAULT CHARSET=utf8;"
+	_, err := db.Exec(task)
 	return err
 }
+
+// func InsertFile(db *sql.DB, tableName string, filename string, data []byte) error {
+// 	err := db.Exec("INSERT IGNORE INTO " + tableName + " VALUES(?)" + filename + ", " + data)
+// 	return err
+// }
