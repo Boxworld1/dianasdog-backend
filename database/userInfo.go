@@ -81,9 +81,9 @@ func UserSignup(user User) error {
 
 func SearchUser(username string) (string, error) {
 	selectTask := "select userpassword from UserInfo" + " where username='" + username + "'"
-	res, err := UserInfoClient.Query(selectTask)
+	res := UserInfoClient.QueryRow(selectTask)
 	var password string
-	_ = res.Scan(&password)
+	err := res.Scan(&password)
 	if err == nil {
 		return password, err
 	} else {
