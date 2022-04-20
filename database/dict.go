@@ -11,11 +11,8 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-// 词典和文件对应的数据库
+// 词典对应的数据库
 var DictClient *sql.DB
-var DataClient *sql.DB
-var ConfigClient *sql.DB
-var TemplateClient *sql.DB
 
 func GenUrl(name string) string {
 	var url string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql.DianasDog.secoder.local:3306)/"
@@ -28,18 +25,9 @@ func GenUrl(name string) string {
 // @param: do not need a param
 // @return: do not need a return-value
 func init() {
-	// 开启数据库
 	DictClient, _ = sql.Open("mysql", GenUrl("dict"))
-	DataClient, _ = sql.Open("mysql", GenUrl("data"))
-	ConfigClient, _ = sql.Open("mysql", GenUrl("config"))
-	TemplateClient, _ = sql.Open("mysql", GenUrl("template"))
-
-	// 改变字符类型
 	inittask := `SET NAMES utf8 `
 	DictClient.Exec(inittask)
-	DataClient.Exec(inittask)
-	ConfigClient.Exec(inittask)
-	TemplateClient.Exec(inittask)
 }
 
 // @title: CreateTableFromDict
