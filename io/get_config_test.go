@@ -3,7 +3,7 @@
 // @auth		ryl				2022/3/17		10:00
 // @param		t				*testing.T		testing 用参数
 
-package setup
+package io
 
 import (
 	"testing"
@@ -30,13 +30,13 @@ func TestGetConfig(t *testing.T) {
 		item0 := itemSettings[0]
 		item1 := itemSettings[1]
 		// 配置错误
-		if item0.dumpDigest != true || item1.dumpDigest != false {
+		if item0.DumpDigest != true || item1.DumpDigest != false {
 			t.Error("dump digest 错误")
 		}
-		if item0.dumpInvertIdx != false || item1.dumpInvertIdx != false {
+		if item0.DumpInvertIdx != false || item1.DumpInvertIdx != false {
 			t.Error("dump invert idx 错误")
 		}
-		if item0.dumpDict != true || item1.dumpDict != true {
+		if item0.DumpDict != true || item1.DumpDict != true {
 			t.Error("dump dict 错误")
 		}
 

@@ -6,6 +6,7 @@
 package setup
 
 import (
+	"dianasdog/path"
 	"testing"
 )
 
@@ -17,7 +18,7 @@ func TestAddData(t *testing.T) {
 	}
 
 	// 读入测试文件（是否有误由下层函数判断
-	abspath, _ := GetAbsPath()
+	abspath, _ := path.GetAbsPath()
 	err = AddData(abspath+"data/testcase/", "test")
 	if err != nil {
 		t.Error(err)

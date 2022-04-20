@@ -9,7 +9,7 @@
 package io
 
 import (
-	"dianasdog/setup"
+	"dianasdog/path"
 	"io/ioutil"
 	"os"
 )
@@ -17,7 +17,7 @@ import (
 func SetData(resource string, filename string, content []byte) error {
 
 	// 得到此文件的绝对路径
-	abspath, _ := setup.GetAbsPath()
+	abspath, _ := path.GetAbsPath()
 
 	// 查找对应类型的文件路径（先记为 .txt）
 	filepath := abspath + "data/" + resource + "/"

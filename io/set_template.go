@@ -8,14 +8,14 @@
 package io
 
 import (
-	"dianasdog/setup"
+	"dianasdog/path"
 	"io/ioutil"
 )
 
 func SetTemplate(resource string, content []byte) error {
 
 	// 得到此文件的绝对路径
-	abspath, _ := setup.GetAbsPath()
+	abspath, _ := path.GetAbsPath()
 
 	// 查找对应类型的 template 文档路径
 	filepath := abspath + "template/" + resource + ".json"

@@ -7,6 +7,7 @@ package setup
 
 import (
 	"bufio"
+	"dianasdog/path"
 	"fmt"
 	"os"
 )
@@ -15,7 +16,7 @@ func SetByCategory() error {
 	var category []string
 
 	// 得到此文件的绝对路径
-	abspath, _ := GetAbsPath()
+	abspath, _ := path.GetAbsPath()
 
 	// 以文件形式读入特型卡类型
 	catfile, err := os.Open(abspath + "config/category.txt")
