@@ -1,3 +1,8 @@
+// @title	elastic_search
+// @description	倒排引擎接口
+// @auth	wzq		2022/3
+// @auth	ryl		2022/4/20	10:30
+
 package database
 
 import (
@@ -8,21 +13,25 @@ import (
 	"github.com/olivere/elastic/v7"
 )
 
-// Elasticsearch demo
+// 预加载数据库
+var EsClient *elastic.Client
 
+// 格式
 type Doc struct {
 	DocID   string `json:"DocID"`
 	Content string `json:"content"`
 }
 
-func ConnectToEs() (*elastic.Client, error) {
-	return elastic.NewClient(
+// 全局初始化
+func init() {
+	EsClient, _ = elastic.NewClient(
 		elastic.SetSniff(false),
 		elastic.SetURL("http://elasticsearch.DianasDog.secoder.local:9200"),
 		// elastic.SetURL("http://localhost:9200"),
 	)
 }
 
+// 插入数据
 func InsertToEs(client *elastic.Client, docId string, content string) (string, error) {
 	doc := Doc{DocID: docId, Content: content}
 	put1, err := client.Index().
@@ -37,8 +46,8 @@ func InsertToEs(client *elastic.Client, docId string, content string) (string, e
 	return put1.Id, err
 }
 
+//下面是更新项目的函数，需要传入docid，对数据进行改变
 func UpdateToEs(client *elastic.Client, docId string, newContent string) (string, error) {
-	//下面是更新项目的函数，需要传入docid，对数据进行改变
 	put2, err := client.Update().
 		Index("document").
 		Id(docId).
@@ -51,7 +60,8 @@ func UpdateToEs(client *elastic.Client, docId string, newContent string) (string
 	return put2.Result, err
 }
 
-func SearchFromEs(client *elastic.Client, content string) ([]Doc, error) { //按照内容去查找，不是精确查找，只要有匹配词就可以
+//按照内容去查找，不是精确查找，只要有匹配词就可以
+func SearchFromEs(client *elastic.Client, content string) ([]Doc, error) {
 	var typ Doc
 	var err error
 	var put4 *elastic.SearchResult

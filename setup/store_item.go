@@ -35,8 +35,8 @@ func StoreItem(data *etree.Element, resource string, operation string, docid str
 	}
 
 	// 开启数据库
-	redis := database.ConnectToRedis()
-	es, _ := database.ConnectToEs()
+	redis := database.RedisClient
+	es := database.EsClient
 	// db, _ := database.CreateDatabase("dict")
 
 	// 提取配置路径并在数据库中新增对应的表

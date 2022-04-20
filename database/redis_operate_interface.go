@@ -1,3 +1,8 @@
+// @title	radis_op_interface
+// @description	redis数据库接口
+// @auth	mty		2022/3
+// @auth	ryl		2022/4/20	10:30
+
 package database
 
 /*this file contains the interface of redis operation,
@@ -11,18 +16,18 @@ import (
 )
 
 var cxt = context.Background()
+var RedisClient *redis.Client
 
 /*function: connect to the default redis,
 * params: do not need in-params,
 * return: a pointer of redis.client while the redis is the default one
  */
-func ConnectToRedis() *redis.Client {
+func init() {
 	var opt = redis.Options{
 		Addr:     "redis.DianasDog.secoder.local:6379",
 		Password: "",
 		DB:       0}
-	var client = redis.NewClient(&opt)
-	return client
+	RedisClient = redis.NewClient(&opt)
 }
 
 /*function: insert string type key-value to redis, if key is existed, the value will be updated.

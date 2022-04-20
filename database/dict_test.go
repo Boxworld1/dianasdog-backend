@@ -1,21 +1,28 @@
+// @title	TestDbInterface
+// @description	此函数的用途为检查 sql 的接口函数正确性
+// @auth	jz		2022/4/19	23:30
+// @auth	ryl		2022/4/20	10:30
+// @param	t		*testing.T	testing 用参数
+
 package database
 
 import (
 	"testing"
 )
 
-// test for function: createTable
-func TestCreateTableFromDict(t *testing.T) {
+func TestDbInterface(t *testing.T) {
+	// 取得数据库
+	db := DictClient
+
+	// 新建表格
 	d := []string{"id", "title"}
-	err := CreateTableFromDict("car", d)
+	err := CreateTableFromDict(db, "car", d)
 	if err != nil {
 		t.Error(err)
 	}
-}
 
-//test for function: showtablesindict
-func TestShowTablesInDict(t *testing.T) {
-	dict, err := ShowTablesInDict()
+	// 测试表格是否正确插入
+	dict, err := ShowTablesInDict(db)
 	if err != nil {
 		t.Error(err)
 	}
@@ -29,57 +36,54 @@ func TestShowTablesInDict(t *testing.T) {
 	if !exist {
 		t.Error("返回错误")
 	}
-}
 
-//test for function:ShowColumnsInTable
-func TestShowColumnsInTable(t *testing.T) {
-	dict, err := ShowColumnsInTable("car")
+	// 检查列名是否正确生成
+	dict, err = ShowColumnsInTable(db, "car")
 	if err != nil {
 		t.Error(err)
 	}
 	if dict[0] != "id" || dict[1] != "title" {
 		t.Error("返回错误")
 	}
-}
 
-// test for function: insert
-func TestInsertToDict(t *testing.T) {
+	// 测试插入功能：向已存在的表中插入数据
 	item := []string{"test0", "奔驰"}
-	err := InsertToDict("car", item)
+	err = InsertToDict(db, "car", item)
 	if err != nil {
 		t.Error(err)
 	}
-	err = InsertToDict("car", item)
+	// 测试插入功能：重复插入数据
+	err = InsertToDict(db, "car", item)
 	if err != nil {
 		t.Error(err)
 	}
+
+	// 测试插入功能：向不存在的表中插入数据
 	item = []string{"test1", "宝马"}
-	err = InsertToDict("flower", item)
+	err = InsertToDict(db, "flower", item)
 	if err == nil {
 		t.Error("禁止向不存在的表中插入数据")
 	}
-}
 
-// test for function: search
-func TestSearchFromDict(t *testing.T) {
-	tmp, _ := SearchFromDict("car", "test2")
+	// 测试搜索功能：查找不存在的键值
+	tmp, _ := SearchFromDict(db, "car", "test2")
 	if len(tmp) != 0 {
 		t.Error("test2 is not in car")
 	}
-	tmp, err := SearchFromDict("car", "test0")
+
+	// 测试搜索功能：查找存在的键值
+	tmp, err = SearchFromDict(db, "car", "test0")
 	if tmp[0] != "test0" || tmp[1] != "奔驰" {
 		t.Error("查询失败")
 	}
 	if err != nil {
 		t.Error(err)
 	}
-}
 
-//test for function QueryColumn
-func TestQueryColumn(t *testing.T) {
-	item := []string{"test1", "宝马"}
-	InsertToDict("car", item)
-	dictionary, err := QueryColumn("car", "title")
+	// 按列查询所有元素
+	item = []string{"test1", "宝马"}
+	InsertToDict(db, "car", item)
+	dictionary, err := QueryColumn(db, "car", "title")
 	if err != nil {
 		t.Error(err)
 	}
@@ -89,23 +93,20 @@ func TestQueryColumn(t *testing.T) {
 		t.Error("返回错误")
 	}
 
-}
-
-// test for function: delete
-func TestDeleteFromDict(t *testing.T) {
-	err := DeleteFromDict("car", "test1")
+	// 测试删除功能：向存在的表中作删除
+	err = DeleteFromDict(db, "car", "test1")
 	if err != nil {
 		t.Error(err)
 	}
-	err = DeleteFromDict("flower", "宝马")
+
+	// 测试删除功能：向不存在的表中作删除
+	err = DeleteFromDict(db, "flower", "宝马")
 	if err == nil {
 		t.Error("禁止向不存在的表中删除数据")
 	}
-}
 
-// test for function: deleteTable
-func TestDeleteTableFromDict(t *testing.T) {
-	err := DeleteTableFromDict("car")
+	// 测试表格删除功能
+	err = DeleteTableFromDict(db, "car")
 	if err != nil {
 		t.Error(err)
 	}

@@ -11,7 +11,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-var db *sql.DB
+var DictClient *sql.DB
 
 var dataSourceName string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql.DianasDog.secoder.local:3306)/dict?charset=utf8"
 
@@ -24,9 +24,9 @@ func init() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	db = database
+	DictClient = database
 	inittask := `SET NAMES utf8 `
-	db.Exec(inittask)
+	DictClient.Exec(inittask)
 }
 
 // @title: CreateTableFromDict
@@ -34,7 +34,7 @@ func init() {
 // @param: tableName    string    the name of the table to be created
 //         columns      []string  the name of the columns to be created in the table
 // @return: err         error     nil when the table has been created successfully
-func CreateTableFromDict(tableName string, columns []string) error {
+func CreateTableFromDict(db *sql.DB, tableName string, columns []string) error {
 	createTask := `CREATE TABLE IF NOT EXISTS ` + tableName + `( id VARCHAR(64) PRIMARY KEY NULL`
 	for i := 1; i < len(columns); i++ {
 		createTask += `,` + columns[i] + ` VARCHAR(64) NULL`
@@ -48,7 +48,7 @@ func CreateTableFromDict(tableName string, columns []string) error {
 // @description: Delete the tables mentioned
 // @param: tableName    string    the name of the table to be deleted
 // @return: err         error     nil when the table has been deleted successfully
-func DeleteTableFromDict(tableName string) error {
+func DeleteTableFromDict(db *sql.DB, tableName string) error {
 	deleteTask := `DROP TABLE ` + tableName
 	_, err := db.Exec(deleteTask)
 	return err
@@ -59,7 +59,7 @@ func DeleteTableFromDict(tableName string) error {
 // @param: No param is needed.
 // @return: tables      []string  store the name of all the tables
 //		    err         error     nil when the name of the tables has been read successfully
-func ShowTablesInDict() ([]string, error) {
+func ShowTablesInDict(db *sql.DB) ([]string, error) {
 	task := "select table_name from information_schema.tables where table_schema = 'dict'"
 	rows, err := db.Query(task)
 	if err != nil {
@@ -82,7 +82,7 @@ func ShowTablesInDict() ([]string, error) {
 // @param: tableName    string    the name of the table to be searched
 // @return: columns     []string  store the name of all the columns
 //		    err         error     nil when the name of the columns has been read successfully
-func ShowColumnsInTable(tableName string) ([]string, error) {
+func ShowColumnsInTable(db *sql.DB, tableName string) ([]string, error) {
 	task := "select column_name from information_schema.COLUMNS where table_name='" + tableName + "' and table_schema='dict'"
 	rows, err := db.Query(task)
 	if err != nil {
@@ -105,9 +105,9 @@ func ShowColumnsInTable(tableName string) ([]string, error) {
 // @param: tableName    string    the name of the target table
 //         words        []string  the word to be inserted
 // @return: err         error     nil when the word has been inserted into the table successfully
-func InsertToDict(tableName string, words []string) error {
+func InsertToDict(db *sql.DB, tableName string, words []string) error {
 	insertTask := "INSERT IGNORE INTO " + tableName + "(id"
-	columns, _ := ShowColumnsInTable(tableName)
+	columns, _ := ShowColumnsInTable(db, tableName)
 	for i := 1; i < len(columns); i++ {
 		insertTask += "," + columns[i]
 	}
@@ -135,9 +135,9 @@ func InsertToDict(tableName string, words []string) error {
 //         id          string    the id of the data to be searched
 // @return: res         []string  the result of the search
 //          err         error     nil when the word has been successfully searched in the table
-func SearchFromDict(tableName string, id string) ([]string, error) {
+func SearchFromDict(db *sql.DB, tableName string, id string) ([]string, error) {
 	//selectTask := "select id from " + tableName + " where id=?"
-	columns, _ := ShowColumnsInTable(tableName)
+	columns, _ := ShowColumnsInTable(db, tableName)
 	selectTask := "select id"
 	for i := 1; i < len(columns); i++ {
 		selectTask += ", " + columns[i]
@@ -165,7 +165,7 @@ func SearchFromDict(tableName string, id string) ([]string, error) {
 // @param: tableName  string    the name of the target table
 //         id         string    the id of the data to be deleted
 // @return:err        error     nil when the word has been deleted from the table successfully
-func DeleteFromDict(tableName string, id string) error {
+func DeleteFromDict(db *sql.DB, tableName string, id string) error {
 	deleteTask := "delete from " + tableName + " where id=?"
 	_, err := db.Exec(deleteTask, id)
 	if err != nil {
@@ -180,7 +180,7 @@ func DeleteFromDict(tableName string, id string) error {
 //         column        string    the name of the column
 // @return: dictionary    []string    store the total word in the table
 //          err           error       nil when the word has been deleted from the table successfully
-func QueryColumn(tableName string, column string) ([]string, error) {
+func QueryColumn(db *sql.DB, tableName string, column string) ([]string, error) {
 	QueryTask := "select " + column + " from " + tableName
 	rows, err := db.Query(QueryTask)
 	if err != nil {
