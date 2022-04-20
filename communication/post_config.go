@@ -1,11 +1,12 @@
 // @title	PostConfig
-// @description	后端接收配置文件之接口
-// @auth	ryl		2022/4/14	10:30
+// @description	后端接收写入行为之接口
+// @auth	ryl		2022/4/13		17:30
 // @param	context	*gin.Context
 
 package communication
 
 import (
+	"dianasdog/database"
 	"dianasdog/io"
 	"encoding/json"
 	"io/ioutil"
@@ -17,13 +18,13 @@ import (
 
 type ConfigBody struct {
 	Resource string                `form:"resource" binding:"required"`
-	Data     string                `form:"data" binding:"-"`
-	File     *multipart.FileHeader `form:"file" binding:"-"`
+	Data     string                `form:"data"`
+	File     *multipart.FileHeader `form:"file"`
 }
 
 type ConfigJson struct {
-	Resource string                 `form:"resource" binding:"required"`
-	Data     map[string]interface{} `form:"data" binding:"required"`
+	Resource string                 `json:"resource" binding:"required"`
+	Setting  map[string]interface{} `json:"write_setting" binding:"required"`
 }
 
 func PostConfig(context *gin.Context) {
@@ -59,11 +60,12 @@ func PostConfig(context *gin.Context) {
 		err = json.Unmarshal([]byte(str), &jsonContent)
 
 		// 若不正确，则返回错误
+
 		if err != nil {
 			msg = err.Error()
 		}
 
-		if jsonContent.Data == nil {
+		if jsonContent.Setting == nil {
 			msg = "json data error: wrong parameters!"
 		}
 
@@ -92,7 +94,8 @@ func PostConfig(context *gin.Context) {
 	}
 
 	// 否则调用函数写入文件
-	io.SetTemplate(res, data)
+	io.SetConfig(res, data)
+	database.InsertFile(database.ConfigClient, "file", res, data)
 
 	// 返回对应值
 	context.JSON(200, gin.H{

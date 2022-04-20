@@ -1,11 +1,12 @@
-// @title	GoSetting
-// @description	后端接收写入行为之接口
-// @auth	ryl		2022/4/13		17:30
+// @title	PostTemplate
+// @description	后端接收配置文件之接口
+// @auth	ryl		2022/4/20	18:30
 // @param	context	*gin.Context
 
 package communication
 
 import (
+	"dianasdog/database"
 	"dianasdog/io"
 	"encoding/json"
 	"io/ioutil"
@@ -15,19 +16,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type SettingBody struct {
+type TemplateBody struct {
 	Resource string                `form:"resource" binding:"required"`
-	Data     string                `form:"data"`
-	File     *multipart.FileHeader `form:"file"`
+	Data     string                `form:"data" binding:"-"`
+	File     *multipart.FileHeader `form:"file" binding:"-"`
 }
 
-type SettingJson struct {
+type TemplateJson struct {
 	Resource string                 `json:"resource" binding:"required"`
-	Setting  map[string]interface{} `json:"write_setting" binding:"required"`
+	Data     map[string]interface{} `json:"rule_recall_setting_list" binding:"required"`
 }
 
-func PostSetting(context *gin.Context) {
-	var body SettingBody
+func PostTemplate(context *gin.Context) {
+	var body TemplateBody
 	var err error
 	var msg string
 
@@ -55,16 +56,15 @@ func PostSetting(context *gin.Context) {
 		str, _ := strconv.Unquote(content)
 
 		// 检查数据内容是否正确
-		var jsonContent SettingJson
+		var jsonContent TemplateJson
 		err = json.Unmarshal([]byte(str), &jsonContent)
 
 		// 若不正确，则返回错误
-
 		if err != nil {
 			msg = err.Error()
 		}
 
-		if jsonContent.Setting == nil {
+		if jsonContent.Data == nil {
 			msg = "json data error: wrong parameters!"
 		}
 
@@ -93,7 +93,8 @@ func PostSetting(context *gin.Context) {
 	}
 
 	// 否则调用函数写入文件
-	io.SetConfig(res, data)
+	io.SetTemplate(res, data)
+	database.InsertFile(database.TemplateClient, "file", res, data)
 
 	// 返回对应值
 	context.JSON(200, gin.H{

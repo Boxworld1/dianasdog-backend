@@ -1,11 +1,14 @@
 // @title	file_database
-// @description	此函数的用途是配置后端文件对应的数据库
+// @description	本文件函数的用途是配置后端文件对应的数据库
 // @auth	ryl		2022/4/20	11:30
 // @param	t		*testing.T	testing 用参数
 
 package database
 
-import "database/sql"
+import (
+	"database/sql"
+	"errors"
+)
 
 // 文件数据库接口
 var CategoryClient *sql.DB
@@ -38,11 +41,6 @@ func init() {
 	CreateFileTable(TemplateClient, "file")
 }
 
-type FileStruct struct {
-	Filename string `json:filename`
-	Data     []byte `json:data`
-}
-
 // 新建文件表格（含文件名和内容）
 func CreateFileTable(db *sql.DB, tableName string) error {
 	task := "CREATE TABLE IF NOT EXISTS " + tableName + " (filename VARCHAR(64) PRIMARY KEY NULL, data LONGBLOB NULL) DEFAULT CHARSET=utf8;"
@@ -50,7 +48,30 @@ func CreateFileTable(db *sql.DB, tableName string) error {
 	return err
 }
 
-// func InsertFile(db *sql.DB, tableName string, filename string, data []byte) error {
-// 	err := db.Exec("INSERT IGNORE INTO " + tableName + " VALUES(?)" + filename + ", " + data)
-// 	return err
-// }
+// 插入文件
+func InsertFile(db *sql.DB, tableName string, filename string, data []byte) error {
+	task := "REPLACE INTO " + tableName + " VALUES(?,?)"
+	_, err := db.Exec(task, filename, data)
+	return err
+}
+
+// 取出文件
+func GetFile(db *sql.DB, tableName string, filename string) ([]byte, error) {
+	// 按文件名查找
+	task := "SELECT filename, data FROM " + tableName + " WHERE filename=?"
+	rows, err := db.Query(task, filename)
+
+	// 取出数据
+	var name string
+	var data []byte
+	for rows.Next() {
+		err = rows.Scan(&name, &data)
+		break
+	}
+	rows.Close()
+
+	if name != filename {
+		return nil, errors.New("No data with file name = " + filename)
+	}
+	return data, err
+}
