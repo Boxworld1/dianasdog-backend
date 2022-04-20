@@ -7,6 +7,7 @@ package database
 
 import (
 	"database/sql"
+	"errors"
 )
 
 // 文件数据库接口
@@ -57,15 +58,20 @@ func InsertFile(db *sql.DB, tableName string, filename string, data []byte) erro
 // 取出文件
 func GetFile(db *sql.DB, tableName string, filename string) ([]byte, error) {
 	// 按文件名查找
-	task := "SELECT data FROM " + tableName + " WHERE filename=?"
+	task := "SELECT filename, data FROM " + tableName + " WHERE filename=?"
 	rows, err := db.Query(task, filename)
 
 	// 取出数据
+	var name string
 	var data []byte
 	for rows.Next() {
-		err = rows.Scan(&data)
+		err = rows.Scan(&name, &data)
 		break
 	}
 	rows.Close()
+
+	if name != filename {
+		return nil, errors.New("No data with file name = " + filename)
+	}
 	return data, err
 }
