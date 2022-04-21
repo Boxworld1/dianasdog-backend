@@ -7,7 +7,6 @@ package communication
 
 import (
 	"dianasdog/database"
-	"errors"
 	"io/ioutil"
 	"mime/multipart"
 
@@ -28,10 +27,7 @@ func PostData(context *gin.Context) {
 	var msg string
 
 	// 检查收到信息的格式是否正确
-	err = context.ShouldBind(&body)
-
-	// 若不是，则返回错误
-	if err != nil {
+	if err = context.ShouldBind(&body); err != nil {
 		context.JSON(400, gin.H{
 			"err": err.Error(),
 		})
@@ -59,9 +55,7 @@ func PostData(context *gin.Context) {
 		// 若使用文件传输
 		filename = body.File.Filename
 		fileContent, _ := body.File.Open()
-		data, err = ioutil.ReadAll(fileContent)
-
-		if err != nil {
+		if data, err = ioutil.ReadAll(fileContent); err != nil {
 			msg = err.Error()
 		}
 
@@ -78,17 +72,19 @@ func PostData(context *gin.Context) {
 		return
 	}
 
-	err = errors.New("form data error")
 	// 否则按照操作类型进行操作
 	switch typ {
 	// 写入文件
 	case "insert":
 		// 将内容转化为 []byte 方便写入文件
 		// err = io.SetData(res, filename, data)
-		database.CreateFileTable(database.DataClient, res)
-		database.InsertFile(database.DataClient, res, filename, data)
+		if err = database.CreateFileTable(database.DataClient, res); err != nil {
+			msg = err.Error()
+		}
+		if err = database.InsertFile(database.DataClient, res, filename, data); err != nil {
+			msg = err.Error()
+		}
 		// setup.UnpackXmlFile(filename, res)
-		err = nil
 	// 删除条目
 	case "delete":
 		err = nil
@@ -97,15 +93,17 @@ func PostData(context *gin.Context) {
 		err = nil
 	}
 
-	// 返回对应值
-	if err != nil {
+	// 若过程中出现错误
+	if len(msg) > 0 {
 		context.JSON(400, gin.H{
-			"err": err.Error(),
+			"err": msg,
 		})
-	} else {
-		context.JSON(200, gin.H{
-			"message": "successful!", //result,
-		})
+		return
 	}
+
+	// 否则返回成功
+	context.JSON(200, gin.H{
+		"message": "successful!", //result,
+	})
 
 }
