@@ -7,6 +7,7 @@ package communication
 
 import (
 	"dianasdog/database"
+	"errors"
 	"io/ioutil"
 	"mime/multipart"
 
@@ -77,6 +78,7 @@ func PostData(context *gin.Context) {
 		return
 	}
 
+	err = errors.New("form data error")
 	// 否则按照操作类型进行操作
 	switch typ {
 	// 写入文件
@@ -86,6 +88,7 @@ func PostData(context *gin.Context) {
 		database.CreateFileTable(database.DataClient, res)
 		database.InsertFile(database.DataClient, res, filename, data)
 		// setup.UnpackXmlFile(filename, res)
+		err = nil
 	// 删除条目
 	case "delete":
 		err = nil
