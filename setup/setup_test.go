@@ -1,5 +1,5 @@
-// @title		TestStoreItem
-// @description	此函数的用途为检查 StoreItem 函数的正确性
+// @title		SetupTest
+// @description	此函数的用途为检查 setup 包的正确性
 // @auth		ryl				2022/3/17		11:05
 // @param		t				*testing.T		testing 用参数
 
@@ -12,7 +12,7 @@ import (
 	"github.com/beevik/etree"
 )
 
-func TestStoreItem(t *testing.T) {
+func SetupTest(t *testing.T) {
 	// 得到此文件的绝对路径
 	abspath, _ := path.GetAbsPath()
 

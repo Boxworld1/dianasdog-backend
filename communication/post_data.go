@@ -6,7 +6,7 @@
 package communication
 
 import (
-	"dianasdog/io"
+	"dianasdog/database"
 	"io/ioutil"
 	"mime/multipart"
 
@@ -82,7 +82,10 @@ func PostData(context *gin.Context) {
 	// 写入文件
 	case "insert":
 		// 将内容转化为 []byte 方便写入文件
-		err = io.SetData(res, filename, data)
+		// err = io.SetData(res, filename, data)
+		database.CreateFileTable(database.DataClient, res)
+		database.InsertFile(database.DataClient, res, filename, data)
+		// setup.UnpackXmlFile(filename, res)
 	// 删除条目
 	case "delete":
 		err = nil

@@ -1,0 +1,70 @@
+{
+    "resource": "car",
+    "write_setting": {
+        "key": {
+            "dump_digest": "true",
+            "dump_invert_idx": "false",
+            "dump_dict": "false"
+        },
+        "aliaskey": {
+            "dump_digest": "false",
+            "dump_invert_idx": "true",
+            "dump_dict": "true"
+        },
+        "display.title": {
+            "dump_digest": "true",
+            "dump_invert_idx": "true",
+            "dump_dict": "true"
+        },
+        "display.url": {
+            "dump_digest": "true",
+            "dump_invert_idx": "false",
+            "dump_dict": "false"
+        },
+        "display.lightapp_url": {
+            "dump_digest": "true",
+            "dump_invert_idx": "false",
+            "dump_dict": "false"
+        },
+        "display.lightappid_url": {
+            "dump_digest": "true",
+            "dump_invert_idx": "false",
+            "dump_dict": "false"
+        },
+        "display.chapter_info.title": {
+            "dump_digest": "true",
+            "dump_invert_idx": "true",
+            "dump_dict": "true"
+        },
+        "display.chapter_info.lightapp_schema_url": {
+            "dump_digest": "true",
+            "dump_invert_idx": "false",
+            "dump_dict": "false"
+        },
+        "display.chapter_info.lightappid_schema_url": {
+            "dump_digest": "true",
+            "dump_invert_idx": "false",
+            "dump_dict": "false"
+        },
+        "display.directory_url": {
+            "dump_digest": "true",
+            "dump_invert_idx": "false",
+            "dump_dict": "false"
+        },
+        "display.lightapp_directory_url": {
+            "dump_digest": "true",
+            "dump_invert_idx": "false",
+            "dump_dict": "false"
+        },
+        "display.first_category": {
+            "dump_digest": "true",
+            "dump_invert_idx": "false",
+            "dump_dict": "true"
+        },
+        "display.second_category": {
+            "dump_digest": "true",
+            "dump_invert_idx": "false",
+            "dump_dict": "true"
+        }
+    }
+}

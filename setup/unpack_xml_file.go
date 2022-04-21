@@ -1,36 +1,47 @@
-// @Title  unpackfile
-// @Description  Read XML files in folder and unpack them
-// @Author  于沛楠
-// @Update  2022/3/16
-package setup
-
-import (
-	"github.com/beevik/etree"
-)
-
-var currentDocID int = 0
-
-// @title   UnpackXMLFile
+// @title   UnpackXmlFile
 // @description  unpack large XML file to single item
 // @auth    于沛楠       2022/3/16
-// @param	fileName     string             the name of XML File to unpack
-//			resourceName string				the category name of special card
+// @auth	ryl			2022/4/20	22:00
+// @param	filename     string             the name of XML File to unpack
+//			resource	 string				the category name of special card
 // @return  itemList     []*etree.Element   XML <item> array (the itemList uses etree from "github.com/beevik/etree")
 //			itemCount    int                total count of <item></item>
 //          docIDList    []int				docID of each item in itemList
 //			resourceName string				the category name of special card
 //		    err          error              non-nil when fileName is wrong
-func UnpackXMLFile(fileName string, resourceNameArg string) (itemList []*etree.Element, itemCount int, docIDList []int, resourceName string, err error) {
+
+package setup
+
+import (
+	"dianasdog/database"
+
+	"github.com/beevik/etree"
+)
+
+func UnpackXmlFile(filename string, resource string) error {
+
+	// 取得 xml 数据
+	data, err := database.GetFile(database.DataClient, resource, filename)
+	if err != nil {
+		return err
+	}
+
+	// 将数据放入 etree 中
 	doc := etree.NewDocument()
-	if err := doc.ReadFromFile(fileName); err != nil { //wrong fileName
-		return nil, 0, nil, resourceNameArg, err
+	err = doc.ReadFromString(string(data))
+	if err != nil { //wrong fileName
+		return err
 	}
+
+	// 按 item 划分 etree
 	root := doc.SelectElement("DOCUMENT")
-	itemList = root.SelectElements("item")
-	itemCount = len(root.SelectElements("item"))
-	for i := 0; i < itemCount; i++ {
-		docIDList = append(docIDList, currentDocID) // 供写入层模拟功能
-		currentDocID++
+	itemList := root.SelectElements("item")
+
+	// 遍历所有 item 并存入数据库
+	for _, item := range itemList {
+		docid := GetDocid(item, resource)
+		StoreItem(item, resource, "insert", docid)
 	}
-	return itemList, itemCount, docIDList, resourceNameArg, nil
+
+	return nil
 }

@@ -1,6 +1,6 @@
 // @title		SetupRouter
 // @description	后端与前端交互之接口
-// @auth		ryl				2022/4/6		23:30
+// @auth		ryl		2022/4/20	23:30
 
 package communication
 
@@ -15,8 +15,9 @@ func SetupRouter() *gin.Engine {
 
 	router.POST("/search", GoSearch)
 	router.POST("/data", PostData)
-	router.POST("/pattern", PostConfig)
-	router.POST("/setting", PostSetting)
+	router.POST("/pattern", PostTemplate)
+	router.POST("/setting", PostConfig)
+	router.POST("/login", PostLogin)
 
 	return router
 }

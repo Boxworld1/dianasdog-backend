@@ -28,37 +28,44 @@ func TestRouter(t *testing.T) {
 		result []int
 		param  []MapStruct
 	}{
-		{[]int{200, 400, 400, 400}, []MapStruct{
+		{[]int{200, 400, 400, 400, 400}, []MapStruct{
 			{"content", `{"query": "apple"}`},
 		}},
-		{[]int{400, 200, 400, 400}, []MapStruct{
+		{[]int{400, 400, 400, 400, 200}, []MapStruct{
+			{"content", `{"username": "tester"}`},
+		}},
+		{[]int{400, 200, 400, 400, 400}, []MapStruct{
 			{"resource", "testcase_car"},
 			{"data", "{\"resource\":\"testcase_car\",\"write_setting\":{\"a.b.c\":{\"dump_digest\":\"true\",\"dump_invert_idx\":\"false\",\"dump_dict\":\"true\"},\"a.e\":{\"dump_digest\":\"false\",\"dump_invert_idx\":\"false\",\"dump_dict\":\"true\"},\"b.g\":{\"dump_digest\":\"true\",\"dump_invert_idx\":\"true\",\"dump_dict\":\"true\"},\"f.a\":{\"dump_digest\":\"true\",\"dump_invert_idx\":\"false\",\"dump_dict\":\"true\"}}}"},
 		}},
-		{[]int{400, 400, 200, 400}, []MapStruct{
-			{"resource", "testcase_car"},
-			{"data", "{\"resource\":\"hi\",\"data\":{}}"},
+		{[]int{400, 400, 200, 400, 400}, []MapStruct{
+			{"resource", "testcase"},
+			{"data", "{\"resource\":\"testcase\",\"rule_recall_setting_list\":{\"garbage_dict_list\":[\"parser_\u58a8\u8ff9\u5929\u6c14_200_garbage\"],\"pattern_list\":[{\"pattern_item_array\":[[{\"data_pointer\":\"name\",\"data_source_type\":0,\"field_name\":\"name\",\"query_item_type\":0}],[{\"data_pointer\":\"parser_\u58a8\u8ff9\u5929\u6c14_200_intent\",\"data_source_type\":4,\"field_name\":\"intent\",\"query_item_type\":2}]],\"use_common_garbage_dict\":true,\"use_synonym_dict\":true}],\"pre_processors\":[],\"synonym_dict_list\":[\"parser_synonym_\u58a8\u8ff9\u5929\u6c14_200_1622687488\"]}}"},
 		}},
-		{[]int{400, 400, 400, 200}, []MapStruct{
+		{[]int{400, 400, 400, 200, 400}, []MapStruct{
 			{"type", "insert"},
 			{"resource", "testcase_car"},
 			{"filename", "testcase_car.xml"},
 			{"data", "no"},
 		}},
-		{[]int{400, 400, 400, 200}, []MapStruct{
+		{[]int{400, 400, 400, 200, 400}, []MapStruct{
 			{"type", "delete"},
 			{"resource", "testcase_car"},
 			{"filename", "testcase_car.xml"},
 			{"data", "nod"},
 		}},
-		{[]int{400, 400, 400, 200}, []MapStruct{
+		{[]int{400, 400, 400, 200, 400}, []MapStruct{
 			{"type", "update"},
 			{"resource", "testcase_car"},
 			{"filename", "testcase_car.xml"},
 			{"data", "nod"},
 		}},
-		{[]int{400, 400, 400, 400}, []MapStruct{}},
-		{[]int{400, 400, 400, 400}, []MapStruct{
+		{[]int{400, 400, 400, 400, 400}, []MapStruct{}},
+		{[]int{400, 400, 400, 400, 400}, []MapStruct{
+			{"resource", "testcase_car"},
+		}},
+		{[]int{400, 400, 400, 400, 400}, []MapStruct{
+			{"type", "update"},
 			{"resource", "testcase_car"},
 		}},
 	}
@@ -69,6 +76,7 @@ func TestRouter(t *testing.T) {
 		{"POST", "/setting"},
 		{"POST", "/pattern"},
 		{"POST", "/data"},
+		{"POST", "/login"},
 	}
 
 	// 开启 router
@@ -79,7 +87,7 @@ func TestRouter(t *testing.T) {
 			var req *http.Request
 
 			// mock 一个 HTTP 请求
-			if dataID == 0 {
+			if dataID <= 1 {
 				// json raw data for /search
 				req = httptest.NewRequest(
 					method.key,   // 请求方法
