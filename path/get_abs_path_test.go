@@ -18,7 +18,7 @@ func TestGetAbsPath(t *testing.T) {
 		t.Error(err)
 	}
 	// 检查结果
-	target := Projname
+	target := Projname + "/"
 	if path[len(path)-8:] != target {
 		t.Error("截取错误")
 	}

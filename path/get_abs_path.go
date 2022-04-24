@@ -19,7 +19,7 @@ func GetAbsPath() (string, error) {
 		return "", err
 	}
 
-	path = strings.Replace(path, Projname, Projname+"@", 1)
+	path = strings.Replace(path, Projname, Projname+"/@", 1)
 	pathlist := strings.Split(path, "@")
 
 	return pathlist[0], nil
