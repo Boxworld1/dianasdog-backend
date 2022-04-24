@@ -73,8 +73,8 @@ func UserSignup(user User) error {
 	//if err != nil {
 	//	return err
 	//}
-	err := CreateTableForUserinfo()
-	err = InsertPwdIntoSQL(user.Password, user.Name)
+	_ = CreateTableForUserinfo()
+	err := InsertPwdIntoSQL(user.Password, user.Name)
 	if err != nil {
 		return err
 	}
