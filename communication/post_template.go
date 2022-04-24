@@ -9,9 +9,9 @@ import (
 	"dianasdog/database"
 	"dianasdog/io"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"mime/multipart"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -53,11 +53,13 @@ func PostTemplate(context *gin.Context) {
 		content := body.Data
 
 		// 去掉前端多余的引号
-		str, _ := strconv.Unquote(content)
+		// content, _ := strconv.Unquote(content)
 
 		// 检查数据内容是否正确
 		var jsonContent TemplateJson
-		err = json.Unmarshal([]byte(str), &jsonContent)
+		fmt.Println(content)
+		err = json.Unmarshal([]byte(content), &jsonContent)
+		fmt.Println(content)
 
 		// 若不正确，则返回错误
 		if err != nil {
@@ -65,7 +67,7 @@ func PostTemplate(context *gin.Context) {
 		}
 
 		if jsonContent.Data == nil {
-			msg = "json data error: wrong parameters!"
+			msg = "json data error: wrong parameters!" + content
 		}
 
 		data, _ = json.Marshal(jsonContent)

@@ -8,9 +8,9 @@ package communication
 import (
 	"dianasdog/database"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"mime/multipart"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -52,11 +52,13 @@ func PostConfig(context *gin.Context) {
 		content := body.Data
 
 		// 去掉前端多余的引号
-		str, _ := strconv.Unquote(content)
+		// content, _ := strconv.Unquote(content)
 
 		// 检查数据内容是否正确
 		var jsonContent ConfigJson
-		err = json.Unmarshal([]byte(str), &jsonContent)
+		fmt.Println(content)
+		err = json.Unmarshal([]byte(content), &jsonContent)
+		fmt.Println(content)
 
 		// 若不正确，则返回错误
 
@@ -65,7 +67,7 @@ func PostConfig(context *gin.Context) {
 		}
 
 		if jsonContent.Setting == nil {
-			msg = "json data error: wrong parameters!"
+			msg = "json data error: wrong parameters!" + content
 		}
 
 		data, _ = json.Marshal(jsonContent)
