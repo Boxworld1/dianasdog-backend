@@ -13,8 +13,8 @@ RUN go mod download
 COPY . $HOME
 # Use static linking to get rid of the error below
 # exec user process caused "no such file or directory"
-RUN GOOS=linux GOARCH=amd64 go build -a -ldflags "-linkmode external -extldflags '-static' -s -w"
-
+# RUN GOOS=linux GOARCH=amd64 go build -a -ldflags "-linkmode external -extldflags '-static' -s -w"
+RUN go build -v -o /opt/Backend/dianasdog
 EXPOSE 80
 
 CMD ["/opt/Backend/dianasdog", "-host", "0.0.0.0", "-port", "80"]
