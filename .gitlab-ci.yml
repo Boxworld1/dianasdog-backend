@@ -37,4 +37,3 @@ deploy:
   only:
     - 36-dev-resolve-database
     - master
-    - 37-dev-fix-container 

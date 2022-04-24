@@ -1,5 +1,5 @@
 # First stage, build the executable
-FROM golang:1.17
+FROM golang:1.18
 
 ENV GOPROXY=https://goproxy.cn
 ENV HOME=/opt/Backend
