@@ -18,6 +18,11 @@ var TemplateClient *sql.DB
 
 func init() {
 	// 开启数据库
+	CreateDatabase("category")
+	CreateDatabase("data")
+	CreateDatabase("config")
+	CreateDatabase("template")
+
 	CategoryClient, _ = sql.Open("mysql", GenUrl("category"))
 	DataClient, _ = sql.Open("mysql", GenUrl("data"))
 	ConfigClient, _ = sql.Open("mysql", GenUrl("config"))

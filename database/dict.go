@@ -14,11 +14,11 @@ import (
 // 词典对应的数据库
 var DictClient *sql.DB
 
-func GenUrl(name string) string {
-	// var url string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql-DianasDog.app.secoder.net)/"
+var url string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql.DianasDog.secoder.local:3306)/"
 
-	var url string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql.DianasDog.secoder.local:3306)/"
-	// var url string = "root:eelariucie5Tabi8eizioQueineph8la@tcp(localhost:3306)/"
+// var url string = "root:eisietaiXei2Ejinga4urahruzae9oos@tcp(localhost:3306)/"
+
+func GenUrl(name string) string {
 	return url + name + "?charset=utf8"
 }
 
@@ -27,9 +27,16 @@ func GenUrl(name string) string {
 // @param: do not need a param
 // @return: do not need a return-value
 func init() {
+	CreateDatabase("dict")
 	DictClient, _ = sql.Open("mysql", GenUrl("dict"))
 	inittask := `SET NAMES utf8 `
 	DictClient.Exec(inittask)
+}
+
+func CreateDatabase(name string) {
+	db, _ := sql.Open("mysql", url)
+	task := "CREATE DATABASE IF NOT EXISTS " + name
+	db.Exec(task)
 }
 
 // @title: CreateTableFromDict
