@@ -9,6 +9,7 @@ import (
 	"dianasdog/database"
 	"dianasdog/io"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"mime/multipart"
 
@@ -56,7 +57,9 @@ func PostTemplate(context *gin.Context) {
 
 		// 检查数据内容是否正确
 		var jsonContent TemplateJson
+		fmt.Println(content)
 		err = json.Unmarshal([]byte(content), &jsonContent)
+		fmt.Println(content)
 
 		// 若不正确，则返回错误
 		if err != nil {
