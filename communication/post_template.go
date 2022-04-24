@@ -64,7 +64,7 @@ func PostTemplate(context *gin.Context) {
 		}
 
 		if jsonContent.Data == nil {
-			// msg = "json data error: wrong parameters!"
+			msg = "json data error: wrong parameters!" + content
 		}
 
 		data, _ = json.Marshal(jsonContent)

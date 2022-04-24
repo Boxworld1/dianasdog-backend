@@ -14,12 +14,8 @@ import (
 // 词典对应的数据库
 var DictClient *sql.DB
 
-var url string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql.DianasDog.secoder.local:3306)/"
-
-// var url string = "root:eisietaiXei2Ejinga4urahruzae9oos@tcp(localhost:3306)/"
-
 func GenUrl(name string) string {
-	return url + name + "?charset=utf8"
+	return SqlUrl + name + "?charset=utf8"
 }
 
 // @title: init
@@ -34,7 +30,7 @@ func init() {
 }
 
 func CreateDatabase(name string) {
-	db, _ := sql.Open("mysql", url)
+	db, _ := sql.Open("mysql", SqlUrl)
 	task := "CREATE DATABASE IF NOT EXISTS " + name
 	db.Exec(task)
 }
