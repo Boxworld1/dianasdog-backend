@@ -6,13 +6,12 @@ import (
 
 func TestMatch(t *testing.T) {
 	ac := NewMatcher()
-	dict := []string{"she", "her", "he", "say"}
+	dict := []string{"宝马", "奔驰", "奥迪"}
 	ac.Build(dict)
-	ret := ac.Match("shershx")
-	if ret[0].BegPosition != 0 || ret[0].EndPosition != 2 || ret[1].BegPosition != 1 || ret[1].EndPosition != 2 || ret[2].BegPosition != 1 || ret[2].EndPosition != 3 {
+	ret := ac.Match("宝马的价格是多少")
+	if ret[0].BegPosition != 0 || ret[0].EndPosition != 1 {
 		t.Error("wrong answer")
 	}
-
 }
 
 func TestCheck(t *testing.T) {

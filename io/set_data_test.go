@@ -6,26 +6,24 @@
 package io
 
 import (
-	"dianasdog/setup"
-	"io/ioutil"
+	"dianasdog/database"
 	"testing"
 )
 
 func TestSetData(t *testing.T) {
 
-	// 得到此文件的绝对路径
-	abspath, _ := setup.GetAbsPath()
-
-	// 取得测试文件
-	filepath := abspath + "data/testcase/testcase_car.xml"
-
-	// 读入文件
-	file, err := ioutil.ReadFile(filepath)
-	if err != nil {
-		t.Error(err)
+	// 初始化测例
+	if err := SetTestData(); err != nil {
+		t.Error("测例建造失败")
 	}
 
-	err = SetData("testcase", "testcase_car.xml", file)
+	// 读入文件
+	data, err := database.GetFile(database.DataClient, "testdata", "testcase.xml")
+	if err != nil {
+		t.Error("测试文件有误")
+	}
+
+	err = SetData("testdata", "testcase.xml", data)
 	// 测试时出错
 	if err != nil {
 		t.Error(err)

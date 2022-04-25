@@ -7,21 +7,12 @@
 
 package io
 
-import (
-	"dianasdog/setup"
-	"io/ioutil"
-)
+import "dianasdog/database"
 
 func SetConfig(resource string, content []byte) error {
 
-	// 得到此文件的绝对路径
-	abspath, _ := setup.GetAbsPath()
-
-	// 查找对应类型的 config 文档路径
-	filepath := abspath + "config/" + resource + ".json"
-
 	// 写入配置
-	err := ioutil.WriteFile(filepath, content, 0644)
+	err := database.InsertFile(database.ConfigClient, "file", resource, content)
 
 	// 无论正确与否都返回 err 的内容
 	return err

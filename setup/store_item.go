@@ -10,62 +10,48 @@
 package setup
 
 import (
+	"dianasdog/database"
+	"dianasdog/io"
 	"fmt"
 	"strings"
 
 	"github.com/beevik/etree"
 )
 
-func GetKey(resource string, tarPath string) string {
-	path := strings.Split(tarPath, ".")
-	key := path[len(path)-1]
-	return resource + "@" + key
-}
-
-func StoreItem(data *etree.Element, resource string, operation string, docid string) error {
-	var itemSettings []ItemSetting
-	var err error
-
-	// 查找对应特型卡的配置
-	itemSettings, err = GetConfig(resource)
-	if err != nil {
-		return err
-	}
+func StoreItem(data *etree.Element, resource string, operation string, docid string, itemSettings []io.ItemSetting) error {
 
 	// 开启数据库
-	// redis := database.ConnectToRedis()
-	// es, _ := database.ConnectToEs()
+	redis := database.RedisClient
+	es := database.EsClient
+	//dict := database.DictClient
 
-	// 提取配置路径并在数据库中新增对应的表
-	// for _, itemSetting := range itemSettings {
-	// 	key := GetKey(resource, itemSetting.itemPath)
-	// 	database.CreateTableFromDict(key)
-	// }
+	// 新建表格
+	database.CreateTableInDict(resource)
+	database.CreateTableInPattern(resource)
 
 	// 根据配置信息写入数据库
 	for _, itemSetting := range itemSettings {
 
 		// 根据路径选取对应数据
-		// key := GetKey(resource, itemSetting.itemPath)
-		path := strings.Replace(itemSetting.itemPath, ".", "/", -1)
+		path := strings.Replace(itemSetting.ItemPath, ".", "/", -1)
 
 		for _, value := range data.FindElements(path) {
 			// 数据写入摘要(Radis)
-			if itemSetting.dumpDigest {
+			if itemSetting.DumpDigest {
 				fmt.Println("insert to redis: ", value.Text())
-				//database.SetToRedis(redis, docid, value.Text())
+				database.SetToRedis(redis, docid, value.Text())
 			}
 
 			// 数据写入倒排引擎(Es)
-			if itemSetting.dumpInvertIdx {
+			if itemSetting.DumpInvertIdx {
 				fmt.Println("inesrt to es: ", value.Text())
-				//database.InsertToEs(es, docid, value.Text())
+				database.InsertToEs(es, docid, value.Text())
 			}
 
 			// 数据写入词典(Dict)
-			if itemSetting.dumpDict {
+			if itemSetting.DumpDict {
 				fmt.Println("insert to dict", value.Text())
-				// database.InsertToDict(key, value.Text())
+				//database.InsertToDict(resource, docid, value.Text()})
 			}
 		}
 

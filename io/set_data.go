@@ -8,30 +8,23 @@
 
 package io
 
-import (
-	"dianasdog/setup"
-	"io/ioutil"
-	"os"
-)
+import "dianasdog/database"
 
 func SetData(resource string, filename string, content []byte) error {
 
-	// 得到此文件的绝对路径
-	abspath, _ := setup.GetAbsPath()
+	// 創建对应表格
+	if err := database.CreateFileTable(database.DataClient, resource); err != nil {
+		return err
+	}
 
-	// 查找对应类型的文件路径（先记为 .txt）
-	filepath := abspath + "data/" + resource + "/"
-	tmppath := filepath + "1.txt"
+	// 插入文件
+	if err := database.InsertFile(database.DataClient, resource, filename, content); err != nil {
+		return err
+	}
 
-	// 新建文件夹
-	_ = os.MkdirAll(filepath, os.ModePerm)
-
-	// 写入配置
-	err := ioutil.WriteFile(tmppath, content, 0644)
-
-	// 写入后改回 .xml
-	os.Rename(tmppath, filepath+filename)
+	// 文件解包
+	// setup.UnpackXmlFile(filename, resource)
 
 	// 无论正确与否都返回 err 的内容
-	return err
+	return nil
 }
