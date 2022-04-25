@@ -35,6 +35,7 @@ func StoreItem(data *etree.Element, resource string, operation string, docid str
 
 	// 新建表格
 	database.CreateTableInDict(resource)
+	database.CreateTableInPattern(resource)
 
 	// 根据配置信息写入数据库
 	for _, itemSetting := range itemSettings {
