@@ -6,35 +6,43 @@
 package setup
 
 import (
+	"dianasdog/database"
 	"dianasdog/io"
-	"dianasdog/path"
 	"testing"
 
 	"github.com/beevik/etree"
 )
 
 func TestStoreItem(t *testing.T) {
-	// 得到此文件的绝对路径
-	abspath, _ := path.GetAbsPath()
-	path := abspath + "data/testcase/testcase_normal.xml"
-	doc := etree.NewDocument()
+
+	// 初始化测例
+	if err := io.SetTestData(); err != nil {
+		t.Error("测例建造失败")
+	}
+
+	// 读入文件
+	data, err := database.GetFile(database.DataClient, "testcase", "testcase.xml")
+	if err != nil {
+		t.Error("测试文件有误")
+	}
 
 	// 读入文件错误
-	if err := doc.ReadFromFile(path); err != nil {
+	doc := etree.NewDocument()
+	if err := doc.ReadFromString(string(data)); err != nil {
 		t.Error(err)
 	}
 
 	root := doc.SelectElement("DOCUMENT")
 
-	// 查找存在的特型卡配置
-	itemSetting, err := io.GetConfig("testcase_poem")
-	if err == nil {
+	// 查找特型卡配置
+	itemSetting, err := io.GetConfig("testcase")
+	if err != nil {
 		t.Error("无法检测问题，错误！")
 	}
 
 	// 插入正常数据
 	for _, item := range root.SelectElements("item") {
-		err := StoreItem(item, "testcase_poem", "insert", "0", itemSetting)
+		err := StoreItem(item, "testcase", "insert", "0", itemSetting)
 		if err != nil {
 			t.Error(err)
 		}
