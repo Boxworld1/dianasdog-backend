@@ -6,7 +6,6 @@ package database
 
 import (
 	"database/sql"
-	"fmt"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -28,7 +27,7 @@ func init() {
 
 //在词典中创建表
 func CreateTableInDict(tableName string) error {
-	createTask := `CREATE TABLE IF NOT EXISTS ` + tableName + `(docid VARCHAR(100) NULL,field VARCHAR(100) NULL,word  VARCHAR(100) NULL)DEFAULT CHARSET=utf8;`
+	createTask := `CREATE TABLE IF NOT EXISTS ` + tableName + `(docid VARCHAR(100) NULL,field VARCHAR(100) NULL,word VARCHAR(100) NULL)DEFAULT CHARSET=utf8;`
 	_, err := DictClient.Exec(createTask)
 	return err
 }
@@ -61,14 +60,10 @@ func ShowTablesInDict() ([]string, error) {
 
 //向表中插入数据
 func InsertToDict(tableName string, docid string, field string, word string) error {
-	selectTask := "select word from " + tableName + " where docid=? and field=? and word=?"
+	selectTask := "select 1 from " + tableName + " where docid=? and field=? and word=?"
 	var tmp string
 	err := DictClient.QueryRow(selectTask, docid, field, word).Scan(&tmp)
-	if err != nil {
-		return err
-	}
-	if tmp == word {
-		fmt.Println("The record has existed.")
+	if err == nil && tmp == "1" {
 		return nil
 	}
 	insertTask := "INSERT INTO " + tableName + "(docid, field, word) values(?, ?, ?)"
