@@ -6,7 +6,6 @@
 package communication
 
 import (
-	"dianasdog/database"
 	"dianasdog/io"
 	"encoding/json"
 	"fmt"
@@ -96,7 +95,6 @@ func PostTemplate(context *gin.Context) {
 
 	// 否则调用函数写入文件
 	io.SetTemplate(res, data)
-	database.InsertFile(database.TemplateClient, "file", res, data)
 
 	// 返回对应值
 	context.JSON(200, gin.H{

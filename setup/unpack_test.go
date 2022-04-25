@@ -18,7 +18,7 @@ func TestUnpackXml(t *testing.T) {
 	}
 
 	// 查找存在的特型卡配置
-	// err = UnpackXmlFile("testcase.xml", "testcase")
+	// err = UnpackXmlFile("testcase.xml", "testdata")
 	// if err != nil {
 	// 	t.Error("检测到不存在的错误！")
 	// }

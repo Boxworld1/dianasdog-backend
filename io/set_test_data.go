@@ -17,7 +17,7 @@ func SetTestData() error {
 	abspath, _ := path.GetAbsPath()
 
 	// 数据加入数据库
-	res := "testcase"
+	res := "testdata"
 	filename := "testcase.xml"
 	filepath := abspath + "testcase/" + filename
 

@@ -1,5 +1,5 @@
 {
-    "resource": "testcase",
+    "resource": "testdata",
     "write_setting": {
         "key": {
             "dump_digest": "true",

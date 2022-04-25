@@ -21,7 +21,7 @@ func TestStoreItem(t *testing.T) {
 	}
 
 	// 读入文件
-	data, err := database.GetFile(database.DataClient, "testcase", "testcase.xml")
+	data, err := database.GetFile(database.DataClient, "testdata", "testcase.xml")
 	if err != nil {
 		t.Error("测试文件有误")
 	}
@@ -35,14 +35,14 @@ func TestStoreItem(t *testing.T) {
 	root := doc.SelectElement("DOCUMENT")
 
 	// 查找特型卡配置
-	itemSetting, err := io.GetConfig("testcase")
+	itemSetting, err := io.GetConfig("testdata")
 	if err != nil {
 		t.Error("无法检测问题，错误！")
 	}
 
 	// 插入正常数据
 	for _, item := range root.SelectElements("item") {
-		err := StoreItem(item, "testcase", "insert", "0", itemSetting)
+		err := StoreItem(item, "testdata", "insert", "0", itemSetting)
 		if err != nil {
 			t.Error(err)
 		}

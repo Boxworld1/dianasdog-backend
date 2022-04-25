@@ -1,5 +1,5 @@
 {
-    "resource": "testcase",
+    "resource": "testdata",
     "rule_recall_setting_list": {
         "garbage_dict_list": ["parser_墨迹天气_200_garbage"],
         "pattern_list": [{

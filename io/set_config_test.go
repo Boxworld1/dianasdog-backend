@@ -17,12 +17,12 @@ func TestSetConfig(t *testing.T) {
 	}
 
 	// 读入文件
-	data, err := database.GetFile(database.ConfigClient, "file", "testcase")
+	data, err := database.GetFile(database.ConfigClient, "file", "testdata")
 	if err != nil {
 		t.Error("测试文件有误")
 	}
 
-	err = SetConfig("testcase", data)
+	err = SetConfig("testdata", data)
 	// 测试时出错
 	if err != nil {
 		t.Error(err)
