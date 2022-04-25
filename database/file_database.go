@@ -66,6 +66,11 @@ func GetFile(db *sql.DB, tableName string, filename string) ([]byte, error) {
 	task := "SELECT filename, data FROM " + tableName + " WHERE filename=?"
 	rows, err := db.Query(task, filename)
 
+	// 对于文件表不存在
+	if err != nil {
+		return nil, err
+	}
+
 	// 取出数据
 	var name string
 	var data []byte

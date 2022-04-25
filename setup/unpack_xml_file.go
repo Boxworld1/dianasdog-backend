@@ -14,6 +14,7 @@ package setup
 
 import (
 	"dianasdog/database"
+	"dianasdog/io"
 
 	"github.com/beevik/etree"
 )
@@ -37,10 +38,16 @@ func UnpackXmlFile(filename string, resource string) error {
 	root := doc.SelectElement("DOCUMENT")
 	itemList := root.SelectElements("item")
 
+	// 查找对应特型卡的配置
+	itemSettings, err := io.GetConfig(resource)
+	if err != nil {
+		return err
+	}
+
 	// 遍历所有 item 并存入数据库
 	for _, item := range itemList {
 		docid := GetDocid(item, resource)
-		StoreItem(item, resource, "insert", docid)
+		StoreItem(item, resource, "insert", docid, itemSettings)
 	}
 
 	return nil
