@@ -1,1 +1,0 @@
-{"resource":"testcase_car","write_setting":{"a.b.c":{"dump_dict":"true","dump_digest":"true","dump_invert_idx":"false"},"a.e":{"dump_dict":"true","dump_digest":"false","dump_invert_idx":"false"},"b.g":{"dump_dict":"true","dump_digest":"true","dump_invert_idx":"true"},"f.a":{"dump_dict":"true","dump_digest":"true","dump_invert_idx":"false"}}}

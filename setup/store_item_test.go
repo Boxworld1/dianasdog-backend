@@ -1,45 +1,50 @@
 // @title		TestStoreItem
 // @description	此函数的用途为检查 StoreItem 函数的正确性
-// @auth		ryl				2022/3/17		11:05
+// @auth		ryl				2022/4/25		18:05
 // @param		t				*testing.T		testing 用参数
 
 package setup
 
 import (
-	"dianasdog/path"
+	"dianasdog/database"
+	"dianasdog/io"
 	"testing"
 
 	"github.com/beevik/etree"
 )
 
 func TestStoreItem(t *testing.T) {
-	// 得到此文件的绝对路径
-	abspath, _ := path.GetAbsPath()
 
-	path := abspath + "data/testcase/testcase_normal.xml"
-	doc := etree.NewDocument()
+	// 初始化测例
+	if err := io.SetTestData(); err != nil {
+		t.Error("测例建造失败")
+	}
+
+	// 读入文件
+	data, err := database.GetFile(database.DataClient, "testdata", "testcase.xml")
+	if err != nil {
+		t.Error("测试文件有误")
+	}
 
 	// 读入文件错误
-	if err := doc.ReadFromFile(path); err != nil {
+	doc := etree.NewDocument()
+	if err := doc.ReadFromString(string(data)); err != nil {
 		t.Error(err)
 	}
 
 	root := doc.SelectElement("DOCUMENT")
 
-	// 插入不存在的特型卡类型
-	testItem := root.FindElement("item")
-	if testItem != nil {
-		myErr := StoreItem(testItem, "apple", "delete", "0")
-		if myErr == nil {
-			t.Error("无法检测问题，错误！")
-		}
+	// 查找特型卡配置
+	itemSetting, err := io.GetConfig("testdata")
+	if err != nil {
+		t.Error("无法检测问题，错误！")
 	}
 
 	// 插入正常数据
-	// for _, item := range root.SelectElements("item") {
-	// 	err := StoreItem(item, "testcase_poem", "insert", "0")
-	// 	if err != nil {
-	// 		t.Error(err)
-	// 	}
-	// }
+	for _, item := range root.SelectElements("item") {
+		err := StoreItem(item, "testdata", "insert", "0", itemSetting)
+		if err != nil {
+			t.Error(err)
+		}
+	}
 }

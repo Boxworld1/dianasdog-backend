@@ -26,8 +26,7 @@ type Doc struct {
 func init() {
 	EsClient, _ = elastic.NewClient(
 		elastic.SetSniff(false),
-		elastic.SetURL("http://elasticsearch.DianasDog.secoder.local:9200"),
-		// elastic.SetURL("http://localhost:9200"),
+		elastic.SetURL(EsUrl),
 	)
 }
 

@@ -18,15 +18,7 @@ import (
 	"github.com/beevik/etree"
 )
 
-func StoreItem(data *etree.Element, resource string, operation string, docid string) error {
-	var itemSettings []io.ItemSetting
-	var err error
-
-	// 查找对应特型卡的配置
-	itemSettings, err = io.GetConfig(resource)
-	if err != nil {
-		return err
-	}
+func StoreItem(data *etree.Element, resource string, operation string, docid string, itemSettings []io.ItemSetting) error {
 
 	// 开启数据库
 	redis := database.RedisClient
