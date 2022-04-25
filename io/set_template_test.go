@@ -17,7 +17,7 @@ func TestSetTemplate(t *testing.T) {
 	abspath, _ := path.GetAbsPath()
 
 	// 取得测试文件
-	filepath := abspath + "template/testcase.json"
+	filepath := abspath + "testcase/template.json"
 
 	// 读入文件
 	file, err := ioutil.ReadFile(filepath)

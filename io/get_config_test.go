@@ -17,27 +17,34 @@ func TestGetConfig(t *testing.T) {
 		t.Error(err)
 	}
 
-	itemSettings, err := GetConfig("testcase_car")
+	itemSettings, err := GetConfig("testcase")
 	// 测试时出错
 	if err != nil {
 		t.Error(err)
 	}
 
+	// 定义结果
+	ans := [][]bool{{true, true, true}, {false, false, true}}
+
 	// 配置数量错误
-	if len(itemSettings) != 4 {
+	if len(itemSettings) != 2 {
 		t.Error("配置数量有误", len(itemSettings))
 	} else {
-		item0 := itemSettings[0]
-		item1 := itemSettings[1]
-		// 配置错误
-		if item0.DumpDigest != true || item1.DumpDigest != false {
-			t.Error("dump digest 错误")
-		}
-		if item0.DumpInvertIdx != false || item1.DumpInvertIdx != false {
-			t.Error("dump invert idx 错误")
-		}
-		if item0.DumpDict != true || item1.DumpDict != true {
-			t.Error("dump dict 错误")
+		for _, item := range itemSettings {
+			// 配置错误
+			key := 0
+			if item.ItemPath == "display.title" {
+				key = 1
+			}
+			if item.DumpDigest != ans[key][0] {
+				t.Error("dump digest 错误")
+			}
+			if item.DumpInvertIdx != ans[key][1] {
+				t.Error("dump invert idx 错误")
+			}
+			if item.DumpDict != ans[key][2] {
+				t.Error("dump dict 错误")
+			}
 		}
 
 	}

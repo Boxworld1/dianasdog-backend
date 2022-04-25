@@ -17,7 +17,7 @@ func TestSetConfig(t *testing.T) {
 	abspath, _ := path.GetAbsPath()
 
 	// 取得测试文件
-	filepath := abspath + "config/testcase_car.json"
+	filepath := abspath + "testcase/config.json"
 
 	// 读入文件
 	file, err := ioutil.ReadFile(filepath)
@@ -25,7 +25,7 @@ func TestSetConfig(t *testing.T) {
 		t.Error(err)
 	}
 
-	err = SetConfig("testcase_car", file)
+	err = SetConfig("testcase", file)
 	// 测试时出错
 	if err != nil {
 		t.Error(err)

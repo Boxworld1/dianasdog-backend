@@ -81,7 +81,7 @@ func GetFile(db *sql.DB, tableName string, filename string) ([]byte, error) {
 	rows.Close()
 
 	if name != filename {
-		return nil, errors.New("No data with file name = " + filename)
+		return nil, errors.New("No data with filename = " + filename)
 	}
 	return data, err
 }

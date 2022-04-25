@@ -17,7 +17,7 @@ func TestSetData(t *testing.T) {
 	abspath, _ := path.GetAbsPath()
 
 	// 取得测试文件
-	filepath := abspath + "data/testcase/testcase_car.xml"
+	filepath := abspath + "testcase/testcase.xml"
 
 	// 读入文件
 	file, err := ioutil.ReadFile(filepath)
@@ -25,7 +25,7 @@ func TestSetData(t *testing.T) {
 		t.Error(err)
 	}
 
-	err = SetData("testcase", "testcase_car.xml", file)
+	err = SetData("testcase", "testcase.xml", file)
 	// 测试时出错
 	if err != nil {
 		t.Error(err)
