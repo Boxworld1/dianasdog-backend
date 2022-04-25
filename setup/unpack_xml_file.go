@@ -30,7 +30,9 @@ func UnpackXmlFile(filename string, resource string) error {
 	// 将数据放入 etree 中
 	doc := etree.NewDocument()
 	err = doc.ReadFromString(string(data))
-	if err != nil { //wrong fileName
+
+	// 文件名有误
+	if err != nil {
 		return err
 	}
 

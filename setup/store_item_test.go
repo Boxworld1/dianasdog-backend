@@ -1,6 +1,6 @@
 // @title		TestStoreItem
-// @description	此函数的用途为检查 setup 包 StoreItem 的正确性
-// @auth		ryl				2022/3/17		11:05
+// @description	此函数的用途为检查 StoreItem 函数的正确性
+// @auth		ryl				2022/4/25		18:05
 // @param		t				*testing.T		testing 用参数
 
 package setup
