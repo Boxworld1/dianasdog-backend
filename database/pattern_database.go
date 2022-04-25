@@ -5,6 +5,7 @@ import "database/sql"
 var PatternClient *sql.DB
 
 func init() {
+	CreateDatabase("pattern")
 	PatternClient, _ = sql.Open("mysql", GenUrl("pattern"))
 	inittask := `SET NAMES utf8 `
 	PatternClient.Exec(inittask)

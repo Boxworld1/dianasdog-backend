@@ -25,6 +25,13 @@ func init() {
 	DictClient.Exec(inittask)
 }
 
+//创建数据库
+func CreateDatabase(name string) {
+	db, _ := sql.Open("mysql", SqlUrl)
+	task := "CREATE DATABASE IF NOT EXISTS " + name
+	db.Exec(task)
+}
+
 //在词典中创建表
 func CreateTableInDict(tableName string) error {
 	createTask := `CREATE TABLE IF NOT EXISTS ` + tableName + `(docid VARCHAR(100) NULL,field VARCHAR(100) NULL,word VARCHAR(100) NULL)DEFAULT CHARSET=utf8;`
