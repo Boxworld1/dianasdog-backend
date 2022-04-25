@@ -64,26 +64,30 @@ func InsertToDict(tableName string, docid string, field string, word string) err
 	selectTask := "select word from " + tableName + " where docid=? and field=? and word=?"
 	var tmp string
 	err := DictClient.QueryRow(selectTask, docid, field, word).Scan(tmp)
+	if err != nil {
+		return err
+	}
 	if tmp == word {
 		fmt.Println("The record has existed.")
 		return nil
 	}
 	insertTask := "INSERT INTO " + tableName + "(docid, field, word) values(?, ?, ?)"
 	_, err = DictClient.Exec(insertTask, docid, field, word)
-	if err != nil {
-		return err
-	}
-	return nil
+	return err
 }
 
 //删除docid为xxx的所有数据
 func DeleteByDocid(tableName string, docid string) error {
 	deleteTask := "delete from " + tableName + " where docid=?"
 	_, err := DictClient.Exec(deleteTask, docid)
-	if err != nil {
-		return err
-	}
-	return nil
+	return err
+}
+
+//删除指定docid、field的数据
+func DeleteByField(tableName string, docid string, field string) error {
+	deleteTask := "delete from " + tableName + " where docid=? and field=?"
+	_, err := DictClient.Exec(deleteTask, docid, field)
+	return err
 }
 
 //返回docid为xxx的所有数据(field + word)
@@ -97,6 +101,25 @@ func SearchByDocid(tableName string, docid string) ([][2]string, error) {
 	res := [][2]string{}
 	for rows.Next() {
 		err = rows.Scan(&tmp[0], &tmp[1])
+		if err != nil {
+			return nil, err
+		}
+		res = append(res, tmp)
+	}
+	return res, nil
+}
+
+//返回指定docid、field的所有数据(word)
+func SearchByField(tableName string, docid string, field string) ([]string, error) {
+	selectTask := "select word from " + tableName + " where docid=? and field=?"
+	rows, err := DictClient.Query(selectTask, docid, field)
+	if err != nil {
+		return nil, err
+	}
+	var tmp string
+	res := []string{}
+	for rows.Next() {
+		err = rows.Scan(&tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -125,7 +148,7 @@ func GetAllField(tableName string) ([]string, error) {
 }
 
 //返回field为xxx的所有数据(word)
-func SearchByField(tableName string, field string) ([]string, error) {
+func GetAllWord(tableName string, field string) ([]string, error) {
 	selectTask := "select word from " + tableName + " where field=?"
 	rows, err := DictClient.Query(selectTask, field)
 	if err != nil {

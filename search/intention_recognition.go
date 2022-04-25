@@ -26,7 +26,7 @@ func init() {
 		acmap[table] = make(map[string]*Matcher)
 		for _, field := range fields {
 			acmap[table][field] = NewMatcher()
-			dict, err := database.SearchByField(table, field)
+			dict, err := database.GetAllWord(table, field)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -42,9 +42,9 @@ func init() {
 func IntentionRecognition(query string) []string {
 	intentList := []string{}
 	for table := range acmap {
-		if table != "intent" && table != "garbage" {
-			for column := range acmap[table] {
-				check := acmap[table][column].Check(query)
+		for field := range acmap[table] {
+			if field != "garbage" && field != "intent" {
+				check := acmap[table][field].Check(query)
 				if check {
 					intentList = append(intentList, table)
 					break
