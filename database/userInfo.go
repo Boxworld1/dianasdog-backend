@@ -3,6 +3,7 @@ package database
 import (
 	"database/sql"
 	"fmt"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -39,6 +40,7 @@ func EncodePassword(password string) (string, error) {
 var UserInfoClient *sql.DB
 
 func init() {
+	CreateDatabase("UserInfo")
 	UserInfoClient, _ = sql.Open("mysql", GenUrl("UserInfo"))
 	inittask := `SET NAMES utf8 `
 	UserInfoClient.Exec(inittask)
@@ -71,8 +73,8 @@ func UserSignup(user User) error {
 	//if err != nil {
 	//	return err
 	//}
-	err := CreateTableForUserinfo()
-	err = InsertPwdIntoSQL(user.Password, user.Name)
+	_ = CreateTableForUserinfo()
+	err := InsertPwdIntoSQL(user.Password, user.Name)
 	if err != nil {
 		return err
 	}

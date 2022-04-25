@@ -11,13 +11,15 @@ import (
 	"strings"
 )
 
+var Projname = "Backend"
+
 func GetAbsPath() (string, error) {
 	path, err := os.Getwd()
 	if err != nil {
 		return "", err
 	}
 
-	path = strings.Replace(path, "Backend", "Backend/@", 1)
+	path = strings.Replace(path, Projname, Projname+"/@", 1)
 	pathlist := strings.Split(path, "@")
 
 	return pathlist[0], nil

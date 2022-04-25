@@ -6,7 +6,6 @@
 package communication
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -99,14 +98,9 @@ func TestRouter(t *testing.T) {
 				// 根据测试用例加入参数
 				form := url.Values{}
 				for _, value := range testcase.param {
-					// 去掉前端多余的引号
-					if value.key == "data" {
-						tarstr, _ := json.Marshal(value.value)
-						form.Add(value.key, string(tarstr))
-					} else {
-						form.Add(value.key, value.value)
-					}
-
+					key := value.key
+					content := value.value
+					form.Add(key, content)
 				}
 
 				req = httptest.NewRequest(

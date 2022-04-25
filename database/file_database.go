@@ -17,6 +17,12 @@ var ConfigClient *sql.DB
 var TemplateClient *sql.DB
 
 func init() {
+	// 创建数据库
+	CreateDatabase("category")
+	CreateDatabase("data")
+	CreateDatabase("config")
+	CreateDatabase("template")
+
 	// 开启数据库
 	CategoryClient, _ = sql.Open("mysql", GenUrl("category"))
 	DataClient, _ = sql.Open("mysql", GenUrl("data"))
@@ -61,6 +67,11 @@ func GetFile(db *sql.DB, tableName string, filename string) ([]byte, error) {
 	task := "SELECT filename, data FROM " + tableName + " WHERE filename=?"
 	rows, err := db.Query(task, filename)
 
+	// 对于文件表不存在
+	if err != nil {
+		return nil, err
+	}
+
 	// 取出数据
 	var name string
 	var data []byte
@@ -71,7 +82,7 @@ func GetFile(db *sql.DB, tableName string, filename string) ([]byte, error) {
 	rows.Close()
 
 	if name != filename {
-		return nil, errors.New("No data with file name = " + filename)
+		return nil, errors.New("No data with filename = " + filename)
 	}
 	return data, err
 }

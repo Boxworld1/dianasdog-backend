@@ -14,12 +14,12 @@ var DictClient *sql.DB
 
 //生成URL
 func GenUrl(name string) string {
-	var url string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql.DianasDog.secoder.local:3306)/"
-	return url + name + "?charset=utf8"
+	return SqlUrl + name + "?charset=utf8"
 }
 
 //初始化数据库指针
 func init() {
+	CreateDatabase("dict")
 	DictClient, _ = sql.Open("mysql", GenUrl("dict"))
 	inittask := `SET NAMES utf8 `
 	DictClient.Exec(inittask)
