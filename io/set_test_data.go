@@ -28,42 +28,28 @@ func SetTestData() error {
 	}
 
 	// 若无对应表则建表
-	if err := database.CreateFileTable(database.DataClient, res); err != nil {
-		return err
-	}
-	if err := database.InsertFile(database.DataClient, res, filename, data); err != nil {
-		return err
-	}
+	_ = database.CreateFileTable(database.DataClient, res)
+	_ = database.InsertFile(database.DataClient, res, filename, data)
 
 	// 数据加入数据库
 	filename = "config.json"
 	filepath = abspath + "testcase/" + filename
 
 	// 读入文件
-	data, err = ioutil.ReadFile(filepath)
-	if err != nil {
-		return err
-	}
+	data, _ = ioutil.ReadFile(filepath)
 
 	// 加入数据库中
-	if err := database.InsertFile(database.ConfigClient, "file", res, data); err != nil {
-		return err
-	}
+	_ = database.InsertFile(database.ConfigClient, "file", res, data)
 
 	// 数据加入数据库
 	filename = "template.json"
 	filepath = abspath + "testcase/" + filename
 
 	// 读入文件
-	data, err = ioutil.ReadFile(filepath)
-	if err != nil {
-		return err
-	}
+	data, _ = ioutil.ReadFile(filepath)
 
 	// 加入数据库中
-	if err := database.InsertFile(database.TemplateClient, "file", res, data); err != nil {
-		return err
-	}
+	_ = database.InsertFile(database.TemplateClient, "file", res, data)
 
 	return nil
 }

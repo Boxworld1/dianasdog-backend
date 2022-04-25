@@ -33,6 +33,7 @@ func StoreItem(data *etree.Element, resource string, operation string, docid str
 	for _, itemSetting := range itemSettings {
 
 		// 根据路径选取对应数据
+		key := GetKey(itemSetting.ItemPath)
 		path := strings.Replace(itemSetting.ItemPath, ".", "/", -1)
 
 		for _, value := range data.FindElements(path) {
@@ -51,7 +52,7 @@ func StoreItem(data *etree.Element, resource string, operation string, docid str
 			// 数据写入词典(Dict)
 			if itemSetting.DumpDict {
 				fmt.Println("insert to dict", value.Text())
-				//database.InsertToDict(resource, docid, value.Text()})
+				database.InsertToDict(resource, docid, key, value.Text())
 			}
 		}
 
