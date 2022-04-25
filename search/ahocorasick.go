@@ -80,7 +80,7 @@ func (m *Matcher) Match(s string) []*Term {
 	//	mark := make([]bool, m.size)
 	ret := make([]*Term, 0)
 
-	for index, rune := range s {
+	for index, rune := range []rune(s) {
 		for curNode.child[rune] == nil && curNode != m.root {
 			curNode = curNode.fail
 		}
@@ -108,12 +108,11 @@ func (m *Matcher) Match(s string) []*Term {
 func (m *Matcher) Check(s string) bool {
 	curNode := m.root
 	var p *trieNode = nil
-
-	for _, v := range s {
-		for curNode.child[v] == nil && curNode != m.root {
+	for _, rune := range s {
+		for curNode.child[rune] == nil && curNode != m.root {
 			curNode = curNode.fail
 		}
-		curNode = curNode.child[v]
+		curNode = curNode.child[rune]
 		if curNode == nil {
 			curNode = m.root
 		}
@@ -171,6 +170,6 @@ func (m *Matcher) insert(s string) {
 		curNode = curNode.child[v]
 	}
 	curNode.count++
-	curNode.len = len(s)
+	curNode.len = len([]rune(s))
 	m.size++
 }
