@@ -11,14 +11,13 @@ package setup
 
 import (
 	"dianasdog/database"
-	"dianasdog/io"
 	"fmt"
 	"strings"
 
 	"github.com/beevik/etree"
 )
 
-func StoreItem(data *etree.Element, resource string, operation string, docid string, itemSettings []io.ItemSetting) error {
+func StoreItem(data *etree.Element, resource string, operation string, docid string, itemSettings []ItemSetting) error {
 
 	// 开启数据库
 	redis := database.RedisClient

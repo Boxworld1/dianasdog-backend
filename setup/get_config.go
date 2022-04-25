@@ -5,7 +5,7 @@
 // @return		itemSettings	[]ItemSetting	此键值下所有需要写入数据库的数据
 // @return		err				error			错误值
 
-package io
+package setup
 
 import (
 	"dianasdog/database"

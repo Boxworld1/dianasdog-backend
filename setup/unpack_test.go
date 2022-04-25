@@ -6,14 +6,13 @@
 package setup
 
 import (
-	"dianasdog/io"
 	"testing"
 )
 
 func TestUnpackXml(t *testing.T) {
 
 	// 初始化测例
-	if err := io.SetTestData(); err != nil {
+	if err := SetTestData(); err != nil {
 		t.Error("测例建造失败")
 	}
 
