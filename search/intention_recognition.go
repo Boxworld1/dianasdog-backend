@@ -14,23 +14,23 @@ var acmap map[string]map[string]*Matcher
 // @return: do not need a return-value
 func init() {
 	acmap = make(map[string]map[string]*Matcher)
-	tables, err := database.ShowTablesInDict(database.DictClient)
+	tables, err := database.ShowTablesInDict()
 	if err != nil {
 		fmt.Println(err)
 	}
 	for _, table := range tables {
-		columns, err := database.ShowColumnsInTable(database.DictClient, table)
+		fields, err := database.GetAllField(table)
 		if err != nil {
 			fmt.Println(err)
 		}
 		acmap[table] = make(map[string]*Matcher)
-		for _, column := range columns {
-			acmap[table][column] = NewMatcher()
-			dict, err := database.QueryColumn(database.DictClient, table, column)
+		for _, field := range fields {
+			acmap[table][field] = NewMatcher()
+			dict, err := database.SearchByField(table, field)
 			if err != nil {
 				fmt.Println(err)
 			}
-			acmap[table][column].Build(dict)
+			acmap[table][field].Build(dict)
 		}
 	}
 }

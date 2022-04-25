@@ -27,7 +27,7 @@ func init() {
 
 	// 生成特型卡词典
 	CategoryClient.Exec(inittask)
-	CreateTableFromDict(CategoryClient, "word", []string{"id"})
+	//CreateTableFromDict(CategoryClient, "word", []string{"id"})
 
 	// 生成源数据数据库（每个特型卡有多个对应文件）
 	DataClient.Exec(inittask)

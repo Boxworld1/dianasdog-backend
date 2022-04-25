@@ -31,10 +31,10 @@ func StoreItem(data *etree.Element, resource string, operation string, docid str
 	// 开启数据库
 	redis := database.RedisClient
 	es := database.EsClient
-	dict := database.DictClient
+	//dict := database.DictClient
 
 	// 新建表格
-	database.CreateTableFromDict(dict, resource, []string{"id", "title"})
+	database.CreateTableInDict(resource)
 
 	// 根据配置信息写入数据库
 	for _, itemSetting := range itemSettings {
@@ -58,7 +58,7 @@ func StoreItem(data *etree.Element, resource string, operation string, docid str
 			// 数据写入词典(Dict)
 			if itemSetting.DumpDict {
 				fmt.Println("insert to dict", value.Text())
-				database.InsertToDict(dict, resource, []string{docid, value.Text()})
+				//database.InsertToDict(resource, docid, value.Text()})
 			}
 		}
 
