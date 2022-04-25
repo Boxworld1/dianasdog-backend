@@ -51,7 +51,7 @@ func TestDbInterface(t *testing.T) {
 	}
 
 	// 测试搜索功能(SearchByDocid)：查找不存在的docid
-	tmp, err := SearchByDocid("testcase", "12345")
+	tmp, err := SearchByDocidFromDict("testcase", "12345")
 	if len(tmp) != 0 {
 		t.Error("Docid 12345 is not in testcase")
 	}
@@ -60,7 +60,7 @@ func TestDbInterface(t *testing.T) {
 	}
 
 	// 测试搜索功能(SearchByDocid)：查找存在的docid
-	tmp, err = SearchByDocid("testcase", "10086")
+	tmp, err = SearchByDocidFromDict("testcase", "10086")
 	if tmp[0][0] != "title" || tmp[0][1] != "奔驰" {
 		t.Error("查询失败")
 	}
@@ -69,13 +69,13 @@ func TestDbInterface(t *testing.T) {
 	}
 
 	// 测试搜索功能(SearchByField)
-	tmp1, err := SearchByField("testcase", "10086", "title")
+	tmp1, err := SearchByFieldFromDict("testcase", "10086", "title")
 	if tmp1[0] != "奔驰" || err != nil {
 		t.Error("查询失败")
 	}
 
 	//测试取词功能(GetAllWord):不存在的键值
-	res, err := GetAllWord("testcase", "name")
+	res, err := GetAllWordFromDict("testcase", "name")
 	if len(res) != 0 {
 		t.Error("Field name is not in testcase")
 	}
@@ -84,7 +84,7 @@ func TestDbInterface(t *testing.T) {
 	}
 
 	// 测试取词功能(GetAllWord)：存在的键值
-	res, err = GetAllWord("testcase", "title")
+	res, err = GetAllWordFromDict("testcase", "title")
 	if res[0] != "奔驰" {
 		t.Error("查询失败")
 	}
@@ -93,26 +93,26 @@ func TestDbInterface(t *testing.T) {
 	}
 
 	// 测试获取所有字段名
-	dict, err = GetAllField("testcase")
+	dict, err = GetAllFieldFromDict("testcase")
 	if len(dict) == 0 || err != nil || dict[0] != "title" {
 		t.Error("GetAllField failed.")
 	}
 
 	//测试删除功能：删除某一field
-	err = DeleteByField("testcase", "10086", "title")
+	err = DeleteByFieldFromDict("testcase", "10086", "title")
 	if err != nil {
 		t.Error(err)
 	}
 
 	// 测试删除功能：向存在的表中作删除
 	InsertToDict("testcase", "10086", "title", "奔驰")
-	err = DeleteByDocid("testcase", "10086")
+	err = DeleteByDocidFromDict("testcase", "10086")
 	if err != nil {
 		t.Error(err)
 	}
 
 	// 测试删除功能：向不存在的表中作删除
-	err = DeleteByDocid("testcase_flower", "10086")
+	err = DeleteByDocidFromDict("testcase_flower", "10086")
 	if err == nil {
 		t.Error("禁止向不存在的表中删除数据")
 	}

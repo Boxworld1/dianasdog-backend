@@ -63,7 +63,7 @@ func ShowTablesInDict() ([]string, error) {
 func InsertToDict(tableName string, docid string, field string, word string) error {
 	selectTask := "select word from " + tableName + " where docid=? and field=? and word=?"
 	var tmp string
-	err := DictClient.QueryRow(selectTask, docid, field, word).Scan(tmp)
+	err := DictClient.QueryRow(selectTask, docid, field, word).Scan(&tmp)
 	if err != nil {
 		return err
 	}
@@ -77,21 +77,21 @@ func InsertToDict(tableName string, docid string, field string, word string) err
 }
 
 //删除docid为xxx的所有数据
-func DeleteByDocid(tableName string, docid string) error {
+func DeleteByDocidFromDict(tableName string, docid string) error {
 	deleteTask := "delete from " + tableName + " where docid=?"
 	_, err := DictClient.Exec(deleteTask, docid)
 	return err
 }
 
 //删除指定docid、field的数据
-func DeleteByField(tableName string, docid string, field string) error {
+func DeleteByFieldFromDict(tableName string, docid string, field string) error {
 	deleteTask := "delete from " + tableName + " where docid=? and field=?"
 	_, err := DictClient.Exec(deleteTask, docid, field)
 	return err
 }
 
 //返回docid为xxx的所有数据(field + word)
-func SearchByDocid(tableName string, docid string) ([][2]string, error) {
+func SearchByDocidFromDict(tableName string, docid string) ([][2]string, error) {
 	selectTask := "select field, word from " + tableName + " where docid=?"
 	rows, err := DictClient.Query(selectTask, docid)
 	if err != nil {
@@ -110,7 +110,7 @@ func SearchByDocid(tableName string, docid string) ([][2]string, error) {
 }
 
 //返回指定docid、field的所有数据(word)
-func SearchByField(tableName string, docid string, field string) ([]string, error) {
+func SearchByFieldFromDict(tableName string, docid string, field string) ([]string, error) {
 	selectTask := "select word from " + tableName + " where docid=? and field=?"
 	rows, err := DictClient.Query(selectTask, docid, field)
 	if err != nil {
@@ -129,7 +129,7 @@ func SearchByField(tableName string, docid string, field string) ([]string, erro
 }
 
 //返回表中所有的字段名（去重后的field）
-func GetAllField(tableName string) ([]string, error) {
+func GetAllFieldFromDict(tableName string) ([]string, error) {
 	selectTask := "select distinct field from " + tableName
 	rows, err := DictClient.Query(selectTask)
 	if err != nil {
@@ -148,7 +148,7 @@ func GetAllField(tableName string) ([]string, error) {
 }
 
 //返回field为xxx的所有数据(word)
-func GetAllWord(tableName string, field string) ([]string, error) {
+func GetAllWordFromDict(tableName string, field string) ([]string, error) {
 	selectTask := "select word from " + tableName + " where field=?"
 	rows, err := DictClient.Query(selectTask, field)
 	if err != nil {

@@ -19,14 +19,14 @@ func init() {
 		fmt.Println(err)
 	}
 	for _, table := range tables {
-		fields, err := database.GetAllField(table)
+		fields, err := database.GetAllFieldFromDict(table)
 		if err != nil {
 			fmt.Println(err)
 		}
 		acmap[table] = make(map[string]*Matcher)
 		for _, field := range fields {
 			acmap[table][field] = NewMatcher()
-			dict, err := database.GetAllWord(table, field)
+			dict, err := database.GetAllWordFromDict(table, field)
 			if err != nil {
 				fmt.Println(err)
 			}
