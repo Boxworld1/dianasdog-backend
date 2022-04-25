@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-var Projname = "Backend"
+var Projname = "Backend-Test"
 
 func GetAbsPath() (string, error) {
 	path, err := os.Getwd()
