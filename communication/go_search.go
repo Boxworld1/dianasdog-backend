@@ -6,6 +6,8 @@
 package communication
 
 import (
+	"dianasdog/search"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -31,10 +33,10 @@ func GoSearch(context *gin.Context) {
 	query := body.Query
 
 	// 开始搜索流程
-	// result := search.IntentRecognition(query)
+	result := search.Search(query)
 
 	// 返回结果
 	context.JSON(200, gin.H{
-		"content": query, //result,
+		"content": result, //result,
 	})
 }

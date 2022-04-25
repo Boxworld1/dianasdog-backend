@@ -11,12 +11,13 @@ func Search(query string) string {
 	// 意图识別
 	intentList := IntentionRecognition(query)
 
+	// Query 理解
 	result := QueryUnderstanding(intentList, query)
 
 	for item := range result {
 		item = item
 	}
 
-	// 无论正确与否都返回 err 的内容
-	return ""
+	// 返回搜索结果
+	return "I'm result"
 }
