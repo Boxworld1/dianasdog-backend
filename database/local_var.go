@@ -2,7 +2,7 @@ package database
 
 // For local test
 
-// var SqlUrl string = "root:Iwee3thoh9ahNo6thiong1gahzee6tie@tcp(localhost:3306)/"
+// var SqlUrl string = "root:hieyohrahng0eing7nuaBoofaichaiBo@tcp(localhost:3306)/"
 // var EsUrl string = "http://localhost:9200"
 // var RedisUrl string = "localhost:6379"
 // var RedisPw string = "0"

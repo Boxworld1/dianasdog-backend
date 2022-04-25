@@ -28,6 +28,18 @@ func TestFileTable(t *testing.T) {
 		t.Error(err)
 	}
 
+	// 取出不存在的文件
+	_, err = GetFile(ConfigClient, "file", "filename")
+	if err == nil {
+		t.Error("检测不到错误")
+	}
+
+	// 取出不存在的表格
+	_, err = GetFile(ConfigClient, "apple", "filename")
+	if err == nil {
+		t.Error("检测不到错误")
+	}
+
 	// 对比结果
 	res := bytes.Compare(srcData, dstData)
 	fmt.Println(srcData)

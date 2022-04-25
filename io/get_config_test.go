@@ -17,7 +17,7 @@ func TestGetConfig(t *testing.T) {
 		t.Error(err)
 	}
 
-	itemSettings, err := GetConfig("testcase")
+	itemSettings, err := GetConfig("testdata")
 	// 测试时出错
 	if err != nil {
 		t.Error(err)
