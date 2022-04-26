@@ -1,22 +1,23 @@
-// @title	GetConfig
+// @title	GetDataName
 // @description	后端发出写入行为之接口
-// @auth	ryl		2022/4/26		17:30
+// @auth	ryl		2022/4/26		19:30
 // @param	context	*gin.Context
 
 package communication
 
 import (
 	"dianasdog/database"
+	"encoding/json"
 
 	"github.com/gin-gonic/gin"
 )
 
-type GetConfigBody struct {
+type GetDataNameBody struct {
 	Resource string `json:"resource" binding:"required"`
 }
 
-func GetConfig(context *gin.Context) {
-	var body GetConfigBody
+func GetDataName(context *gin.Context) {
+	var body GetDataNameBody
 
 	// 检查收到信息的格式是否正确
 	err := context.ShouldBindJSON(&body)
@@ -30,7 +31,7 @@ func GetConfig(context *gin.Context) {
 	}
 
 	// 取得文件
-	data, err := database.GetFile(database.ConfigClient, "file", body.Resource)
+	data, err := database.GetFileName(database.DataClient, body.Resource)
 
 	// 若不存在文件/对应特型卡类型，则返回错误
 	if err != nil {
@@ -40,8 +41,11 @@ func GetConfig(context *gin.Context) {
 		return
 	}
 
+	// 若存在，则变为 json 阵列
+	result, _ := json.Marshal(data)
+
 	// 否则正常返回结果
 	context.JSON(200, gin.H{
-		"data": string(data),
+		"data": result,
 	})
 }

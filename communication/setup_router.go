@@ -17,7 +17,11 @@ func SetupRouter() *gin.Engine {
 	router.POST("/login", PostLogin)
 
 	router.POST("/data", PostData)
+	// router.GET("/data", GetData)
+	router.GET("/dataname", GetDataName)
+
 	router.POST("/pattern", PostTemplate)
+	// router.GET("/pattern", GetTemplate)
 
 	router.POST("/setting", PostConfig)
 	router.GET("/setting", GetConfig)
