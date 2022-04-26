@@ -7,7 +7,8 @@ package setup
 
 import (
 	"dianasdog/database"
-	"dianasdog/io"
+	"dianasdog/getter"
+	"dianasdog/testcase"
 	"testing"
 
 	"github.com/beevik/etree"
@@ -16,7 +17,7 @@ import (
 func TestStoreItem(t *testing.T) {
 
 	// 初始化测例
-	if err := io.SetTestData(); err != nil {
+	if err := testcase.SetTestData(0); err != nil {
 		t.Error("测例建造失败")
 	}
 
@@ -35,7 +36,7 @@ func TestStoreItem(t *testing.T) {
 	root := doc.SelectElement("DOCUMENT")
 
 	// 查找特型卡配置
-	itemSetting, err := io.GetConfig("testdata")
+	itemSetting, err := getter.GetConfig("testdata")
 	if err != nil {
 		t.Error("无法检测问题，错误！")
 	}

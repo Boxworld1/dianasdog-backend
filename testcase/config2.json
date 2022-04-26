@@ -1,0 +1,15 @@
+{
+    "resource": "testdata",
+    "write_setting": {
+        "key": {
+            "dump_digest": "true",
+            "dump_invert_idx": "true",
+            "dump_dict": "true"
+        },
+        "display.score": {
+            "dump_digest": "true",
+            "dump_invert_idx": "false",
+            "dump_dict": "false"
+        }
+    }
+}

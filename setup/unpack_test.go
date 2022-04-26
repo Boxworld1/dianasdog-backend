@@ -6,25 +6,32 @@
 package setup
 
 import (
-	"dianasdog/io"
+	"dianasdog/getter"
+	"dianasdog/testcase"
 	"testing"
 )
 
 func TestUnpackXml(t *testing.T) {
 
 	// 初始化测例
-	if err := io.SetTestData(); err != nil {
+	if err := testcase.SetTestData(0); err != nil {
 		t.Error("测例建造失败")
 	}
 
 	// 查找不存在的文件
-	err := UnpackXmlFile("apple.xml", "testcase_apple")
+	err := UnpackXmlFile("apple.xml", "testcase_apple", "insert", nil)
 	if err == nil {
 		t.Error("无法检测问题，错误！")
 	}
 
 	// 查找存在的特型卡配置
-	err = UnpackXmlFile("testcase.xml", "testdata")
+	itemSettings, err := getter.GetConfig("testdata")
+	if err != nil {
+		t.Error("读入配置出错")
+	}
+
+	// 拆包
+	err = UnpackXmlFile("testcase.xml", "testdata", "insert", itemSettings)
 	if err != nil {
 		t.Error("检测到不存在的错误！")
 	}

@@ -61,13 +61,36 @@ func InsertFile(db *sql.DB, tableName string, filename string, data []byte) erro
 	return err
 }
 
+// 取出文件名
+func GetFileName(db *sql.DB, tableName string) ([]string, error) {
+	// 查找表格
+	task := "SELECT filename FROM " + tableName
+	rows, err := db.Query(task)
+
+	// 对应表格不存在
+	if err != nil {
+		return nil, err
+	}
+
+	// 否则取出数据
+	var names []string = make([]string, 0)
+	for rows.Next() {
+		var name string
+		rows.Scan(&name)
+		names = append(names, name)
+	}
+	rows.Close()
+
+	return names, nil
+}
+
 // 取出文件
 func GetFile(db *sql.DB, tableName string, filename string) ([]byte, error) {
 	// 按文件名查找
 	task := "SELECT filename, data FROM " + tableName + " WHERE filename=?"
 	rows, err := db.Query(task, filename)
 
-	// 对于文件表不存在
+	// 对应表格不存在
 	if err != nil {
 		return nil, err
 	}
@@ -81,6 +104,7 @@ func GetFile(db *sql.DB, tableName string, filename string) ([]byte, error) {
 	}
 	rows.Close()
 
+	// 若数据不符合条件，则返回错误
 	if name != filename {
 		return nil, errors.New("No data with filename = " + filename)
 	}

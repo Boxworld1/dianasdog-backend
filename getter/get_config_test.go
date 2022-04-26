@@ -3,13 +3,19 @@
 // @auth		ryl				2022/3/17		10:00
 // @param		t				*testing.T		testing 用参数
 
-package io
+package getter
 
 import (
+	"dianasdog/testcase"
 	"testing"
 )
 
 func TestGetConfig(t *testing.T) {
+
+	// 初始化测例
+	if err := testcase.SetTestData(0); err != nil {
+		t.Error("测例建造失败")
+	}
 
 	// 查找不存在的文件
 	_, err := GetConfig("testcase_apple")

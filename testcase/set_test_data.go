@@ -1,9 +1,10 @@
 // @title	SetTestData
 // @description	将单元测试需要的数据入库
 // @auth	ryl		2022/4/25	18:00
+// @param	stage	int			数据模式
 // @return	err		error		错误值
 
-package io
+package testcase
 
 import (
 	"dianasdog/database"
@@ -11,7 +12,7 @@ import (
 	"io/ioutil"
 )
 
-func SetTestData() error {
+func SetTestData(stage int) error {
 
 	// 得到此文件的绝对路径
 	abspath, _ := path.GetAbsPath()
@@ -33,6 +34,9 @@ func SetTestData() error {
 
 	// 数据加入数据库
 	filename = "config.json"
+	if stage == 1 {
+		filename = "config2.json"
+	}
 	filepath = abspath + "testcase/" + filename
 
 	// 读入文件

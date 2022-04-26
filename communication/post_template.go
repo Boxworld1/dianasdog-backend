@@ -6,7 +6,7 @@
 package communication
 
 import (
-	"dianasdog/io"
+	"dianasdog/setter"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -94,7 +94,7 @@ func PostTemplate(context *gin.Context) {
 	}
 
 	// 否则调用函数写入文件
-	io.SetTemplate(res, data)
+	setter.SetTemplate(res, data)
 
 	// 返回对应值
 	context.JSON(200, gin.H{

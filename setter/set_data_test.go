@@ -3,17 +3,18 @@
 // @auth	ryl		2022/4/14	10:30
 // @param	t		*testing.T	testing 用参数
 
-package io
+package setter
 
 import (
 	"dianasdog/database"
+	"dianasdog/testcase"
 	"testing"
 )
 
 func TestSetData(t *testing.T) {
 
 	// 初始化测例
-	if err := SetTestData(); err != nil {
+	if err := testcase.SetTestData(0); err != nil {
 		t.Error("测例建造失败")
 	}
 
