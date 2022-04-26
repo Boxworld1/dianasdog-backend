@@ -3,7 +3,7 @@
 // @auth	ryl			2022/4/26	13:30
 // @param	filename	string		文件名
 // @param	resource	string		特型卡类型
-// @param	type_		string		操作类型（insert/delete）
+// @param	opType		string		操作类型（insert/delete）
 // @param	itemSettings	[]getter.ItemSetting	写入行为
 // @return  err			error		non-nil when fileName is wrong
 
@@ -16,7 +16,7 @@ import (
 	"github.com/beevik/etree"
 )
 
-func UnpackXmlFile(filename string, resource string, type_ string, itemSettings []getter.ItemSetting) error {
+func UnpackXmlFile(filename string, resource string, opType string, itemSettings []getter.ItemSetting) error {
 
 	// 取得 xml 数据
 	data, err := database.GetFile(database.DataClient, resource, filename)
@@ -40,7 +40,7 @@ func UnpackXmlFile(filename string, resource string, type_ string, itemSettings 
 	// 遍历所有 item 并存入数据库
 	for _, item := range itemList {
 		docid := GetDocid(item, resource)
-		if err := StoreItem(item, resource, type_, docid, itemSettings); err != nil {
+		if err := StoreItem(item, resource, opType, docid, itemSettings); err != nil {
 			return err
 		}
 	}
