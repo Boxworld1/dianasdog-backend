@@ -29,7 +29,8 @@ func StoreItem(data *etree.Element, resource string, operation string, docid str
 	database.CreateTableInPattern(resource)
 
 	// 先记录要传入 Redis 的值
-	var redisValues []string = make([]string, 0)
+	var redisStr string
+	var esStr string
 
 	// 根据配置信息写入数据库
 	for _, itemSetting := range itemSettings {
@@ -41,13 +42,17 @@ func StoreItem(data *etree.Element, resource string, operation string, docid str
 		for _, value := range data.FindElements(path) {
 			// 写入摘要(Radis)的数据
 			if itemSetting.DumpDigest {
-				redisValues = append(redisValues, "\""+key+"\": \""+value.Text()+"\"")
+				// 若字串不为空，则加入逗号分隔
+				if len(redisStr) != 0 {
+					redisStr += ", "
+				}
+				// 然后存入数据
+				redisStr += "\"" + key + "\": \"" + value.Text() + "\""
 			}
 
-			// 数据写入倒排引擎(Es)
+			// 写入倒排引擎(Es)的数据
 			if itemSetting.DumpInvertIdx {
-				fmt.Println("inesrt to es: ", value.Text())
-				database.InsertToEs(resource, es, docid, value.Text())
+				esStr = esStr + value.Text() + " "
 			}
 
 			// 数据写入词典(Dict)
@@ -59,24 +64,16 @@ func StoreItem(data *etree.Element, resource string, operation string, docid str
 
 	}
 
-	// 将传入 redis 的数据置为 json
-	var redisStr string = "{"
-
-	// 遍历所有要传入 redis 的数据
-	for key, value := range redisValues {
-		// 若不为首位则用逗号分隔
-		if key != 0 {
-			redisStr += ","
-		}
-
-		// 然后接上值
-		redisStr += value
-	}
-	redisStr += "}"
+	// 将传入 redis 的数据变为 json
+	redisStr = "{" + redisStr + "}"
 
 	// 数据写入摘要(Radis)
 	fmt.Println("insert to redis: ", redisStr)
 	database.SetToRedis(redis, docid, redisStr)
+
+	// 数据写入倒排引擎(Es)
+	fmt.Println("inesrt to es: ", esStr)
+	database.InsertToEs(resource, es, docid, esStr)
 
 	return nil
 }
