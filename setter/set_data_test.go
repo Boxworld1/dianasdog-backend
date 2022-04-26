@@ -14,7 +14,7 @@ import (
 func TestSetData(t *testing.T) {
 
 	// 初始化测例
-	if err := testcase.SetTestData(); err != nil {
+	if err := testcase.SetTestData(0); err != nil {
 		t.Error("测例建造失败")
 	}
 

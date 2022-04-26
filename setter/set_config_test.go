@@ -13,7 +13,7 @@ import (
 func TestSetConfig(t *testing.T) {
 
 	// 初始化测例
-	if err := testcase.SetTestData(); err != nil {
+	if err := testcase.SetTestData(0); err != nil {
 		t.Error("测例建造失败")
 	}
 
@@ -21,6 +21,11 @@ func TestSetConfig(t *testing.T) {
 	data, err := database.GetFile(database.ConfigClient, "file", "testdata")
 	if err != nil {
 		t.Error("测试文件有误")
+	}
+
+	// 初始化测例
+	if err := testcase.SetTestData(1); err != nil {
+		t.Error("测例建造失败")
 	}
 
 	err = SetConfig("testdata", data)

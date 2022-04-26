@@ -11,12 +11,14 @@ import (
 
 func TestSetTestData(t *testing.T) {
 
-	// 初始化测例
-	err := SetTestData()
+	for i := 0; i < 2; i++ {
+		// 初始化测例
+		err := SetTestData(0)
 
-	// 测试时出错
-	if err != nil {
-		t.Error(err)
+		// 测试时出错
+		if err != nil {
+			t.Error(err)
+		}
 	}
 
 }

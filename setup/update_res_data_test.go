@@ -14,7 +14,7 @@ import (
 func TestUpdateResData(t *testing.T) {
 
 	// 初始化测例
-	if err := testcase.SetTestData(); err != nil {
+	if err := testcase.SetTestData(0); err != nil {
 		t.Error("测例建造失败")
 	}
 
@@ -26,9 +26,14 @@ func TestUpdateResData(t *testing.T) {
 
 	// 全量建库测试
 	err = UpdateResData("testdata", "insert", itemSettings)
-
 	if err != nil {
 		t.Error("检测到不存在的错误！")
+	}
+
+	// 全量建库：不存在特型卡
+	err = UpdateResData("testdata_apple", "insert", itemSettings)
+	if err == nil {
+		t.Error("检测不到存在的错误！")
 	}
 
 }
