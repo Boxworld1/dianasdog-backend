@@ -7,6 +7,7 @@ package setup
 
 import (
 	"dianasdog/database"
+	"dianasdog/testcase"
 	"testing"
 
 	"github.com/beevik/etree"
@@ -15,7 +16,7 @@ import (
 func TestStoreItem(t *testing.T) {
 
 	// 初始化测例
-	if err := SetTestData(); err != nil {
+	if err := testcase.SetTestData(); err != nil {
 		t.Error("测例建造失败")
 	}
 

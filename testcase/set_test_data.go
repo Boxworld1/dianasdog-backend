@@ -3,7 +3,7 @@
 // @auth	ryl		2022/4/25	18:00
 // @return	err		error		错误值
 
-package io
+package testcase
 
 import (
 	"dianasdog/database"

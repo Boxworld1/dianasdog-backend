@@ -7,13 +7,14 @@ package io
 
 import (
 	"dianasdog/database"
+	"dianasdog/testcase"
 	"testing"
 )
 
 func TestSetData(t *testing.T) {
 
 	// 初始化测例
-	if err := SetTestData(); err != nil {
+	if err := testcase.SetTestData(); err != nil {
 		t.Error("测例建造失败")
 	}
 
