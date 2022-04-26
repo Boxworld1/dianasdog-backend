@@ -30,7 +30,7 @@ func TestGetConfig(t *testing.T) {
 	}
 
 	// 定义结果
-	ans := [][]bool{{true, true, true}, {false, false, true}}
+	ans := [][]bool{{true, true, true}, {true, false, true}}
 
 	// 配置数量错误
 	if len(itemSettings) != 2 {

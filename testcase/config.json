@@ -7,7 +7,7 @@
             "dump_dict": "true"
         },
         "display.title": {
-            "dump_digest": "false",
+            "dump_digest": "true",
             "dump_invert_idx": "false",
             "dump_dict": "true"
         }
