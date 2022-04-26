@@ -24,7 +24,7 @@ func TestSetTemplate(t *testing.T) {
 		t.Error("测试文件有误")
 	}
 
-	err = SetConfig("testdata", data)
+	err = SetTemplate("testdata", data)
 	// 测试时出错
 	if err != nil {
 		t.Error(err)
