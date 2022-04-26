@@ -8,7 +8,6 @@ package communication
 import (
 	"dianasdog/setter"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"mime/multipart"
 
@@ -56,9 +55,7 @@ func PostConfig(context *gin.Context) {
 
 		// 检查数据内容是否正确
 		var jsonContent ConfigJson
-		fmt.Println(content)
 		err = json.Unmarshal([]byte(content), &jsonContent)
-		fmt.Println(content)
 
 		// 若不正确，则返回错误
 
