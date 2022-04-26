@@ -2,7 +2,7 @@
 // @description	此函数的用途为检查 SetConfig 函数的正确性
 // @auth	ryl		2022/4/13	10:00
 // @param	t		*testing.T	testing 用参数
-package io
+package setter
 
 import (
 	"dianasdog/database"

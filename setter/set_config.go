@@ -5,14 +5,27 @@
 // @param	content		[]ItemSetting	需要写入配置文件的数据
 // @return	err			error			错误值
 
-package io
+package setter
 
-import "dianasdog/database"
+import (
+	"dianasdog/database"
+)
 
 func SetConfig(resource string, content []byte) error {
 
-	// 写入配置
+	// 查找原来特型卡的配置
+	// oldSetting, err := getter.GetConfig(resource)
+	// if err != nil {
+	// 	return err
+	// }
+
+	// 写入新配置
 	err := database.InsertFile(database.ConfigClient, "file", resource, content)
+
+	// 查找新特型卡配置
+	// newSetting, err := getter.GetConfig(resource)
+
+	// 更改对应文件入库的数据（全量建库）
 
 	// 无论正确与否都返回 err 的内容
 	return err

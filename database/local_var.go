@@ -13,3 +13,6 @@ var SqlUrl string = "root:thi4gaiHoa0aicees5booCiet2igoo8i@tcp(mysql.DianasDog.s
 var EsUrl string = "http://elasticsearch.DianasDog.secoder.local:9200"
 var RedisUrl string = "redis.DianasDog.secoder.local:6379"
 var RedisPw string = ""
+
+// login database
+// mysql -uroot -p --default-character-set=utf8

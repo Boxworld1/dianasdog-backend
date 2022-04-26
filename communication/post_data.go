@@ -6,7 +6,7 @@
 package communication
 
 import (
-	"dianasdog/io"
+	"dianasdog/setter"
 	"io/ioutil"
 	"mime/multipart"
 
@@ -76,7 +76,7 @@ func PostData(context *gin.Context) {
 	switch typ {
 	// 写入文件
 	case "insert":
-		if err := io.SetData(res, filename, data); err != nil {
+		if err := setter.SetData(res, filename, data); err != nil {
 			msg = err.Error()
 		}
 	// 删除条目

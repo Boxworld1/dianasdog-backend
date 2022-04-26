@@ -14,6 +14,7 @@ package setup
 
 import (
 	"dianasdog/database"
+	"dianasdog/getter"
 
 	"github.com/beevik/etree"
 )
@@ -40,7 +41,7 @@ func UnpackXmlFile(filename string, resource string) error {
 	itemList := root.SelectElements("item")
 
 	// 查找对应特型卡的配置
-	itemSettings, err := GetConfig(resource)
+	itemSettings, err := getter.GetConfig(resource)
 	if err != nil {
 		return err
 	}

@@ -6,7 +6,7 @@
 // @param	content		[]ItemSetting	需要写入配置文件的数据
 // @return	err			error			错误值
 
-package io
+package setter
 
 import (
 	"dianasdog/database"
@@ -25,9 +25,9 @@ func SetData(resource string, filename string, content []byte) error {
 		return err
 	}
 
-	// 文件拆包
-	err := setup.UnpackXmlFile(filename, resource)
+	// 文件拆包（多线程）
+	go setup.UnpackXmlFile(filename, resource)
 
 	// 无论正确与否都返回 err 的内容
-	return err
+	return nil
 }

@@ -5,7 +5,7 @@
 // @param	content		[]ItemSetting	需要写入配置文件的数据
 // @return	err			error			错误值
 
-package io
+package setter
 
 import "dianasdog/database"
 

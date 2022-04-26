@@ -6,7 +6,7 @@
 package communication
 
 import (
-	"dianasdog/io"
+	"dianasdog/setter"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -95,7 +95,7 @@ func PostConfig(context *gin.Context) {
 	}
 
 	// 否则调用函数写入文件
-	err = io.SetConfig(res, data)
+	err = setter.SetConfig(res, data)
 
 	if err != nil {
 		context.JSON(400, gin.H{

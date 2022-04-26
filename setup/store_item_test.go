@@ -7,6 +7,7 @@ package setup
 
 import (
 	"dianasdog/database"
+	"dianasdog/getter"
 	"dianasdog/testcase"
 	"testing"
 
@@ -35,7 +36,7 @@ func TestStoreItem(t *testing.T) {
 	root := doc.SelectElement("DOCUMENT")
 
 	// 查找特型卡配置
-	itemSetting, err := GetConfig("testdata")
+	itemSetting, err := getter.GetConfig("testdata")
 	if err != nil {
 		t.Error("无法检测问题，错误！")
 	}

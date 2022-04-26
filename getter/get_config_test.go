@@ -3,7 +3,7 @@
 // @auth		ryl				2022/3/17		10:00
 // @param		t				*testing.T		testing 用参数
 
-package setup
+package getter
 
 import (
 	"dianasdog/testcase"

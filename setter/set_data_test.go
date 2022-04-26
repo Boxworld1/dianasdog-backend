@@ -3,7 +3,7 @@
 // @auth	ryl		2022/4/14	10:30
 // @param	t		*testing.T	testing 用参数
 
-package io
+package setter
 
 import (
 	"dianasdog/database"
