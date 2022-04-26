@@ -7,7 +7,6 @@ package communication
 
 import (
 	"dianasdog/database"
-	"encoding/json"
 
 	"github.com/gin-gonic/gin"
 )
@@ -41,11 +40,8 @@ func GetDataName(context *gin.Context) {
 		return
 	}
 
-	// 若存在，则变为 json 阵列
-	result, _ := json.Marshal(data)
-
 	// 否则正常返回结果
 	context.JSON(200, gin.H{
-		"data": result,
+		"data": data,
 	})
 }
