@@ -13,30 +13,31 @@ func TestEsInterface(t *testing.T) {
 	client := EsClient
 
 	// Test insert function of es
-	_, err = InsertToEs(client, "100", "布加迪威龙")
+	_, err = InsertToEs("car", client, "100", "布加迪威龙")
 	if err != nil {
 		t.Error(err)
 	}
 
 	// Test update function of es
-	_, err = UpdateToEs(client, "100", "柯尼塞格")
+	_, err = UpdateToEs("car", client, "100", "柯尼塞格")
 	if err != nil {
 		t.Error(err)
 	}
 
 	// Test search function of es
-	_, err = SearchFromEs(client, "柯尼塞格")
+
+	_, err = SearchFromEs("car", client, "柯尼塞格")
 	if err != nil {
 		t.Error(err)
 	}
 
 	// Test fetch all function of es
-	_, err = FetchAllFromEs(client)
+	_, err = FetchAllFromEs("car", client)
 	if err != nil {
 		t.Error(err)
 	}
 
 	// Test delete function of es
-	DeleteFromES(client, "100")
+	DeleteFromES("car", client, "100")
 
 }

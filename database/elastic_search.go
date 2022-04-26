@@ -2,6 +2,7 @@
 // @description	倒排引擎接口
 // @auth	wzq		2022/3
 // @auth	ryl		2022/4/20	10:30
+// @auth	wzq		2022/4/26   20:34
 
 package database
 
@@ -30,11 +31,19 @@ func init() {
 	)
 }
 
-// 插入数据
-func InsertToEs(client *elastic.Client, docId string, content string) (string, error) {
+// InsertToEs
+// @title		InsertToEs
+// @description	向指定的特型（resourceName）中添加数据
+// @auth		wzq				2022/4/26		20:39
+// @param		resourceName	string			特型卡类型
+// @param		docid			string			item 编号
+// @param		content		    string			存入文档的内容
+// @return		ID				string			存入数据的id（与docID相同）
+// @return		err				error			错误值
+func InsertToEs(resourceName string, client *elastic.Client, docId string, content string) (string, error) {
 	doc := Doc{DocID: docId, Content: content}
 	put1, err := client.Index().
-		Index("document").
+		Index(resourceName).
 		BodyJson(doc).
 		Id(doc.DocID).
 		Do(context.Background())
@@ -45,10 +54,18 @@ func InsertToEs(client *elastic.Client, docId string, content string) (string, e
 	return put1.Id, err
 }
 
-//下面是更新项目的函数，需要传入docid，对数据进行改变
-func UpdateToEs(client *elastic.Client, docId string, newContent string) (string, error) {
+// UpdateToEs
+// @title		UpdateToEs
+// @description	向指定的特型（resourceName）中指定的文档更新数据
+// @auth		wzq				2022/4/26		20:39
+// @param		resourceName	string			特型卡类型
+// @param		docId			string			item 编号
+// @param		newContent		string			存入文档的内容
+// @return		result			string			result
+// @return		err				error			错误值
+func UpdateToEs(resourceName string, client *elastic.Client, docId string, newContent string) (string, error) {
 	put2, err := client.Update().
-		Index("document").
+		Index(resourceName).
 		Id(docId).
 		Doc(map[string]interface{}{"content": newContent}).
 		Do(context.Background())
@@ -60,12 +77,12 @@ func UpdateToEs(client *elastic.Client, docId string, newContent string) (string
 }
 
 //按照内容去查找，不是精确查找，只要有匹配词就可以
-func SearchFromEs(client *elastic.Client, content string) ([]Doc, error) {
+func SearchFromEs(resourceName string, client *elastic.Client, content string) ([]Doc, error) {
 	var typ Doc
 	var err error
 	var put4 *elastic.SearchResult
-	matchPhraseQuery := elastic.NewMatchPhraseQuery("content", content)
-	put4, err = client.Search("document").Query(matchPhraseQuery).Do(context.Background())
+	matchQuery := elastic.NewMatchQuery("content", content)
+	put4, err = client.Search(resourceName).Query(matchQuery).Size(10).Do(context.Background())
 	if err != nil {
 		print(err.Error())
 		return nil, err
@@ -79,11 +96,11 @@ func SearchFromEs(client *elastic.Client, content string) ([]Doc, error) {
 	return result, err
 }
 
-func FetchAllFromEs(client *elastic.Client) ([]Doc, error) { //拿到类型document里的所有数据
+func FetchAllFromEs(resourceName string, client *elastic.Client) ([]Doc, error) { //拿到类型里的所有数据
 	var put3 *elastic.SearchResult
 	var err error
 	//取所有
-	put3, err = client.Search("document").Do(context.Background())
+	put3, err = client.Search(resourceName).Do(context.Background())
 	var typ Doc
 	if err != nil {
 		print(err.Error())
@@ -98,9 +115,9 @@ func FetchAllFromEs(client *elastic.Client) ([]Doc, error) { //拿到类型docum
 	return result, err
 }
 
-func DeleteFromES(client *elastic.Client, docId string) { //指定想要删除的文档的docId
+func DeleteFromES(resourceName string, client *elastic.Client, docId string) { //指定想要删除的文档的docId
 	var err error
-	res, err := client.Delete().Index("document").
+	res, err := client.Delete().Index(resourceName).
 		Id(docId).
 		Do(context.Background())
 	if err != nil {
