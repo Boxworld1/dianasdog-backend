@@ -14,10 +14,13 @@ func SetupRouter() *gin.Engine {
 	router.Use(cors.Default())
 
 	router.POST("/search", GoSearch)
+	router.POST("/login", PostLogin)
+
 	router.POST("/data", PostData)
 	router.POST("/pattern", PostTemplate)
+
 	router.POST("/setting", PostConfig)
-	router.POST("/login", PostLogin)
+	router.GET("/setting", GetConfig)
 
 	return router
 }
