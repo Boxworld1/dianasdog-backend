@@ -30,7 +30,7 @@ func UnpackXmlFile(filename string, resource string) error {
 	doc := etree.NewDocument()
 	err = doc.ReadFromString(string(data))
 
-	// 文件名有误
+	// 文件有误
 	if err != nil {
 		return err
 	}

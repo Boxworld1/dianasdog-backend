@@ -10,6 +10,7 @@ package io
 
 import (
 	"dianasdog/database"
+	"dianasdog/setup"
 )
 
 func SetData(resource string, filename string, content []byte) error {
@@ -25,8 +26,8 @@ func SetData(resource string, filename string, content []byte) error {
 	}
 
 	// 文件拆包
-	// err := setup.UnpackXmlFile(filename, resource)
+	err := setup.UnpackXmlFile(filename, resource)
 
 	// 无论正确与否都返回 err 的内容
-	return nil
+	return err
 }
