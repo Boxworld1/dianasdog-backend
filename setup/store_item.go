@@ -47,7 +47,7 @@ func StoreItem(data *etree.Element, resource string, operation string, docid str
 			// 数据写入倒排引擎(Es)
 			if itemSetting.DumpInvertIdx {
 				fmt.Println("inesrt to es: ", value.Text())
-				database.InsertToEs(es, docid, value.Text())
+				database.InsertToEs(resource, es, docid, value.Text())
 			}
 
 			// 数据写入词典(Dict)
