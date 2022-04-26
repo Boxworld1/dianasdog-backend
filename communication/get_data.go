@@ -21,7 +21,7 @@ func GetData(context *gin.Context) {
 	var body GetDataBody
 
 	// 检查收到信息的格式是否正确
-	if err := context.ShouldBind(&body); err != nil {
+	if err := context.ShouldBindJSON(&body); err != nil {
 		context.JSON(400, gin.H{
 			"err": err.Error(),
 		})
@@ -34,7 +34,7 @@ func GetData(context *gin.Context) {
 
 	data, err := database.GetFile(database.DataClient, resource, filename)
 
-	// 不存在此特型卡类型
+	// 不存在此特型卡类型或文件
 	if err != nil {
 		context.JSON(400, gin.H{
 			"err": err.Error(),

@@ -6,6 +6,7 @@
 package communication
 
 import (
+	"dianasdog/testcase"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -21,6 +22,11 @@ type MapStruct struct {
 }
 
 func TestRouter(t *testing.T) {
+	// 初始化测例
+	if err := testcase.SetTestData(0); err != nil {
+		t.Error("测例建造失败")
+	}
+
 	// 定义测试用例
 	// 分別记录了正确的返回码、请求格式及内容
 	tests := []struct {
@@ -40,17 +46,34 @@ func TestRouter(t *testing.T) {
 		{[]int{}, 0, []MapStruct{
 			{"content", `{"username": "hksjdahfjasdljgfpqwejgjksadjg"}`},
 		}},
-		// 测试写入行为文件回传（合法类型）
+		// 测试写入行为文件回传、取得文件名（合法类型）
 		{[]int{5, 6}, 0, []MapStruct{
 			{"content", `{"resource": "testdata"}`},
 		}},
-		// 测试写入行为文件回传（非法类型）
+		// 测试写入行为文件回传、取得文件名（非法类型）
 		{[]int{}, 0, []MapStruct{
 			{"content", `{"resource": "testcase_banana"}`},
 		}},
-		// 测试文件下载
+		// 测试文件下载（存在文件）
+		{[]int{5, 6, 7}, 0, []MapStruct{
+			{"content", `{
+				"resource": "testdata",
+				"filename": "testcase.xml"
+			}`},
+		}},
+		// 测试文件下载（合法类型但不存在文件）
 		{[]int{5, 6}, 0, []MapStruct{
-			{"content", `{"resource": "testdata", "filename": "testcase.xml"}`},
+			{"content", `{
+				"resource": "testdata",
+				"filename": "testcase104219.xml"
+			}`},
+		}},
+		// 测试文件下载（非法类型）
+		{[]int{}, 0, []MapStruct{
+			{"content", `{
+				"resource": "testcase_banana"
+				"filename": "testcase.xml"
+			}`},
 		}},
 		// 测试写入行为文件上传
 		{[]int{1}, 1, []MapStruct{
@@ -119,7 +142,7 @@ func TestRouter(t *testing.T) {
 		{"POST", "/login"},
 		{"GET", "/setting"},
 		{"GET", "/dataname"},
-		// {"GET", "/data"},
+		{"GET", "/data"},
 	}
 
 	// 开启 router
@@ -176,7 +199,7 @@ func TestRouter(t *testing.T) {
 
 			// 校验状态码是否符合预期
 			if (w.Code == 200 && status != 1) || (w.Code == 400 && status != 0) {
-				fmt.Println("testcase:", key, "with data:", dataID, "get:", w.Code, "but expect:", testcase.result[key])
+				fmt.Println("testcase:", key, "with data:", dataID, "get:", w.Code)
 				t.Error("状态码错误")
 			}
 		}
