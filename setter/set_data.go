@@ -10,6 +10,7 @@ package setter
 
 import (
 	"dianasdog/database"
+	"dianasdog/getter"
 	"dianasdog/setup"
 )
 
@@ -25,8 +26,14 @@ func SetData(resource string, filename string, content []byte) error {
 		return err
 	}
 
+	// 查找对应特型卡的配置
+	itemSettings, err := getter.GetConfig(resource)
+	if err != nil {
+		return err
+	}
+
 	// 文件拆包（多线程）
-	go setup.UnpackXmlFile(filename, resource)
+	go setup.UnpackXmlFile(filename, resource, "insert", itemSettings)
 
 	// 无论正确与否都返回 err 的内容
 	return nil

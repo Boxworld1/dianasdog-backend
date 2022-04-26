@@ -7,7 +7,6 @@ package database
 
 import (
 	"bytes"
-	"fmt"
 	"testing"
 )
 
@@ -28,6 +27,18 @@ func TestFileTable(t *testing.T) {
 		t.Error(err)
 	}
 
+	// 对比结果
+	res := bytes.Compare(srcData, dstData)
+	if res != 0 {
+		t.Error("存取错误!")
+	}
+
+	// 取出文件名
+	_, err = GetFileName(ConfigClient, "file")
+	if err != nil {
+		t.Error("存取错误!")
+	}
+
 	// 取出不存在的文件
 	_, err = GetFile(ConfigClient, "file", "filename")
 	if err == nil {
@@ -40,12 +51,4 @@ func TestFileTable(t *testing.T) {
 		t.Error("检测不到错误")
 	}
 
-	// 对比结果
-	res := bytes.Compare(srcData, dstData)
-	fmt.Println(srcData)
-	fmt.Println(dstData)
-
-	if res != 0 {
-		t.Error("存取错误!")
-	}
 }
