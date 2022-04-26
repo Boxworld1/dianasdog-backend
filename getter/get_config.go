@@ -1,9 +1,9 @@
-// @title		GetConfig
+// @title	GetConfig
 // @description	此函数的用途为，根据数据 "类型"，在配置文件中找出对应的 "写入行为"，并反馈相关数据到数据处理函数中。
-// @auth		ryl				2022/4/20		17:00
-// @param		targetResource	string			特型卡片类型（如 "诗词" 和 "车" 等）
-// @return		itemSettings	[]ItemSetting	此键值下所有需要写入数据库的数据
-// @return		err				error			错误值
+// @auth	ryl			2022/4/20		17:00
+// @param	resource	string		特型卡片类型（如 "诗词" 和 "车" 等）
+// @return	itemSettings	[]ItemSetting	此键值下所有需要写入数据库的数据
+// @return	err			error		错误值
 
 package getter
 
