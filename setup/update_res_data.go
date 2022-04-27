@@ -11,21 +11,35 @@ package setup
 import (
 	"dianasdog/database"
 	"dianasdog/getter"
+
+	"github.com/beevik/etree"
 )
 
 func UpdateResData(resource string, opType string, itemSettings []getter.ItemSetting) error {
 
-	// 查找特型卡类型下的所有文件名字
-	filenames, err := database.GetFileName(database.DataClient, resource)
+	// 查找特型卡类型下的所有数据
+	data, err := database.GetAllFile(database.DocidClient, resource)
 
 	// 若特型卡类型错误
 	if err != nil {
 		return err
 	}
 
-	// 按文件名拆包
-	for _, file := range filenames {
-		go UnpackXmlFile(file, resource, opType, itemSettings)
+	// 数据分解
+	for _, block := range data {
+		// 取得 docid 和对应内容
+		docid := block.Name
+		content := block.Data
+
+		// 将其转化为 etree 方便写入
+		doc := etree.NewDocument()
+		if err := doc.ReadFromBytes(content); err != nil {
+			return err
+		}
+		item := doc.Root()
+
+		// 直接调用 StoreItem 储存数据
+		StoreItem(item, resource, opType, docid, itemSettings)
 	}
 
 	return nil

@@ -11,29 +11,28 @@ import (
 )
 
 // 文件数据库接口
-var CategoryClient *sql.DB
+var DocidClient *sql.DB
 var DataClient *sql.DB
 var ConfigClient *sql.DB
 var TemplateClient *sql.DB
 
 func init() {
 	// 创建数据库
-	CreateDatabase("category")
+	CreateDatabase("docid")
 	CreateDatabase("data")
 	CreateDatabase("config")
 	CreateDatabase("template")
 
 	// 开启数据库
-	CategoryClient, _ = sql.Open("mysql", GenUrl("category"))
+	DocidClient, _ = sql.Open("mysql", GenUrl("docid"))
 	DataClient, _ = sql.Open("mysql", GenUrl("data"))
 	ConfigClient, _ = sql.Open("mysql", GenUrl("config"))
 	TemplateClient, _ = sql.Open("mysql", GenUrl("template"))
 
 	inittask := "SET NAMES utf8 "
 
-	// 生成特型卡词典
-	CategoryClient.Exec(inittask)
-	//CreateTableFromDict(CategoryClient, "word", []string{"id"})
+	// 生成 docid 数据库（每个特型卡只有一个对应文件）
+	DocidClient.Exec(inittask)
 
 	// 生成源数据数据库（每个特型卡有多个对应文件）
 	DataClient.Exec(inittask)
@@ -49,7 +48,7 @@ func init() {
 
 // 新建文件表格（含文件名和内容）
 func CreateFileTable(db *sql.DB, tableName string) error {
-	task := "CREATE TABLE IF NOT EXISTS " + tableName + " (filename VARCHAR(64) PRIMARY KEY NULL, data LONGBLOB NULL) DEFAULT CHARSET=utf8;"
+	task := "CREATE TABLE IF NOT EXISTS " + tableName + " (filename VARCHAR(64) PRIMARY KEY NULL, data MEDIUMBLOB NULL) DEFAULT CHARSET=utf8;"
 	_, err := db.Exec(task)
 	return err
 }
@@ -109,4 +108,33 @@ func GetFile(db *sql.DB, tableName string, filename string) ([]byte, error) {
 		return nil, errors.New("No data with filename = " + filename)
 	}
 	return data, err
+}
+
+type DataItem struct {
+	Name string
+	Data []byte
+}
+
+func GetAllFile(db *sql.DB, tableName string) ([]DataItem, error) {
+	// 按文件名查找
+	task := "SELECT filename, data FROM " + tableName
+	rows, err := db.Query(task)
+
+	// 对应表格不存在
+	if err != nil {
+		return nil, err
+	}
+
+	// 取出数据
+	var result []DataItem = make([]DataItem, 0)
+	for rows.Next() {
+		var name string
+		var data []byte
+		err = rows.Scan(&name, &data)
+		result = append(result, DataItem{name, data})
+		break
+	}
+	rows.Close()
+
+	return result, err
 }
