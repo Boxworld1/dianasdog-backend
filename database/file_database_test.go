@@ -51,4 +51,16 @@ func TestFileTable(t *testing.T) {
 		t.Error("检测不到错误")
 	}
 
+	// 取出所有文件
+	_, err = GetAllFile(ConfigClient, "file")
+	if err != nil {
+		t.Error("检测不到错误")
+	}
+
+	// 取出不存在的表格
+	_, err = GetAllFile(ConfigClient, "3109275jk")
+	if err == nil {
+		t.Error("检测不到错误")
+	}
+
 }

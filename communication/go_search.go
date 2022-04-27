@@ -1,6 +1,6 @@
 // @title	GoSearch
 // @description	后端搜索接口
-// @auth	ryl		2022/4/14	10:30
+// @auth	ryl		2022/4/27	16:30
 // @param	context	*gin.Context
 
 package communication

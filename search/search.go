@@ -1,14 +1,14 @@
 // @title	Search
 // @description	此函数的用途为搜索与句子相关的信息
-// @auth	ryl		2022/4/25	22:00
+// @auth	ryl		2022/4/27	16:00
 // @param	query	string		句子
-// @return	err		string		结果
+// @return	resList	[]string	结果
 
 package search
 
 import "dianasdog/database"
 
-func Search(query string) string {
+func Search(query string) []string {
 
 	// 意图识別
 	intentList := IntentionRecognition(query)
@@ -37,6 +37,12 @@ func Search(query string) string {
 		}
 	}
 
+	var resList []string = make([]string, 0)
+	for _, docid := range docIdList {
+		result, _ := database.GetFromRedis(database.RedisClient, docid)
+		resList = append(resList, result)
+	}
+
 	// 返回搜索结果
-	return "I'm result"
+	return resList
 }
