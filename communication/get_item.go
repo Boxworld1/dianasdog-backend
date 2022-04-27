@@ -6,6 +6,8 @@
 package communication
 
 import (
+	"dianasdog/database"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -26,21 +28,22 @@ func GetItem(context *gin.Context) {
 	}
 
 	// 若无错误，则继续
-	// resource := body.Resource
-	// key := body.Key
+	resource := body.Resource
+	key := body.Key
+	docid := resource + "@" + key
 
-	// data, err := database.GetFile(database.DataClient, resource, filename)
+	data, err := database.GetFile(database.DocidClient, resource, docid)
 
 	// 不存在此特型卡类型或文件
-	// if err != nil {
-	// 	context.JSON(400, gin.H{
-	// 		"err": err.Error(),
-	// 	})
-	// 	return
-	// }
+	if err != nil {
+		context.JSON(400, gin.H{
+			"err": err.Error(),
+		})
+		return
+	}
 
 	context.JSON(200, gin.H{
-		"data": "",
+		"data": string(data),
 	})
 
 }

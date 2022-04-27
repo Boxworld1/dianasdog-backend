@@ -23,7 +23,7 @@ func SetupRouter() *gin.Engine {
 	router.GET("/dataname", GetDataName)
 	router.GET("/pattern", GetTemplate)
 	router.GET("/setting", GetConfig)
-	// router.GET("/item", GetItem)
+	router.GET("/item", GetItem)
 
 	return router
 }
