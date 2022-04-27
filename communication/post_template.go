@@ -12,9 +12,9 @@ import (
 )
 
 type TemplateBody struct {
-	Resource  string `form:"resource" binding:"required"`
-	Pattern   string `form:"pattern" binding:"required"`
-	Operation string `form:"operation" binding:"required"`
+	Resource  string `json:"resource" binding:"required"`
+	Pattern   string `json:"pattern" binding:"required"`
+	Operation string `json:"operation" binding:"required"`
 }
 
 func PostTemplate(context *gin.Context) {
