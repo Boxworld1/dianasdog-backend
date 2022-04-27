@@ -11,9 +11,5 @@ func TestIntentionRecognition(t *testing.T) {
 	dict := IntentionRecognition("宝马的价格是多少")
 	if len(dict) == 0 {
 		t.Error("invalid length")
-	} else {
-		if dict[0] != "test" {
-			t.Error("wrong answer")
-		}
 	}
 }
