@@ -14,7 +14,6 @@ import (
 var DocidClient *sql.DB
 var DataClient *sql.DB
 var ConfigClient *sql.DB
-var TemplateClient *sql.DB
 
 func init() {
 	// 创建数据库
@@ -27,7 +26,6 @@ func init() {
 	DocidClient, _ = sql.Open("mysql", GenUrl("docid"))
 	DataClient, _ = sql.Open("mysql", GenUrl("data"))
 	ConfigClient, _ = sql.Open("mysql", GenUrl("config"))
-	TemplateClient, _ = sql.Open("mysql", GenUrl("template"))
 
 	inittask := "SET NAMES utf8 "
 
@@ -40,10 +38,6 @@ func init() {
 	// 生成写入行为配置数据库（每个特型卡只有一个对应文件）
 	ConfigClient.Exec(inittask)
 	CreateFileTable(ConfigClient, "file")
-
-	// 生成模板配置数据库（每个特型卡只有一个对应文件）
-	TemplateClient.Exec(inittask)
-	CreateFileTable(TemplateClient, "file")
 }
 
 // 新建文件表格（含文件名和内容）

@@ -96,15 +96,34 @@ func TestRouter(t *testing.T) {
 				"key": "3"
 			}`},
 		}},
+		// 测试配置文件上传
+		{[]int{2}, 0, []MapStruct{
+			{"content", `{
+				"resource": "testcalfa8",
+				"operation": "insert",
+				"pattern": "series_name+garbage+intent+garbage"
+			}`},
+		}},
+		// 测试配置文件上传
+		{[]int{2}, 0, []MapStruct{
+			{"content", `{
+				"resource": "d",
+				"operation": "delete",
+				"pattern": "series_name+garbage+intent+garbage"
+			}`},
+		}},
+		// 测试配置文件上传（合法类型）
+		{[]int{2, 5, 6, 7}, 0, []MapStruct{
+			{"content", `{
+				"resource": "testdata",
+				"operation": "insert",
+				"pattern": "series_name+garbage+intent+garbage"
+			}`},
+		}},
 		// 测试写入行为文件上传
 		{[]int{1}, 1, []MapStruct{
 			{"resource", "testcase_car"},
 			{"data", "{\"resource\":\"testcase_car\",\"write_setting\":{\"key\":{\"dump_digest\":\"true\",\"dump_invert_idx\":\"true\",\"dump_dict\":\"true\"},\"display.title\":{\"dump_digest\":\"false\",\"dump_invert_idx\":\"false\",\"dump_dict\":\"true\"}}}"},
-		}},
-		// 测试配置文件上传
-		{[]int{2}, 1, []MapStruct{
-			{"resource", "testcase_car"},
-			{"data", "{\"resource\":\"testcase_car\",\"rule_recall_setting_list\":{\"garbage_dict_list\":[\"parser_\u58a8\u8ff9\u5929\u6c14_200_garbage\"],\"pattern_list\":[{\"pattern_item_array\":[[{\"data_pointer\":\"name\",\"data_source_type\":0,\"field_name\":\"name\",\"query_item_type\":0}],[{\"data_pointer\":\"parser_\u58a8\u8ff9\u5929\u6c14_200_intent\",\"data_source_type\":4,\"field_name\":\"intent\",\"query_item_type\":2}]],\"use_common_garbage_dict\":true,\"use_synonym_dict\":true}],\"pre_processors\":[],\"synonym_dict_list\":[\"parser_synonym_\u58a8\u8ff9\u5929\u6c14_200_1622687488\"]}}"},
 		}},
 		// 测试数据上传（合法类型）
 		{[]int{3}, 1, []MapStruct{
