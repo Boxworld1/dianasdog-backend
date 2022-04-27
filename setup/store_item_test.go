@@ -29,7 +29,7 @@ func TestStoreItem(t *testing.T) {
 
 	// 读入文件错误
 	doc := etree.NewDocument()
-	if err := doc.ReadFromString(string(data)); err != nil {
+	if err := doc.ReadFromBytes(data); err != nil {
 		t.Error(err)
 	}
 
