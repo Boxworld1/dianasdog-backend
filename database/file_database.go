@@ -132,7 +132,6 @@ func GetAllFile(db *sql.DB, tableName string) ([]DataItem, error) {
 		var data []byte
 		err = rows.Scan(&name, &data)
 		result = append(result, DataItem{name, data})
-		break
 	}
 	rows.Close()
 
