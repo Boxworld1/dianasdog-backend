@@ -54,7 +54,10 @@ func GetAllCategory(db *sql.DB, tableName string) ([]string, error) {
 	for rows.Next() {
 		var name string
 		rows.Scan(&name)
-		names = append(names, name)
+		// 若不为测试类型则加入
+		if name != "testdata" && name != "testcase_car" {
+			names = append(names, name)
+		}
 	}
 	rows.Close()
 

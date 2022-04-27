@@ -186,6 +186,7 @@ func TestRouter(t *testing.T) {
 		{"GET", "/data"},
 		{"GET", "/item"},
 		{"GET", "/category"},
+		// {"GET", "/key"},
 	}
 
 	// 开启 router
