@@ -75,6 +75,27 @@ func TestRouter(t *testing.T) {
 				"filename": "testcase.xml"
 			}`},
 		}},
+		// 测试 item 下载（存在 item）
+		{[]int{5, 6, 7, 9}, 0, []MapStruct{
+			{"content", `{
+				"resource": "testdata",
+				"key": "红豆词1"
+			}`},
+		}},
+		// 测试 item 下载（不存在 item）
+		{[]int{5, 6, 7}, 0, []MapStruct{
+			{"content", `{
+				"resource": "testdata",
+				"key": "3"
+			}`},
+		}},
+		// 测试 item 下载（非法类型）
+		{[]int{}, 0, []MapStruct{
+			{"content", `{
+				"resource": "testcalfa",
+				"key": "3"
+			}`},
+		}},
 		// 测试写入行为文件上传
 		{[]int{1}, 1, []MapStruct{
 			{"resource", "testcase_car"},
@@ -144,6 +165,7 @@ func TestRouter(t *testing.T) {
 		{"GET", "/dataname"},
 		{"GET", "/pattern"},
 		{"GET", "/data"},
+		{"GET", "/item"},
 	}
 
 	// 开启 router
