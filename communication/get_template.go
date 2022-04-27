@@ -30,7 +30,7 @@ func GetTemplate(context *gin.Context) {
 	}
 
 	// 取得文件
-	data, err := database.GetFile(database.TemplateClient, "file", body.Resource)
+	data, err := database.FetchAllPattern(body.Resource)
 
 	// 若不存在文件/对应特型卡类型，则返回错误
 	if err != nil {
@@ -42,6 +42,6 @@ func GetTemplate(context *gin.Context) {
 
 	// 否则正常返回结果
 	context.JSON(200, gin.H{
-		"data": string(data),
+		"data": data,
 	})
 }

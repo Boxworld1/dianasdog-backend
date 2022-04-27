@@ -19,15 +19,20 @@ func TestSetTemplate(t *testing.T) {
 	}
 
 	// 读入文件
-	data, err := database.GetFile(database.TemplateClient, "file", "testdata")
+	data, err := database.FetchAllPattern("testdata")
 	if err != nil {
 		t.Error("测试文件有误")
 	}
 
-	err = SetTemplate("testdata", data)
+	err = SetTemplate("testdata", data[0], "insert")
 	// 测试时出错
 	if err != nil {
 		t.Error(err)
 	}
 
+	err = SetTemplate("testdata", data[0], "delete")
+	// 测试时出错
+	if err != nil {
+		t.Error(err)
+	}
 }

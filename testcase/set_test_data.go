@@ -53,7 +53,7 @@ func SetTestData(stage int) error {
 	data, _ = ioutil.ReadFile(filepath)
 
 	// 加入数据库中
-	_ = database.InsertFile(database.TemplateClient, "file", res, data)
+	_ = database.InsertToPattern(res, "series_name+garbage+intent+garbage")
 
 	return nil
 }

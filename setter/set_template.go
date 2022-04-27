@@ -9,10 +9,17 @@ package setter
 
 import "dianasdog/database"
 
-func SetTemplate(resource string, content []byte) error {
+func SetTemplate(resource string, content string, operation string) error {
 
-	// 写入配置
-	err := database.InsertFile(database.TemplateClient, "file", resource, content)
+	var err error
+	switch operation {
+	case "insert":
+		// 写入配置
+		err = database.InsertToPattern(resource, content)
+	case "delete":
+		// 删除配置
+		err = database.DeleteFromPattern(resource, content)
+	}
 
 	// 无论正确与否都返回 err 的内容
 	return err
