@@ -185,6 +185,7 @@ func TestRouter(t *testing.T) {
 		{"GET", "/pattern"},
 		{"GET", "/data"},
 		{"GET", "/item"},
+		{"GET", "/category"},
 	}
 
 	// 开启 router
@@ -239,6 +240,11 @@ func TestRouter(t *testing.T) {
 				}
 			}
 
+			// 若为 GET "/category" 则
+			if key == 10 && w.Code == 200 {
+				status = 1
+			}
+
 			// 校验状态码是否符合预期
 			if (w.Code == 200 && status != 1) || (w.Code == 400 && status != 0) {
 				fmt.Println("testcase:", key, "with data:", dataID, "get:", w.Code)
@@ -246,4 +252,5 @@ func TestRouter(t *testing.T) {
 			}
 		}
 	}
+
 }
