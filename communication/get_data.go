@@ -1,6 +1,6 @@
 // @title	GetData
-// @description	后端接收数据用接口
-// @auth	ryl		2022/4/20		0:30
+// @description	后端返回数据用接口
+// @auth	ryl		2022/4/26		0:30
 // @param	context	*gin.Context
 
 package communication
