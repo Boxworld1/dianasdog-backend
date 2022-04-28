@@ -24,10 +24,16 @@ func TestSetData(t *testing.T) {
 		t.Error("测试文件有误")
 	}
 
+	// 插入正常数据
 	err = SetData("testdata", "testcase.xml", data)
-	// 测试时出错
 	if err != nil {
 		t.Error(err)
+	}
+
+	// 插入不存在的特型卡
+	err = SetData("testdata_a4", "testcase.xml", data)
+	if err == nil {
+		t.Error("检测不到错误")
 	}
 
 }

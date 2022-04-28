@@ -18,6 +18,7 @@ func SetConfig(resource string, content []byte) error {
 	// 在数据库中新增此类型
 	database.InsertCategory(database.CategoryClient, "word", resource)
 	database.CreateCategoryTable(database.CategoryClient, resource)
+	database.CreateFileTable(database.DataClient, resource)
 
 	// 新建表格
 	database.CreateTableInDict(resource)

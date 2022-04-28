@@ -13,6 +13,7 @@ import (
 
 type GetTemplateBody struct {
 	Resource string `json:"resource" binding:"required"`
+	Type     string `json:"type" binding:"required"`
 }
 
 func GetTemplate(context *gin.Context) {
@@ -30,7 +31,17 @@ func GetTemplate(context *gin.Context) {
 	}
 
 	// 取得文件
-	data, err := database.FetchAllPattern(body.Resource)
+	wordType := body.Type
+	res := body.Resource
+
+	var data []string
+
+	switch wordType {
+	case "pattern":
+		data, err = database.FetchAllPattern(res)
+	default:
+		data, err = database.GetAllWordFromDict(res, wordType)
+	}
 
 	// 若不存在文件/对应特型卡类型，则返回错误
 	if err != nil {
