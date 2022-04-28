@@ -7,6 +7,7 @@ package communication
 
 import (
 	"dianasdog/database"
+	"encoding/json"
 
 	"github.com/gin-gonic/gin"
 )
@@ -40,8 +41,12 @@ func GetConfig(context *gin.Context) {
 		return
 	}
 
-	// 否则正常返回结果
+	// 结果转化为 json
+	var result map[string]interface{}
+	json.Unmarshal(data, &result)
+
+	// 正常返回结果
 	context.JSON(200, gin.H{
-		"data": string(data),
+		"data": result,
 	})
 }

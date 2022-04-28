@@ -8,6 +8,7 @@ package communication
 import (
 	"dianasdog/database"
 
+	"github.com/beevik/etree"
 	"github.com/gin-gonic/gin"
 )
 
@@ -42,8 +43,14 @@ func GetItem(context *gin.Context) {
 		return
 	}
 
+	// 数据转化为 xml
+	doc := etree.NewDocument()
+	doc.ReadFromBytes(data)
+	str, _ := doc.WriteToString()
+
+	// 正常返回结果
 	context.JSON(200, gin.H{
-		"data": string(data),
+		"data": str,
 	})
 
 }
