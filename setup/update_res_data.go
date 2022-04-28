@@ -38,6 +38,17 @@ func UpdateResData(resource string, opType string, itemSettings []getter.ItemSet
 		}
 		item := doc.Root()
 
+		// 检查是否有此特型卡
+		cnt, err := database.CountCategory(database.CategoryClient, resource)
+		if err != nil {
+			return err
+		}
+
+		// 若相关类型未存入过 item
+		if cnt == 0 {
+			SaveItem(item, resource)
+		}
+
 		// 直接调用 StoreItem 储存数据
 		StoreItem(item, resource, opType, docid, itemSettings)
 	}
