@@ -41,4 +41,14 @@ func TestCategoryTable(t *testing.T) {
 		t.Error("不能检测错误")
 	}
 
+	// 删除表格
+	if err := DropCategory(CategoryClient, "hi"); err != nil {
+		t.Error(err)
+	}
+
+	// 删除不存在的表格
+	if err := DropCategory(CategoryClient, "bye"); err == nil {
+		t.Error("不能检测错误")
+	}
+
 }

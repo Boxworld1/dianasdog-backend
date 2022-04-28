@@ -56,9 +56,8 @@ func UnpackXmlData(data []byte, resource string, opType string, itemSettings []g
 		}
 
 		// 然后存入其他数据库
-		if err := StoreItem(item, resource, opType, docid, itemSettings); err != nil {
-			return err
-		}
+		StoreItem(item, resource, docid, itemSettings)
+
 	}
 
 	return nil
