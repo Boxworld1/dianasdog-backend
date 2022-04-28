@@ -24,7 +24,7 @@ func DeleteResData(resource string) error {
 	for _, block := range data {
 		// 取得 docid
 		docid := block.Name
-		DeleteItem(resource, docid)
+		DeleteItem(resource, docid, 1)
 	}
 
 	return nil
