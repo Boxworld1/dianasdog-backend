@@ -16,17 +16,15 @@ func SetTestData(stage int) error {
 
 	// 得到此文件的绝对路径
 	abspath, _ := path.GetAbsPath()
+	abspath += "testcase/"
 
 	// 数据加入数据库
 	res := "testdata"
 	filename := "testcase.xml"
-	filepath := abspath + "testcase/" + filename
+	filepath := abspath + filename
 
 	// 读入文件
-	data, err := ioutil.ReadFile(filepath)
-	if err != nil {
-		return err
-	}
+	data, _ := ioutil.ReadFile(filepath)
 
 	// 若无对应表则建表
 	_ = database.InsertCategory(database.CategoryClient, "word", res)
@@ -39,7 +37,7 @@ func SetTestData(stage int) error {
 	if stage == 1 {
 		filename = "config2.json"
 	}
-	filepath = abspath + "testcase/" + filename
+	filepath = abspath + filename
 
 	// 读入文件
 	data, _ = ioutil.ReadFile(filepath)
@@ -49,13 +47,13 @@ func SetTestData(stage int) error {
 
 	// 数据加入数据库
 	filename = "template.json"
-	filepath = abspath + "testcase/" + filename
+	filepath = abspath + filename
 
 	// 读入文件
 	data, _ = ioutil.ReadFile(filepath)
 
 	// 加入数据库中
-	_ = database.InsertToPattern(res, "series_name+garbage+intent+garbage")
+	_ = database.InsertToPattern(res, string(data))
 
 	return nil
 }
