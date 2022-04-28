@@ -44,6 +44,17 @@ func UnpackXmlData(data []byte, resource string, opType string, itemSettings []g
 		str, _ := itemDoc.WriteToBytes()
 		database.InsertFile(database.DocidClient, resource, docid, str)
 
+		// 检查是否有此特型卡
+		cnt, err := database.CountCategory(database.CategoryClient, resource)
+		if err != nil {
+			return err
+		}
+
+		// 若相关类型未存入过 item
+		if cnt == 0 {
+			SaveItem(item, resource)
+		}
+
 		// 然后存入其他数据库
 		if err := StoreItem(item, resource, opType, docid, itemSettings); err != nil {
 			return err

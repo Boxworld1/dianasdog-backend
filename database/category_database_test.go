@@ -28,7 +28,17 @@ func TestCategoryTable(t *testing.T) {
 
 	// 取出所有类別（不存在）
 	if _, err := GetAllCategory(CategoryClient, "hi23150"); err == nil {
+		t.Error("不能检测错误")
+	}
+
+	// 统计存在的类別
+	if _, err := CountCategory(CategoryClient, "hi"); err != nil {
 		t.Error(err)
+	}
+
+	// 统计不存在的类別
+	if _, err := CountCategory(CategoryClient, "hi34"); err == nil {
+		t.Error("不能检测错误")
 	}
 
 }

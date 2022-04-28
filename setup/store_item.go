@@ -24,10 +24,6 @@ func StoreItem(data *etree.Element, resource string, operation string, docid str
 	redis := database.RedisClient
 	es := database.EsClient
 
-	// 新建表格
-	database.CreateTableInDict(resource)
-	database.CreateTableInPattern(resource)
-
 	// 先记录要传入 Redis 的值
 	var redisStr string
 	var esStr string
