@@ -1,11 +1,10 @@
-// @title		StoreItem
+// @title	StoreItem
 // @description	此函数会拆解上层接口提供的 item，并根据 get_config 的配置，将 item 中的数据截取并分类放入不同的数据库中。
-// @auth		ryl				2022/4/6		00:00
-// @param		data			*etree.Element	上层数据提供的 item 树
-// @param		resourceName	string			特型卡类型
-// @param		operation		string			对数据库的操作
-// @param		docid			string			item 编号
-// @return		err				error			错误值
+// @auth	ryl			2022/4/28		15:00
+// @param	data		*etree.Element	上层数据提供的 item 树
+// @param	resource	string			特型卡类型
+// @param	docid		string			item 编号
+// @return	err			error			错误值
 
 package setup
 
@@ -18,7 +17,7 @@ import (
 	"github.com/beevik/etree"
 )
 
-func StoreItem(data *etree.Element, resource string, operation string, docid string, itemSettings []getter.ItemSetting) error {
+func StoreItem(data *etree.Element, resource string, docid string, itemSettings []getter.ItemSetting) error {
 
 	// 开启数据库
 	redis := database.RedisClient

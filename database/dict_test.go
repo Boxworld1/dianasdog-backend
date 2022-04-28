@@ -68,10 +68,22 @@ func TestDbInterface(t *testing.T) {
 		t.Error(err)
 	}
 
+	// 测试搜索功能(SearchByDocid)：不存在的特型卡
+	_, err = SearchByDocidFromDict("bye", "10086")
+	if err == nil {
+		t.Error(err)
+	}
+
 	// 测试搜索功能(SearchByField)
 	tmp1, err := SearchByFieldFromDict("testcase", "10086", "title")
 	if tmp1[0] != "奔驰" || err != nil {
 		t.Error("查询失败")
+	}
+
+	// 测试搜索功能(SearchByField)：不存在的特型卡
+	_, err = SearchByFieldFromDict("bye", "10086", "title")
+	if err == nil {
+		t.Error(err)
 	}
 
 	//测试取词功能(GetAllWord):不存在的键值
@@ -92,13 +104,25 @@ func TestDbInterface(t *testing.T) {
 		t.Error(err)
 	}
 
+	// 测试取词功能(GetAllWord)：不存在的特型卡
+	_, err = GetAllWordFromDict("bye", "name")
+	if err == nil {
+		t.Error(err)
+	}
+
 	// 测试获取所有字段名
 	dict, err = GetAllFieldFromDict("testcase")
 	if len(dict) == 0 || err != nil || dict[0] != "title" {
 		t.Error("GetAllField failed.")
 	}
 
-	//测试删除功能：删除某一field
+	// 测试获取所有字段名：不存在的特型卡
+	_, err = GetAllFieldFromDict("bye")
+	if err == nil {
+		t.Error(err)
+	}
+
+	// 测试删除功能：删除某一field
 	err = DeleteByFieldFromDict("testcase", "10086", "title")
 	if err != nil {
 		t.Error(err)

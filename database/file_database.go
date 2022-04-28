@@ -109,6 +109,7 @@ type DataItem struct {
 	Data []byte
 }
 
+// 取出表格下的所有文件名
 func GetAllFile(db *sql.DB, tableName string) ([]DataItem, error) {
 	// 按文件名查找
 	task := "SELECT filename, data FROM " + tableName
@@ -130,4 +131,12 @@ func GetAllFile(db *sql.DB, tableName string) ([]DataItem, error) {
 	rows.Close()
 
 	return result, err
+}
+
+// 删除特定名字的文件
+func DeleteFile(db *sql.DB, tableName string, filename string) error {
+	// 按文件名查找
+	task := "DELETE FROM " + tableName + " WHERE filename=?"
+	_, err := db.Exec(task, filename)
+	return err
 }

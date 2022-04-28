@@ -39,6 +39,12 @@ func TestFileTable(t *testing.T) {
 		t.Error("存取错误!")
 	}
 
+	// 取出不存在的文件名
+	_, err = GetFileName(ConfigClient, "fi34le")
+	if err == nil {
+		t.Error("存取错误!")
+	}
+
 	// 取出不存在的文件
 	_, err = GetFile(ConfigClient, "file", "filename")
 	if err == nil {
@@ -54,7 +60,7 @@ func TestFileTable(t *testing.T) {
 	// 取出所有文件
 	_, err = GetAllFile(ConfigClient, "file")
 	if err != nil {
-		t.Error("检测不到错误")
+		t.Error(err)
 	}
 
 	// 取出不存在的表格
@@ -63,4 +69,21 @@ func TestFileTable(t *testing.T) {
 		t.Error("检测不到错误")
 	}
 
+	// 删除文件
+	err = DeleteFile(ConfigClient, "file", filename)
+	if err != nil {
+		t.Error(err)
+	}
+
+	// 删除不存在的文件
+	err = DeleteFile(ConfigClient, "file", "234979832")
+	if err != nil {
+		t.Error(err)
+	}
+
+	// 删除不存在的类型
+	err = DeleteFile(ConfigClient, "1328104809328509", "234979832")
+	if err == nil {
+		t.Error("检测不到错误")
+	}
 }

@@ -6,6 +6,7 @@
 package setup
 
 import (
+	"dianasdog/database"
 	"dianasdog/getter"
 	"dianasdog/testcase"
 	"testing"
@@ -23,6 +24,10 @@ func TestUnpackXml(t *testing.T) {
 	if err == nil {
 		t.Error("无法检测问题，错误！")
 	}
+
+	// 测试 SaveItem
+	database.DropCategory(database.CategoryClient, "testdata")
+	database.CreateCategoryTable(database.CategoryClient, "testdata")
 
 	// 查找存在的特型卡配置
 	itemSettings, err := getter.GetConfig("testdata")

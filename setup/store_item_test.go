@@ -43,7 +43,7 @@ func TestStoreItem(t *testing.T) {
 
 	// 插入正常数据
 	for _, item := range root.SelectElements("item") {
-		err := StoreItem(item, "testdata", "insert", "0", itemSetting)
+		err := StoreItem(item, "testdata", "0", itemSetting)
 		if err != nil {
 			t.Error(err)
 		}

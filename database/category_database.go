@@ -85,3 +85,13 @@ func CountCategory(db *sql.DB, tableName string) (int, error) {
 
 	return count, nil
 }
+
+// 删除表格
+func DropCategory(db *sql.DB, tableName string) error {
+	// 查找表格
+	task := "DROP TABLE " + tableName
+	_, err := db.Query(task)
+
+	// 对应表格不存在
+	return err
+}
