@@ -29,4 +29,10 @@ func TestDeleteResData(t *testing.T) {
 		t.Error("检测不到存在的错误！")
 	}
 
+	// 删除单一数据
+	err = DeleteItem("testdata", "testdata@红豆词1", 0)
+	if err != nil {
+		t.Error(err)
+	}
+
 }
