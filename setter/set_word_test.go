@@ -6,7 +6,6 @@
 package setter
 
 import (
-	"dianasdog/database"
 	"dianasdog/testcase"
 	"testing"
 )
@@ -18,19 +17,13 @@ func TestSetWord(t *testing.T) {
 		t.Error("测例建造失败")
 	}
 
-	// 读入文件
-	data, err := database.FetchAllPattern("testdata")
-	if err != nil {
-		t.Error("测试文件有误")
-	}
-
-	err = SetWord("testdata", data, "insert", "intent")
+	err := SetWord("testdata", []string{"是"}, "insert", "intent")
 	// 测试时出错
 	if err != nil {
 		t.Error(err)
 	}
 
-	err = SetWord("testdata", data, "delete", "intent")
+	err = SetWord("testdata", []string{"是"}, "delete", "intent")
 	// 测试时出错
 	if err != nil {
 		t.Error(err)

@@ -132,11 +132,20 @@ func TestRouter(t *testing.T) {
 				"type": "intent"
 			}`},
 		}},
-		// 测试词语文件上传（合法类型）
+		// 测试词语上传（合法类型）
 		{[]int{2, 5, 6, 7, 11}, 0, []MapStruct{
 			{"content", `{
 				"resource": "testdata",
 				"operation": "insert",
+				"data": ["intent"],
+				"type": "intent"
+			}`},
+		}},
+		// 测试词语删除（合法类型）
+		{[]int{2, 5, 6, 7, 11}, 0, []MapStruct{
+			{"content", `{
+				"resource": "testdata",
+				"operation": "delete",
 				"data": ["intent"],
 				"type": "intent"
 			}`},
