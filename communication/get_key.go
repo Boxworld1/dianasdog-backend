@@ -16,7 +16,7 @@ type GetKeyBody struct {
 }
 
 func GetKey(context *gin.Context) {
-	var body GetConfigBody
+	var body GetKeyBody
 
 	// 检查收到信息的格式是否正确
 	err := context.ShouldBindJSON(&body)
@@ -30,7 +30,7 @@ func GetKey(context *gin.Context) {
 	}
 
 	// 取得文件
-	data, err := database.GetFile(database.ConfigClient, "file", body.Resource)
+	data, err := database.GetAllCategory(database.CategoryClient, body.Resource)
 
 	// 若不存在文件/对应特型卡类型，则返回错误
 	if err != nil {
@@ -42,6 +42,6 @@ func GetKey(context *gin.Context) {
 
 	// 否则正常返回结果
 	context.JSON(200, gin.H{
-		"data": string(data),
+		"data": data,
 	})
 }

@@ -29,6 +29,8 @@ func SetTestData(stage int) error {
 	}
 
 	// 若无对应表则建表
+	_ = database.InsertCategory(database.CategoryClient, "word", res)
+	_ = database.CreateCategoryTable(database.CategoryClient, res)
 	_ = database.CreateFileTable(database.DataClient, res)
 	_ = database.InsertFile(database.DataClient, res, filename, data)
 

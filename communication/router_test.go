@@ -47,7 +47,7 @@ func TestRouter(t *testing.T) {
 			{"content", `{"username": "hksjdahfjasdljgfpqwejgjksadjg"}`},
 		}},
 		// 测试写入行为文件回传、取得文件名（合法类型）
-		{[]int{5, 6, 7}, 0, []MapStruct{
+		{[]int{5, 6, 7, 11}, 0, []MapStruct{
 			{"content", `{"resource": "testdata"}`},
 		}},
 		// 测试写入行为文件回传、取得文件名（非法类型）
@@ -55,14 +55,14 @@ func TestRouter(t *testing.T) {
 			{"content", `{"resource": "testcase_banana"}`},
 		}},
 		// 测试文件下载（存在文件）
-		{[]int{5, 6, 7, 8}, 0, []MapStruct{
+		{[]int{5, 6, 7, 8, 11}, 0, []MapStruct{
 			{"content", `{
 				"resource": "testdata",
 				"filename": "testcase.xml"
 			}`},
 		}},
 		// 测试文件下载（合法类型但不存在文件）
-		{[]int{5, 6, 7}, 0, []MapStruct{
+		{[]int{5, 6, 7, 11}, 0, []MapStruct{
 			{"content", `{
 				"resource": "testdata",
 				"filename": "testcase104219.xml"
@@ -76,14 +76,14 @@ func TestRouter(t *testing.T) {
 			}`},
 		}},
 		// 测试 item 下载（存在 item）
-		{[]int{5, 6, 7, 9}, 0, []MapStruct{
+		{[]int{5, 6, 7, 9, 11}, 0, []MapStruct{
 			{"content", `{
 				"resource": "testdata",
 				"key": "红豆词1"
 			}`},
 		}},
 		// 测试 item 下载（不存在 item）
-		{[]int{5, 6, 7}, 0, []MapStruct{
+		{[]int{5, 6, 7, 11}, 0, []MapStruct{
 			{"content", `{
 				"resource": "testdata",
 				"key": "3"
@@ -113,7 +113,7 @@ func TestRouter(t *testing.T) {
 			}`},
 		}},
 		// 测试配置文件上传（合法类型）
-		{[]int{2, 5, 6, 7}, 0, []MapStruct{
+		{[]int{2, 5, 6, 7, 11}, 0, []MapStruct{
 			{"content", `{
 				"resource": "testdata",
 				"operation": "insert",
@@ -186,7 +186,7 @@ func TestRouter(t *testing.T) {
 		{"GET", "/data"},
 		{"GET", "/item"},
 		{"GET", "/category"},
-		// {"GET", "/key"},
+		{"GET", "/key"},
 	}
 
 	// 开启 router

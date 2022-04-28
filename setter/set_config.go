@@ -15,8 +15,13 @@ import (
 
 func SetConfig(resource string, content []byte) error {
 
-	// 新增此类型
+	// 在数据库中新增此类型
 	database.InsertCategory(database.CategoryClient, "word", resource)
+	database.CreateCategoryTable(database.CategoryClient, resource)
+
+	// 新建表格
+	database.CreateTableInDict(resource)
+	database.CreateTableInPattern(resource)
 
 	// 查找原来特型卡的配置
 	oldSetting, _ := getter.GetConfig(resource)
