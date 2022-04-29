@@ -67,14 +67,14 @@ func ShowTablesInDict() ([]string, error) {
 
 //向表中插入数据
 func InsertToDict(tableName string, docid string, field string, word string) error {
-	selectTask := "select 1 from " + tableName + " where docid=? and field=? and word=?"
-	var tmp string
-	err := DictClient.QueryRow(selectTask, docid, field, word).Scan(&tmp)
-	if err == nil && tmp == "1" {
-		return nil
-	}
-	insertTask := "INSERT INTO " + tableName + "(docid, field, word) values(?, ?, ?)"
-	_, err = DictClient.Exec(insertTask, docid, field, word)
+	// selectTask := "select 1 from " + tableName + " where docid=? and field=? and word=?"
+	// var tmp string
+	// err := DictClient.QueryRow(selectTask, docid, field, word).Scan(&tmp)
+	// if err == nil && tmp == "1" {
+	// 	return nil
+	// }
+	insertTask := "REPLACE INTO " + tableName + "(docid, field, word) values(?, ?, ?)"
+	_, err := DictClient.Exec(insertTask, docid, field, word)
 	return err
 }
 
