@@ -37,6 +37,7 @@ func Search(query string) []string {
 		}
 	}
 
+	// 根据得到的 docid 列表向 redis 中查找
 	var resList []string = make([]string, 0)
 	for _, docid := range docIdList {
 		result, _ := database.GetFromRedis(database.RedisClient, docid)
