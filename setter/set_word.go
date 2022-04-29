@@ -41,16 +41,20 @@ func SetWord(resource string, content []string, opType string, wordType string) 
 		// 若为插入则插入词
 		for _, data := range content {
 			fmt.Println("insert " + data + " as " + wordType)
-			err = database.InsertToDict(resource, GetDocid(resource, wordType, data), wordType, data)
+			if err = database.InsertToDict(resource, GetDocid(resource, wordType, data), wordType, data); err != nil {
+				return err
+			}
 		}
 	case "delete":
 		// 删除词
 		for _, data := range content {
 			fmt.Println("delete " + data + " as " + wordType)
-			err = database.DeleteByDocidFromDict(resource, GetDocid(resource, wordType, data))
+			if err = database.DeleteByDocidFromDict(resource, GetDocid(resource, wordType, data)); err != nil {
+				return err
+			}
 		}
 	}
 
-	// 无论正确与否都返回 err 的内容
-	return err
+	// 返回无错误
+	return nil
 }

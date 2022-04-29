@@ -24,6 +24,13 @@ func TestSetWord(t *testing.T) {
 		t.Error(err)
 	}
 
+	// 插入不存在的特型卡中
+	err = SetWord("testtemp", []string{"intent"}, "insert", "intent")
+	// 测试时出错
+	if err == nil {
+		t.Error("不能检测错误")
+	}
+
 	// 插入所有存在的特型卡中
 	err = SetWord("all", []string{"intent"}, "insert", "intent")
 	// 测试时出错
@@ -43,5 +50,12 @@ func TestSetWord(t *testing.T) {
 	// 测试时出错
 	if err != nil {
 		t.Error(err)
+	}
+
+	// 从不存在的特型卡中删除
+	err = SetWord("testtemp", []string{"intent"}, "delete", "intent")
+	// 测试时出错
+	if err == nil {
+		t.Error("不能检测错误")
 	}
 }

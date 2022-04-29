@@ -34,15 +34,19 @@ func SetTemplate(resource string, content []string, opType string) error {
 	case "insert":
 		// 写入配置
 		for _, data := range content {
-			err = database.InsertToPattern(resource, data)
+			if err = database.InsertToPattern(resource, data); err != nil {
+				return err
+			}
 		}
 	case "delete":
 		// 删除配置
 		for _, data := range content {
-			err = database.DeleteFromPattern(resource, data)
+			if err = database.DeleteFromPattern(resource, data); err != nil {
+				return err
+			}
 		}
 	}
 
 	// 无论正确与否都返回 err 的内容
-	return err
+	return nil
 }

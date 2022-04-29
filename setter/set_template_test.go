@@ -38,6 +38,13 @@ func TestSetTemplate(t *testing.T) {
 		t.Error(err)
 	}
 
+	// 插入不存在的特型卡中
+	err = SetTemplate("testtemp", data, "insert")
+	// 测试时出错
+	if err == nil {
+		t.Error("不能检测错误")
+	}
+
 	// 从特型卡中删除
 	err = SetTemplate("testdata", data, "delete")
 	// 测试时出错
@@ -50,5 +57,12 @@ func TestSetTemplate(t *testing.T) {
 	// 测试时出错
 	if err != nil {
 		t.Error(err)
+	}
+
+	// 从不存在的特型卡中删除
+	err = SetTemplate("testtemp", data, "delete")
+	// 测试时出错
+	if err == nil {
+		t.Error("不能检测错误")
 	}
 }
