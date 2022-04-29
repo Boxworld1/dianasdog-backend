@@ -7,6 +7,7 @@ package communication
 
 import (
 	"dianasdog/setter"
+	"errors"
 
 	"github.com/gin-gonic/gin"
 )
@@ -39,11 +40,22 @@ func PostTemplate(context *gin.Context) {
 	wordType := body.Type
 
 	// 调用函数写入文件
-	switch body.Type {
+	switch wordType {
 	case "pattern":
 		setter.SetTemplate(res, data, opType)
-	default:
+	case "intent":
 		setter.SetWord(res, data, opType, wordType)
+	case "garbage":
+		setter.SetWord(res, data, opType, wordType)
+	default:
+		err = errors.New("wrong word type")
+	}
+
+	if err != nil {
+		context.JSON(400, gin.H{
+			"err": err,
+		})
+		return
 	}
 
 	// 返回对应值

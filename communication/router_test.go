@@ -150,6 +150,24 @@ func TestRouter(t *testing.T) {
 				"type": "intent"
 			}`},
 		}},
+		// 测试垃圾词插入
+		{[]int{2, 5, 6, 7, 11}, 0, []MapStruct{
+			{"content", `{
+				"resource": "testdata",
+				"operation": "insert",
+				"data": ["garbage"],
+				"type": "garbage"
+			}`},
+		}},
+		// 测试插入不存在的类型
+		{[]int{5, 6, 7, 11}, 0, []MapStruct{
+			{"content", `{
+				"resource": "testdata",
+				"operation": "insert",
+				"data": ["garbage"],
+				"type": "fds"
+			}`},
+		}},
 		// 测试写入行为文件上传
 		{[]int{1}, 1, []MapStruct{
 			{"resource", "testcase_car"},

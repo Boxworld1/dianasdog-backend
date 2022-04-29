@@ -17,13 +17,13 @@ func TestSetWord(t *testing.T) {
 		t.Error("测例建造失败")
 	}
 
-	err := SetWord("testdata", []string{"是"}, "insert", "intent")
+	err := SetWord("testdata", []string{"intent"}, "insert", "intent")
 	// 测试时出错
 	if err != nil {
 		t.Error(err)
 	}
 
-	err = SetWord("testdata", []string{"是"}, "delete", "intent")
+	err = SetWord("testdata", []string{"intent"}, "delete", "intent")
 	// 测试时出错
 	if err != nil {
 		t.Error(err)

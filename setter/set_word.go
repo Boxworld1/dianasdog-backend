@@ -7,7 +7,10 @@
 
 package setter
 
-import "dianasdog/database"
+import (
+	"dianasdog/database"
+	"fmt"
+)
 
 func GetDocid(resource string, wordType string, data string) string {
 	return resource + "@" + wordType + "@" + data
@@ -20,11 +23,13 @@ func SetWord(resource string, content []string, opType string, wordType string) 
 	case "insert":
 		// 若为插入则插入词
 		for _, data := range content {
+			fmt.Println("insert " + data + "as " + wordType)
 			err = database.InsertToDict(resource, GetDocid(resource, wordType, data), wordType, data)
 		}
 	case "delete":
 		// 删除词
 		for _, data := range content {
+			fmt.Println("delete " + data + "as " + wordType)
 			err = database.DeleteByDocidFromDict(resource, GetDocid(resource, wordType, data))
 		}
 	}
