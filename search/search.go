@@ -2,13 +2,16 @@
 // @description	此函数的用途为搜索与句子相关的信息
 // @auth	ryl		2022/4/27	16:00
 // @param	query	string		句子
-// @return	resList	[]string	结果
+// @return	resList	[]map[string]interface{}	结果
 
 package search
 
-import "dianasdog/database"
+import (
+	"dianasdog/database"
+	"encoding/json"
+)
 
-func Search(query string) []string {
+func Search(query string) []map[string]interface{} {
 
 	// 意图识別
 	intentList := IntentionRecognition(query)
@@ -38,9 +41,16 @@ func Search(query string) []string {
 	}
 
 	// 根据得到的 docid 列表向 redis 中查找
-	var resList []string = make([]string, 0)
+	var resList []map[string]interface{}
 	for _, docid := range docIdList {
-		result, _ := database.GetFromRedis(database.RedisClient, docid)
+		// 从 redis 中查找
+		res, _ := database.GetFromRedis(database.RedisClient, docid)
+
+		// 结果转化为 json
+		var result map[string]interface{}
+		json.Unmarshal([]byte(res), &result)
+
+		// 加入队尾
 		resList = append(resList, result)
 	}
 
