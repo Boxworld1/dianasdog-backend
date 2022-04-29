@@ -20,7 +20,6 @@ func init() {
 	CreateDatabase("docid")
 	CreateDatabase("data")
 	CreateDatabase("config")
-	CreateDatabase("template")
 
 	// 开启数据库
 	DocidClient, _ = sql.Open("mysql", GenUrl("docid"))

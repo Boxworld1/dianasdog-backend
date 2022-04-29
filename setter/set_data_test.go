@@ -31,7 +31,7 @@ func TestSetData(t *testing.T) {
 	}
 
 	// 插入不存在的特型卡
-	err = SetData("testdata_a4", "testcase.xml", data)
+	err = SetData("testdata_a", "testcase.xml", data)
 	if err == nil {
 		t.Error("检测不到错误")
 	}
