@@ -15,12 +15,35 @@ type result struct {
 	detail   []string
 }
 
+// 查找字串是否在 slice 中出现过
+func Contains(s []string, e string) bool {
+	for _, v := range s {
+		if v == e {
+			return true
+		}
+	}
+	return false
+}
+
 func QueryUnderstanding(intentlist []string, query string) []result {
 	var retList []result
 	for _, table := range intentlist {
 		patterns, _ := database.FetchAllPattern(table)
+
 		for _, rawpattern := range patterns {
 			pattern := strings.Split(rawpattern, "+")
+			fields, _ := database.GetAllFieldFromDict(table)
+			var check bool = false
+			for _, pat := range pattern {
+				if !Contains(fields, pat) {
+					check = true
+					break
+				}
+			}
+			if check {
+				continue
+			}
+
 			lenp, lenq := len(pattern), len([]rune(query))
 			rune := []rune(query)
 			//初始化数组

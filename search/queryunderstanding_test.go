@@ -12,6 +12,12 @@ func TestQueryUnderstanding(t *testing.T) {
 		t.Error("插入失败", err)
 	}
 
+	// 测试鲁棒性用
+	err = database.InsertToPattern("test", "tilte+garbage+intent+garbage")
+	if err != nil {
+		t.Error("插入失败", err)
+	}
+
 	database.CreateTableInDict("test")
 	database.InsertToDict("test", "10086", "title", "宝马")
 	database.InsertToDict("test", "0", "garbage", "的")

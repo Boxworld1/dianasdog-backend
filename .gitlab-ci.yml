@@ -15,7 +15,7 @@ build:
     - deployer build
 
 unit-test:
-  image: golang:1.17
+  image: golang:1.18
   stage: test
 
   before_script:
