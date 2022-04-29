@@ -17,13 +17,29 @@ func TestSetWord(t *testing.T) {
 		t.Error("测例建造失败")
 	}
 
+	// 插入存在的特型卡中
 	err := SetWord("testdata", []string{"intent"}, "insert", "intent")
 	// 测试时出错
 	if err != nil {
 		t.Error(err)
 	}
 
+	// 插入所有存在的特型卡中
+	err = SetWord("all", []string{"intent"}, "insert", "intent")
+	// 测试时出错
+	if err != nil {
+		t.Error(err)
+	}
+
+	// 从特型卡中删除
 	err = SetWord("testdata", []string{"intent"}, "delete", "intent")
+	// 测试时出错
+	if err != nil {
+		t.Error(err)
+	}
+
+	// 从所有特型卡中删除
+	err = SetWord("all", []string{"intent"}, "delete", "intent")
 	// 测试时出错
 	if err != nil {
 		t.Error(err)

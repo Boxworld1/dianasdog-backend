@@ -10,9 +10,26 @@ package setter
 
 import "dianasdog/database"
 
-func SetTemplate(resource string, content []string, opType string) error {
-
+func SetTemplateAll(content []string, opType string) error {
 	var err error
+	// 取出所有类型
+	data, _ := database.GetAllCategory(database.CategoryClient, "word")
+	// 按类別插入
+	for _, res := range data {
+		err = SetTemplate(res, content, opType)
+	}
+	return err
+}
+
+func SetTemplate(resource string, content []string, opType string) error {
+	var err error
+
+	// 若需全部插入则
+	if resource == "all" {
+		return SetTemplateAll(content, opType)
+	}
+
+	// 否则若为单一类型
 	switch opType {
 	case "insert":
 		// 写入配置

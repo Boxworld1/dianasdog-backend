@@ -16,9 +16,26 @@ func GetDocid(resource string, wordType string, data string) string {
 	return resource + "@" + wordType + "@" + data
 }
 
+func SetWordAll(content []string, opType string, wordType string) error {
+	var err error
+	// 取出所有类型
+	data, _ := database.GetAllCategory(database.CategoryClient, "word")
+	// 按类別插入
+	for _, res := range data {
+		err = SetWord(res, content, opType, wordType)
+	}
+	return err
+}
+
 func SetWord(resource string, content []string, opType string, wordType string) error {
 
 	var err error
+	// 若需全部插入则
+	if resource == "all" {
+		return SetWordAll(content, opType, wordType)
+	}
+
+	// 否则若为单一类型
 	switch opType {
 	case "insert":
 		// 若为插入则插入词
