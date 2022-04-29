@@ -8,9 +8,12 @@ package search
 
 import (
 	"dianasdog/database"
+	"encoding/json"
+	"fmt"
+	"strings"
 )
 
-func Search(query string) []string {
+func Search(query string) []map[string]interface{} {
 
 	// 意图识別
 	intentList := IntentionRecognition(query)
@@ -40,16 +43,16 @@ func Search(query string) []string {
 	}
 
 	// 根据得到的 docid 列表向 redis 中查找
-	// var resList []map[string]interface{}
-	var resList []string
+	var resList []map[string]interface{}
 	for _, docid := range docIdList {
 		// 从 redis 中查找
 		res, _ := database.GetFromRedis(database.RedisClient, docid)
+		res = strings.Replace(res, "\n", "", -1)
 
+		fmt.Println(res)
 		// 结果转化为 json
-		// var result map[string]interface{}
-		// json.Unmarshal([]byte(res), &result)
-		result := res
+		var result map[string]interface{}
+		json.Unmarshal([]byte(res), &result)
 
 		// 加入队尾
 		resList = append(resList, result)
