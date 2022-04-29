@@ -24,13 +24,13 @@ func TestSetTemplate(t *testing.T) {
 		t.Error("测试文件有误")
 	}
 
-	err = SetTemplate("testdata", data[0], "insert")
+	err = SetTemplate("testdata", data, "insert")
 	// 测试时出错
 	if err != nil {
 		t.Error(err)
 	}
 
-	err = SetTemplate("testdata", data[0], "delete")
+	err = SetTemplate("testdata", data, "delete")
 	// 测试时出错
 	if err != nil {
 		t.Error(err)

@@ -30,6 +30,7 @@ func SetTestData(stage int) error {
 	_ = database.InsertCategory(database.CategoryClient, "word", res)
 	_ = database.CreateCategoryTable(database.CategoryClient, res)
 	_ = database.CreateFileTable(database.DataClient, res)
+	_ = database.CreateTableInDict(res)
 	_ = database.InsertFile(database.DataClient, res, filename, data)
 
 	// 数据加入数据库

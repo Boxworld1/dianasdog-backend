@@ -47,7 +47,7 @@ func TestRouter(t *testing.T) {
 			{"content", `{"username": "hksjdahfjasdljgfpqwejgjksadjg"}`},
 		}},
 		// 测试写入行为文件回传、取得文件名（合法类型）
-		{[]int{5, 6, 7, 11}, 0, []MapStruct{
+		{[]int{5, 6, 11}, 0, []MapStruct{
 			{"content", `{"resource": "testdata"}`},
 		}},
 		// 测试写入行为文件回传、取得文件名（非法类型）
@@ -55,14 +55,14 @@ func TestRouter(t *testing.T) {
 			{"content", `{"resource": "testcase_banana"}`},
 		}},
 		// 测试文件下载（存在文件）
-		{[]int{5, 6, 7, 8, 11}, 0, []MapStruct{
+		{[]int{5, 6, 8, 11}, 0, []MapStruct{
 			{"content", `{
 				"resource": "testdata",
 				"filename": "testcase.xml"
 			}`},
 		}},
 		// 测试文件下载（合法类型但不存在文件）
-		{[]int{5, 6, 7, 11}, 0, []MapStruct{
+		{[]int{5, 6, 11}, 0, []MapStruct{
 			{"content", `{
 				"resource": "testdata",
 				"filename": "testcase104219.xml"
@@ -76,14 +76,14 @@ func TestRouter(t *testing.T) {
 			}`},
 		}},
 		// 测试 item 下载（存在 item）
-		{[]int{5, 6, 7, 9, 11}, 0, []MapStruct{
+		{[]int{5, 6, 9, 11}, 0, []MapStruct{
 			{"content", `{
 				"resource": "testdata",
 				"key": "红豆词1"
 			}`},
 		}},
 		// 测试 item 下载（不存在 item）
-		{[]int{5, 6, 7, 11}, 0, []MapStruct{
+		{[]int{5, 6, 11}, 0, []MapStruct{
 			{"content", `{
 				"resource": "testdata",
 				"key": "3"
@@ -101,7 +101,8 @@ func TestRouter(t *testing.T) {
 			{"content", `{
 				"resource": "testcalfa8",
 				"operation": "insert",
-				"pattern": "series_name+garbage+intent+garbage"
+				"data": ["series_name+garbage+intent+garbage"],
+				"type": "pattern"
 			}`},
 		}},
 		// 测试配置文件上传
@@ -109,7 +110,8 @@ func TestRouter(t *testing.T) {
 			{"content", `{
 				"resource": "d",
 				"operation": "delete",
-				"pattern": "series_name+garbage+intent+garbage"
+				"data": ["series_name+garbage+intent+garbage"],
+				"type": "pattern"
 			}`},
 		}},
 		// 测试配置文件上传（合法类型）
@@ -117,7 +119,53 @@ func TestRouter(t *testing.T) {
 			{"content", `{
 				"resource": "testdata",
 				"operation": "insert",
-				"pattern": "series_name+garbage+intent+garbage"
+				"data": ["series_name+garbage+intent+garbage"],
+				"type": "pattern"
+			}`},
+		}},
+		// 测试词语上传
+		{[]int{2}, 0, []MapStruct{
+			{"content", `{
+				"resource": "d",
+				"operation": "delete",
+				"data": ["intent"],
+				"type": "intent"
+			}`},
+		}},
+		// 测试词语上传（合法类型）
+		{[]int{2, 5, 6, 7, 11}, 0, []MapStruct{
+			{"content", `{
+				"resource": "testdata",
+				"operation": "insert",
+				"data": ["intent"],
+				"type": "intent"
+			}`},
+		}},
+		// 测试词语删除（合法类型）
+		{[]int{2, 5, 6, 7, 11}, 0, []MapStruct{
+			{"content", `{
+				"resource": "testdata",
+				"operation": "delete",
+				"data": ["intent"],
+				"type": "intent"
+			}`},
+		}},
+		// 测试垃圾词插入
+		{[]int{2, 5, 6, 7, 11}, 0, []MapStruct{
+			{"content", `{
+				"resource": "testdata",
+				"operation": "insert",
+				"data": ["garbage"],
+				"type": "garbage"
+			}`},
+		}},
+		// 测试插入不存在的类型
+		{[]int{5, 6, 7, 11}, 0, []MapStruct{
+			{"content", `{
+				"resource": "testdata",
+				"operation": "insert",
+				"data": ["garbage"],
+				"type": "fds"
 			}`},
 		}},
 		// 测试写入行为文件上传

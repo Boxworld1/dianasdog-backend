@@ -16,11 +16,6 @@ import (
 
 func SetData(resource string, filename string, content []byte) error {
 
-	// 創建对应表格
-	if err := database.CreateFileTable(database.DataClient, resource); err != nil {
-		return err
-	}
-
 	// 插入文件
 	if err := database.InsertFile(database.DataClient, resource, filename, content); err != nil {
 		return err

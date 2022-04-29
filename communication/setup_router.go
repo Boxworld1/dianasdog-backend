@@ -19,7 +19,7 @@ func SetupRouter() *gin.Engine {
 	router.POST("/login", PostLogin)
 	// 数据上传
 	router.POST("/data", PostData)
-	// 模板上传
+	// 模板/垃圾词/意图词上传
 	router.POST("/pattern", PostTemplate)
 	// 写入配置上传
 	router.POST("/setting", PostConfig)
@@ -28,7 +28,7 @@ func SetupRouter() *gin.Engine {
 	router.GET("/data", GetData)
 	// 返回某一特型卡下的所有文件名
 	router.GET("/dataname", GetDataName)
-	// 模板下载
+	// 模板/垃圾词/意图词下载
 	router.GET("/pattern", GetTemplate)
 	// 写入配置下载
 	router.GET("/setting", GetConfig)
