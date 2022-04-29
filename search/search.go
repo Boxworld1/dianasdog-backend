@@ -9,6 +9,8 @@ package search
 import (
 	"dianasdog/database"
 	"encoding/json"
+	"fmt"
+	"strings"
 )
 
 func Search(query string) []map[string]interface{} {
@@ -45,7 +47,9 @@ func Search(query string) []map[string]interface{} {
 	for _, docid := range docIdList {
 		// 从 redis 中查找
 		res, _ := database.GetFromRedis(database.RedisClient, docid)
+		res = strings.Replace(res, "\n", "", -1)
 
+		fmt.Println(res)
 		// 结果转化为 json
 		var result map[string]interface{}
 		json.Unmarshal([]byte(res), &result)
