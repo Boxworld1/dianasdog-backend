@@ -73,7 +73,7 @@ func InsertToDict(tableName string, docid string, field string, word string) err
 	// if err == nil && tmp == "1" {
 	// 	return nil
 	// }
-	insertTask := "REPLACE INTO " + tableName + "(docid, field, word) values(?, ?, ?)"
+	insertTask := "REPLACE INTO " + tableName + " values(?, ?, ?)"
 	_, err := DictClient.Exec(insertTask, docid, field, word)
 	return err
 }
