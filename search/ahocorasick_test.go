@@ -1,9 +1,15 @@
+// @title	TestAhocorasick
+// @description	检查 AC 自动机
+// @auth	jz	2022/4/7	12:00
+// @param	t	*testing.T	testing 用参数
+
 package search
 
 import (
 	"testing"
 )
 
+// 测试 AC 自动机的匹配功能
 func TestMatch(t *testing.T) {
 	ac := NewMatcher()
 	dict := []string{"宝马", "奔驰", "奥迪"}
@@ -14,6 +20,7 @@ func TestMatch(t *testing.T) {
 	}
 }
 
+// 测试 AC 自动机的返回值
 func TestCheck(t *testing.T) {
 	ac := NewMatcher()
 	dict := []string{"she", "her", "he", "say"}

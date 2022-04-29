@@ -1,3 +1,8 @@
+// @title	TestIntentionRecognition
+// @description	检查意图识別功能
+// @auth	jz	2022/4/7	12:00
+// @param	t	*testing.T	testing 用参数
+
 package search
 
 import (

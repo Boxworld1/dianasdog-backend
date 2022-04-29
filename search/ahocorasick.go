@@ -1,3 +1,7 @@
+// @title	Ahocorasick
+// @description	AC 自动机
+// @auth	jz	2022/4/7	12:00
+
 package search
 
 import (
