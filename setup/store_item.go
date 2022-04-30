@@ -14,6 +14,7 @@ import (
 	"fmt"
 	"strings"
 
+	jsonvalue "github.com/Andrew-M-C/go.jsonvalue"
 	"github.com/beevik/etree"
 )
 
@@ -23,26 +24,35 @@ func StoreItem(data *etree.Element, resource string, docid string, itemSettings 
 	redis := database.RedisClient
 	es := database.EsClient
 
-	// 先记录要传入 Redis 的值
+	// 先初始化要传入 Redis 和 ES 的值
 	var redisStr string
 	var esStr string
+
+	// 初始化 json
+	myJson := jsonvalue.NewObject()
 
 	// 根据配置信息写入数据库
 	for _, itemSetting := range itemSettings {
 
 		// 根据路径选取对应数据
 		key := GetKey(itemSetting.ItemPath)
+		keySlice := strings.Split(key, ".")
 		path := strings.Replace(itemSetting.ItemPath, ".", "/", -1)
 
 		for _, value := range data.FindElements(path) {
 			// 写入摘要(Radis)的数据
 			if itemSetting.DumpDigest {
-				// 若字串不为空，则加入逗号分隔
-				if len(redisStr) != 0 {
-					redisStr += ", "
+				// 若为图片
+				if itemSetting.IsPic {
+					keySlice = []string{"my_pictrues"}
 				}
-				// 然后存入数据
-				redisStr += "\"" + key + "\": \"" + value.Text() + "\""
+				// 将 []string 拆为 []interface{}
+				pathList := make([]interface{}, len(keySlice))
+				for i := range keySlice {
+					pathList[i] = keySlice[i]
+				}
+				// 然后插入 Json
+				myJson.SetString(value.Text()).At("item", pathList...)
 			}
 
 			// 写入倒排引擎(Es)的数据
@@ -60,7 +70,7 @@ func StoreItem(data *etree.Element, resource string, docid string, itemSettings 
 	}
 
 	// 将传入 redis 的数据变为 json
-	redisStr = "{" + redisStr + "}"
+	redisStr = myJson.MustMarshalString()
 
 	// 数据写入摘要(Radis)
 	fmt.Println("insert to redis: ", redisStr)
