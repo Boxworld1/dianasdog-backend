@@ -48,6 +48,7 @@ func Search(query string) []map[string]interface{} {
 		// 从 redis 中查找
 		res, _ := database.GetFromRedis(database.RedisClient, docid)
 		res = strings.Replace(res, "\n", "", -1)
+		res = strings.Replace(res, "\r", "", -1)
 
 		fmt.Println(res)
 		// 结果转化为 json
