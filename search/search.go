@@ -30,16 +30,14 @@ func Search(query string) []map[string]interface{} {
 		content = ""
 		for x := range result[item].detail {
 			if result[item].pattern[x] != "garbage" && result[item].pattern[x] != "intent" {
-				content += result[item].detail[x]
-				if x < len(result[item].detail) {
-					content += " "
+				content = result[item].detail[x]
+				resList, _ := database.SearchFromEs(resourceName, database.EsClient, content)
+				for k := range resList {
+					docIdList = append(docIdList, resList[k].DocID)
 				}
 			}
 		}
-		resList, _ := database.SearchFromEs(resourceName, database.EsClient, content)
-		for k := range resList {
-			docIdList = append(docIdList, resList[k].DocID)
-		}
+
 	}
 
 	// 根据得到的 docid 列表向 redis 中查找
