@@ -30,6 +30,7 @@ func StoreItem(data *etree.Element, resource string, docid string, itemSettings 
 
 	// 初始化 json
 	myJson := jsonvalue.NewObject()
+	myJson.SetString(resource).At("type")
 
 	// 根据配置信息写入数据库
 	for _, itemSetting := range itemSettings {
@@ -44,15 +45,16 @@ func StoreItem(data *etree.Element, resource string, docid string, itemSettings 
 			if itemSetting.DumpDigest {
 				// 若为图片
 				if itemSetting.IsPic {
-					keySlice = []string{"my_pictrues"}
+					myJson.SetString(value.Text()).At("picture")
+				} else {
+					// 将 []string 拆为 []interface{}
+					pathList := make([]interface{}, len(keySlice))
+					for i := range keySlice {
+						pathList[i] = keySlice[i]
+					}
+					// 然后插入 Json
+					myJson.SetString(value.Text()).At("item", pathList...)
 				}
-				// 将 []string 拆为 []interface{}
-				pathList := make([]interface{}, len(keySlice))
-				for i := range keySlice {
-					pathList[i] = keySlice[i]
-				}
-				// 然后插入 Json
-				myJson.SetString(value.Text()).At("item", pathList...)
 			}
 
 			// 写入倒排引擎(Es)的数据
