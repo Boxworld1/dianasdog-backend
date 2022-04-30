@@ -12,6 +12,7 @@ import (
 	"dianasdog/database"
 	"dianasdog/getter"
 	"fmt"
+	"strconv"
 	"strings"
 
 	jsonvalue "github.com/Andrew-M-C/go.jsonvalue"
@@ -32,26 +33,57 @@ func StoreItem(data *etree.Element, resource string, docid string, itemSettings 
 	myJson := jsonvalue.NewObject()
 	myJson.SetString(resource).At("type")
 
+	// 图片计数器
+	picCount := 0
+
+	// 数组计数器
+	var itemCount map[string]int = make(map[string]int)
+
 	// 根据配置信息写入数据库
 	for _, itemSetting := range itemSettings {
 
 		// 根据路径选取对应数据
 		key := GetKey(itemSetting.ItemPath)
-		keySlice := strings.Split(key, ".")
+		keySlice := strings.Split(itemSetting.ItemPath, ".")
 		path := strings.Replace(itemSetting.ItemPath, ".", "/", -1)
 
+		// 查找所有可行路径
 		for _, value := range data.FindElements(path) {
-			// 写入摘要(Radis)的数据
+
+			// 索引初始化
+			var pathKey string = ""
+
+			// 将 []string 拆为 []interface{}
+			pathList := make([]interface{}, 0)
+			for _, key1 := range keySlice {
+				// 索引拼接
+				pathKey = pathKey + "@" + key1
+
+				// 路径加长
+				pathList = append(pathList, key1)
+
+				// 若为特定键值
+				if key1 == "item" || key1 == "tag" || key1 == "tab" {
+					// 检查键值是否出现过
+					if _, ok := itemCount[pathKey]; !ok {
+						itemCount[pathKey] = 0
+					}
+					// 设置位置
+					pathList = append(pathList, itemCount[pathKey])
+					itemCount[pathKey]++
+
+					// 更改位置
+					pathKey = pathKey + "@" + strconv.Itoa(itemCount[pathKey]-1)
+				}
+			}
+
+			// 写入摘要(Redis)的数据
 			if itemSetting.DumpDigest {
 				// 若为图片
 				if itemSetting.IsPic {
-					myJson.SetString(value.Text()).At("picture")
+					myJson.SetString(value.Text()).At("picture", picCount)
+					picCount++
 				} else {
-					// 将 []string 拆为 []interface{}
-					pathList := make([]interface{}, len(keySlice))
-					for i := range keySlice {
-						pathList[i] = keySlice[i]
-					}
 					// 然后插入 Json
 					myJson.SetString(value.Text()).At("item", pathList...)
 				}
