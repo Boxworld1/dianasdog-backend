@@ -81,8 +81,8 @@ func SearchFromEs(resourceName string, client *elastic.Client, content string) (
 	var typ Doc
 	var err error
 	var put4 *elastic.SearchResult
-	matchQuery := elastic.NewMatchQuery("content", content)
-	put4, err = client.Search(resourceName).Query(matchQuery).Size(10).Do(context.Background())
+	matchQuery := elastic.NewMatchPhraseQuery("content", content)
+	put4, err = client.Search(resourceName).Query(matchQuery).Size(5).Do(context.Background())
 	if err != nil {
 		print(err.Error())
 		return nil, err
