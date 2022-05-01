@@ -32,7 +32,6 @@ func isSpecial(key string) bool {
 
 func dfs(data *etree.Element, keySlice []string, path []interface{}, res string, docid string, itemSetting getter.ItemSetting) {
 
-	fmt.Println(itemSetting.ItemPath, itemSetting.DumpDigest, itemSetting.DumpDict, itemSetting.DumpInvertIdx, itemSetting.IsPic)
 	// Json Tree 索引记录
 	pathList := path
 	// 初始化 etree 索引路径
@@ -46,13 +45,10 @@ func dfs(data *etree.Element, keySlice []string, path []interface{}, res string,
 
 		// 若到达目标位置
 		if idx == len(keySlice)-1 {
-			fmt.Println("STORE: ", pathList)
 			for _, value := range data.FindElements(nowPath) {
 				// 写入摘要(Redis)的数据
-				fmt.Println(itemSetting.ItemPath, itemSetting.DumpDigest, itemSetting.DumpDict, itemSetting.DumpInvertIdx, itemSetting.IsPic)
 				if itemSetting.DumpDigest {
 					// 若为图片
-					fmt.Println("13258791235")
 					if itemSetting.IsPic {
 						myJson.SetString(value.Text()).At("picture", picCount)
 						picCount++
@@ -112,13 +108,10 @@ func StoreItem(data *etree.Element, resource string, docid string, itemSettings 
 
 		// 根据路径选取对应数据
 		keySlice := strings.Split(itemSetting.ItemPath, ".")
-		fmt.Println("")
-		fmt.Println("========TARGET", strings.Replace(itemSetting.ItemPath, ".", "/", -1), "=========")
 		var path []interface{} = make([]interface{}, 0)
 
-		fmt.Println(itemSetting.ItemPath, itemSetting.DumpDigest, itemSetting.DumpDict, itemSetting.DumpInvertIdx, itemSetting.IsPic)
+		// 递归查找
 		dfs(data, keySlice, path, resource, docid, itemSetting)
-
 	}
 
 	// 将传入 redis 的数据变为 json
