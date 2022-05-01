@@ -19,6 +19,15 @@ type TemplateBody struct {
 	Operation string   `json:"operation" binding:"required"`
 }
 
+// PostTemplate postlogin
+// @Summary 后端密码接口
+// @Description 后端密码接口
+// @Accept json
+// @Produce json
+// @Param username query string true "用户名"
+// @Success 200 {object} TemplateBody "{"msg": "hello Razeen"}"
+// @Failure 400 {object} string "{"msg": "who are you"}"
+// @Router /pattern [post]
 func PostTemplate(context *gin.Context) {
 	var body TemplateBody
 

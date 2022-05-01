@@ -15,6 +15,15 @@ type LoginBody struct {
 	Username string `json:"username" binding:"required"`
 }
 
+// PostLogin postlogin
+// @Summary 后端密码接口
+// @Description 后端密码接口
+// @Accept json
+// @Produce json
+// @Param username query string true "用户名"
+// @Success 200 {object} string "{"msg": "hello Razeen"}"
+// @Failure 400 {object} string "{"msg": "who are you"}"
+// @Router /login [post]
 func PostLogin(context *gin.Context) {
 	var body LoginBody
 

@@ -35,11 +35,6 @@ func init() {
 // @title		InsertToEs
 // @description	向指定的特型（resourceName）中添加数据
 // @auth		wzq				2022/4/26		20:39
-// @param		resourceName	string			特型卡类型
-// @param		docid			string			item 编号
-// @param		content		    string			存入文档的内容
-// @return		ID				string			存入数据的id（与docID相同）
-// @return		err				error			错误值
 func InsertToEs(resourceName string, client *elastic.Client, docId string, content string) (string, error) {
 	doc := Doc{DocID: docId, Content: content}
 	put1, err := client.Index().
@@ -58,11 +53,6 @@ func InsertToEs(resourceName string, client *elastic.Client, docId string, conte
 // @title		UpdateToEs
 // @description	向指定的特型（resourceName）中指定的文档更新数据
 // @auth		wzq				2022/4/26		20:39
-// @param		resourceName	string			特型卡类型
-// @param		docId			string			item 编号
-// @param		newContent		string			存入文档的内容
-// @return		result			string			result
-// @return		err				error			错误值
 func UpdateToEs(resourceName string, client *elastic.Client, docId string, newContent string) (string, error) {
 	put2, err := client.Update().
 		Index(resourceName).
