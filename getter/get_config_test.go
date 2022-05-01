@@ -30,18 +30,22 @@ func TestGetConfig(t *testing.T) {
 	}
 
 	// 定义结果
-	ans := [][]bool{{true, true, true}, {true, false, true}}
+	ans := [][]bool{{true, true, true, false}, {true, false, true, false}, {true, false, true, true}}
 
 	// 配置数量错误
-	if len(itemSettings) != 2 {
+	if len(itemSettings) != 3 {
 		t.Error("配置数量有误", len(itemSettings))
 	} else {
 		for _, item := range itemSettings {
 			// 配置错误
 			key := 0
-			if item.ItemPath == "display.title" {
+			switch item.ItemPath {
+			case "display.title":
 				key = 1
+			case "display.item.mytest":
+				key = 2
 			}
+
 			if item.DumpDigest != ans[key][0] {
 				t.Error("dump digest 错误")
 			}
@@ -50,6 +54,9 @@ func TestGetConfig(t *testing.T) {
 			}
 			if item.DumpDict != ans[key][2] {
 				t.Error("dump dict 错误")
+			}
+			if item.IsPic != ans[key][3] {
+				t.Error("is pic 错误")
 			}
 		}
 

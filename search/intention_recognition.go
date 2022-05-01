@@ -1,3 +1,8 @@
+// @title	IntentionRecognition
+// @description	意图识別功能
+// @auth	jz		2022/4/7	12:00
+// @param	query	string
+
 package search
 
 import (
@@ -25,14 +30,18 @@ func init() {
 		}
 		acmap[table] = make(map[string]*Matcher)
 		for _, field := range fields {
-			acmap[table][field] = NewMatcher()
-			dict, err := database.GetAllWordFromDict(table, field)
-			if err != nil {
-				fmt.Println(err)
-			}
-			acmap[table][field].Build(dict)
+			BuildAC(table, field)
 		}
 	}
+}
+
+func BuildAC(table string, field string) {
+	acmap[table][field] = NewMatcher()
+	dict, err := database.GetAllWordFromDict(table, field)
+	if err != nil {
+		fmt.Println(err)
+	}
+	acmap[table][field].Build(dict)
 }
 
 // @title: IntentionRecognition
@@ -44,6 +53,9 @@ func IntentionRecognition(query string) []string {
 	for table := range acmap {
 		for field := range acmap[table] {
 			if field != "garbage" && field != "intent" {
+				if acmap[table][field] == nil {
+					BuildAC(table, field)
+				}
 				check := acmap[table][field].Check(query)
 				if check {
 					intentList = append(intentList, table)

@@ -19,6 +19,7 @@ type ItemSetting struct {
 	DumpDigest    bool   // 本字段是否需要 dump 摘要 (Redis)
 	DumpInvertIdx bool   // 本字段是否需要 dump 倒排 (ES)
 	DumpDict      bool   // 本字段是否需要 dump 词表 (Dict)
+	IsPic         bool   // 存入 Redis 的类型（如图片）
 }
 
 func GetConfig(resource string) ([]ItemSetting, error) {
@@ -42,6 +43,7 @@ func GetConfig(resource string) ([]ItemSetting, error) {
 
 		var item ItemSetting
 		item.ItemPath = key.String()
+		item.IsPic = false
 
 		// 读取此路径下的 dump 信息
 		value.ForEach(func(key, value gjson.Result) bool {
@@ -52,6 +54,8 @@ func GetConfig(resource string) ([]ItemSetting, error) {
 				item.DumpDict = value.Bool()
 			case "dump_invert_idx":
 				item.DumpInvertIdx = value.Bool()
+			case "is_picture":
+				item.IsPic = value.Bool()
 			}
 			return true
 		})

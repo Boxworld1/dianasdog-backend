@@ -63,6 +63,9 @@ func QueryUnderstanding(intentlist []string, query string) []result {
 			f[0][0] = 1
 			//检测query[i:j]是否在模板对应的词表中
 			for i, field := range pattern {
+				if acmap[table][field] == nil {
+					BuildAC(table, field)
+				}
 				rets := acmap[table][field].Match(query)
 				for _, ret := range rets {
 					w[ret.BegPosition+1][ret.EndPosition+1][i+1] = 1
