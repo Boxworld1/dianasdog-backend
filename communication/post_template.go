@@ -19,14 +19,16 @@ type TemplateBody struct {
 	Operation string   `json:"operation" binding:"required"`
 }
 
-// PostTemplate postlogin
-// @Summary 后端密码接口
-// @Description 后端密码接口
-// @Accept json
+// @Summary 接收配置文件
+// @Description 后端接收配置文件之接口
+// @Accept mpfd
 // @Produce json
-// @Param username query string true "用户名"
-// @Success 200 {object} TemplateBody "{"msg": "hello Razeen"}"
-// @Failure 400 {object} string "{"msg": "who are you"}"
+// @Param type query string true "上传信息类型 (intent, garbage, pattern)"
+// @Param resource query string true "特型卡名称 (如: car, poem 等)"
+// @Param data query []string true "数据内容"
+// @Param operation query string true "操作类型 (insert, delete)"
+// @Success 200 {object} string "{"message": "successful!"}"
+// @Failure 400 {object} string "错误原因"
 // @Router /pattern [post]
 func PostTemplate(context *gin.Context) {
 	var body TemplateBody

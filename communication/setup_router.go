@@ -14,7 +14,7 @@ func SetupRouter() *gin.Engine {
 	router.Use(cors.Default())
 
 	// 搜索句子
-	router.POST("/search", GoSearch)
+	router.POST("/search", PostSearch)
 	// 登入较验
 	router.POST("/login", PostLogin)
 	// 数据上传

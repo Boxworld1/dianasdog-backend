@@ -21,6 +21,18 @@ type DataBody struct {
 	Data     string                `form:"data"`
 }
 
+// @Summary 接收 XML 数据
+// @Description 后端接收 XML 数据之接口
+// @Accept mpfd
+// @Produce json
+// @Param resource formData string true "特型卡名称 (如: car, poem 等)"
+// @Param type formData string true "操作类型 (insert, delete)"
+// @Param file formData file false "文件形式上传之数据"
+// @Param data formData string false "数据内容"
+// @Param filename formData string false "文件名"
+// @Success 200 {object} string "OK"
+// @Failure 400 {object} string "Error: Bad Request"
+// @Router /data [post]
 func PostData(context *gin.Context) {
 	var body DataBody
 	var err error
