@@ -19,7 +19,7 @@ type TemplateBody struct {
 	Operation string   `json:"operation" binding:"required"`
 }
 
-// @Summary 接收配置文件
+// @Summary 发送配置文件
 // @Description 后端接收配置文件之接口
 // @Accept mpfd
 // @Produce json
@@ -28,7 +28,7 @@ type TemplateBody struct {
 // @Param data query []string true "数据内容"
 // @Param operation query string true "操作类型 (insert, delete)"
 // @Success 200 {object} string "{"message": "successful!"}"
-// @Failure 400 {object} string "错误原因"
+// @Failure 400 {object} string "Bad Request"
 // @Router /pattern [post]
 func PostTemplate(context *gin.Context) {
 	var body TemplateBody

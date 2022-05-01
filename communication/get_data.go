@@ -17,6 +17,15 @@ type GetDataBody struct {
 	Filename string `json:"filename" binding:"required"`
 }
 
+// @Summary 取得数据
+// @Description 后端返回数据之接口
+// @Accept json
+// @Produce mpfd
+// @Param resource query string true "特型卡名称 (如: car, poem 等)"
+// @Param filename query string true "文件名"
+// @Success 200 {file} string "XML 文件"
+// @Failure 400 {object} string "Bad Request"
+// @Router /data [get]
 func GetData(context *gin.Context) {
 	var body GetDataBody
 

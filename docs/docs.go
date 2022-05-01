@@ -20,7 +20,70 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/category": {
+            "get": {
+                "description": "后端返回现有特型卡类型之接口",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "取得现有特型卡类型",
+                "responses": {
+                    "200": {
+                        "description": "{\"data\": data}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/data": {
+            "get": {
+                "description": "后端返回数据之接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "multipart/form-data"
+                ],
+                "summary": "取得数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "特型卡名称 (如: car, poem 等)",
+                        "name": "resource",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "文件名",
+                        "name": "filename",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "XML 文件",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "后端接收 XML 数据之接口",
                 "consumes": [
@@ -29,7 +92,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "summary": "接收 XML 数据",
+                "summary": "发送 XML 数据",
                 "parameters": [
                     {
                         "type": "string",
@@ -46,12 +109,6 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "file",
-                        "description": "文件形式上传之数据",
-                        "name": "file",
-                        "in": "formData"
-                    },
-                    {
                         "type": "string",
                         "description": "数据内容",
                         "name": "data",
@@ -61,6 +118,12 @@ const docTemplate = `{
                         "type": "string",
                         "description": "文件名",
                         "name": "filename",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "file",
+                        "description": "文件形式上传之数据",
+                        "name": "file",
                         "in": "formData"
                     }
                 ],
@@ -72,7 +135,125 @@ const docTemplate = `{
                         }
                     },
                     "400": {
-                        "description": "Error: Bad Request",
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/dataname": {
+            "get": {
+                "description": "后端返回数据文件名之接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "取得数据文件名",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "特型卡名称 (如: car, poem 等)",
+                        "name": "resource",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "文件名",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/item": {
+            "get": {
+                "description": "后端返回某一条数据之接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "取得单一数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "特型卡名称 (如: car, poem 等)",
+                        "name": "resource",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "索引值 (默认为 item.key)",
+                        "name": "key",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"data\": data}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/key": {
+            "get": {
+                "description": "后端返回某一数据类型键值之接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "取得数据键值",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "特型卡名称 (如: car, poem 等)",
+                        "name": "resource",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"data\": data}",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
                         "schema": {
                             "type": "string"
                         }
@@ -107,7 +288,7 @@ const docTemplate = `{
                         }
                     },
                     "400": {
-                        "description": "Error: Bad Request",
+                        "description": "Bad Request",
                         "schema": {
                             "type": "string"
                         }
@@ -116,6 +297,49 @@ const docTemplate = `{
             }
         },
         "/pattern": {
+            "get": {
+                "description": "后端返回配置文件之接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "取得配置文件",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "特型卡名称 (如: car, poem 等)",
+                        "name": "resource",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "下载信息类型 (intent, garbage, pattern)",
+                        "name": "type",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"data\": data}",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "后端接收配置文件之接口",
                 "consumes": [
@@ -124,7 +348,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "summary": "接收配置文件",
+                "summary": "发送配置文件",
                 "parameters": [
                     {
                         "type": "string",
@@ -166,7 +390,7 @@ const docTemplate = `{
                         }
                     },
                     "400": {
-                        "description": "错误原因",
+                        "description": "Bad Request",
                         "schema": {
                             "type": "string"
                         }
@@ -201,7 +425,7 @@ const docTemplate = `{
                         }
                     },
                     "400": {
-                        "description": "Error: Bad Request",
+                        "description": "Bad Request",
                         "schema": {
                             "type": "string"
                         }
@@ -210,15 +434,48 @@ const docTemplate = `{
             }
         },
         "/setting": {
+            "get": {
+                "description": "后端返回写入行为描述之接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "取得写入行为描述",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "特型卡名称 (如: car, poem 等)",
+                        "name": "resource",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"data\": data}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
             "post": {
-                "description": "后端接收写入行为之接口",
+                "description": "后端接收写入行为描述之接口",
                 "consumes": [
                     "multipart/form-data"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "接收写入行为数据",
+                "summary": "发送写入行为描述",
                 "parameters": [
                     {
                         "type": "string",
@@ -248,7 +505,7 @@ const docTemplate = `{
                         }
                     },
                     "400": {
-                        "description": "Error: Bad Request",
+                        "description": "Bad Request",
                         "schema": {
                             "type": "string"
                         }
@@ -262,7 +519,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:80",
+	Host:             "https://Backend-DianasDog.app.secoder.net",
 	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "特型卡片搜索系统",

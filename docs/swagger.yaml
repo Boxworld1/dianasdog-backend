@@ -1,5 +1,5 @@
 basePath: /
-host: localhost:80
+host: https://Backend-DianasDog.app.secoder.net
 info:
   contact: {}
   license:
@@ -8,7 +8,49 @@ info:
   title: 特型卡片搜索系统
   version: "1.0"
 paths:
+  /category:
+    get:
+      description: 后端返回现有特型卡类型之接口
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": data}'
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: 取得现有特型卡类型
   /data:
+    get:
+      consumes:
+      - application/json
+      description: 后端返回数据之接口
+      parameters:
+      - description: '特型卡名称 (如: car, poem 等)'
+        in: query
+        name: resource
+        required: true
+        type: string
+      - description: 文件名
+        in: query
+        name: filename
+        required: true
+        type: string
+      produces:
+      - multipart/form-data
+      responses:
+        "200":
+          description: XML 文件
+          schema:
+            type: file
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: 取得数据
     post:
       consumes:
       - multipart/form-data
@@ -24,10 +66,6 @@ paths:
         name: type
         required: true
         type: string
-      - description: 文件形式上传之数据
-        in: formData
-        name: file
-        type: file
       - description: 数据内容
         in: formData
         name: data
@@ -36,6 +74,10 @@ paths:
         in: formData
         name: filename
         type: string
+      - description: 文件形式上传之数据
+        in: formData
+        name: file
+        type: file
       produces:
       - application/json
       responses:
@@ -44,10 +86,88 @@ paths:
           schema:
             type: string
         "400":
-          description: 'Error: Bad Request'
+          description: Bad Request
           schema:
             type: string
-      summary: 接收 XML 数据
+      summary: 发送 XML 数据
+  /dataname:
+    get:
+      consumes:
+      - application/json
+      description: 后端返回数据文件名之接口
+      parameters:
+      - description: '特型卡名称 (如: car, poem 等)'
+        in: query
+        name: resource
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 文件名
+          schema:
+            items:
+              type: string
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: 取得数据文件名
+  /item:
+    get:
+      consumes:
+      - application/json
+      description: 后端返回某一条数据之接口
+      parameters:
+      - description: '特型卡名称 (如: car, poem 等)'
+        in: query
+        name: resource
+        required: true
+        type: string
+      - description: 索引值 (默认为 item.key)
+        in: query
+        name: key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": data}'
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: 取得单一数据
+  /key:
+    get:
+      consumes:
+      - application/json
+      description: 后端返回某一数据类型键值之接口
+      parameters:
+      - description: '特型卡名称 (如: car, poem 等)'
+        in: query
+        name: resource
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": data}'
+          schema:
+            items:
+              type: string
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: 取得数据键值
   /login:
     post:
       consumes:
@@ -67,11 +187,40 @@ paths:
           schema:
             type: string
         "400":
-          description: 'Error: Bad Request'
+          description: Bad Request
           schema:
             type: string
       summary: 密码较验接口
   /pattern:
+    get:
+      consumes:
+      - application/json
+      description: 后端返回配置文件之接口
+      parameters:
+      - description: '特型卡名称 (如: car, poem 等)'
+        in: query
+        name: resource
+        required: true
+        type: string
+      - description: 下载信息类型 (intent, garbage, pattern)
+        in: query
+        name: type
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": data}'
+          schema:
+            items:
+              type: string
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: 取得配置文件
     post:
       consumes:
       - multipart/form-data
@@ -107,10 +256,10 @@ paths:
           schema:
             type: string
         "400":
-          description: 错误原因
+          description: Bad Request
           schema:
             type: string
-      summary: 接收配置文件
+      summary: 发送配置文件
   /search:
     post:
       consumes:
@@ -130,15 +279,37 @@ paths:
           schema:
             type: string
         "400":
-          description: 'Error: Bad Request'
+          description: Bad Request
           schema:
             type: string
       summary: 搜索系统接口
   /setting:
+    get:
+      consumes:
+      - application/json
+      description: 后端返回写入行为描述之接口
+      parameters:
+      - description: '特型卡名称 (如: car, poem 等)'
+        in: query
+        name: resource
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": data}'
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: 取得写入行为描述
     post:
       consumes:
       - multipart/form-data
-      description: 后端接收写入行为之接口
+      description: 后端接收写入行为描述之接口
       parameters:
       - description: '特型卡名称 (如: car, poem 等)'
         in: formData
@@ -161,8 +332,8 @@ paths:
           schema:
             type: string
         "400":
-          description: 'Error: Bad Request'
+          description: Bad Request
           schema:
             type: string
-      summary: 接收写入行为数据
+      summary: 发送写入行为描述
 swagger: "2.0"

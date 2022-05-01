@@ -21,7 +21,7 @@ type SearchBody struct {
 // @Produce json
 // @Param query query string true "要搜索的句子"
 // @Success 200 {object} string "OK"
-// @Failure 400 {object} string "Error: Bad Request"
+// @Failure 400 {object} string "Bad Request"
 // @Router /search [post]
 func PostSearch(context *gin.Context) {
 	var body SearchBody

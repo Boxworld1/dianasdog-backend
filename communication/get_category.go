@@ -11,6 +11,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary 取得现有特型卡类型
+// @Description 后端返回现有特型卡类型之接口
+// @Produce json
+// @Success 200 {object} string "{"data": data}"
+// @Failure 400 {object} string "Bad Request"
+// @Router /category [get]
 func GetCategory(context *gin.Context) {
 
 	// 取得文件

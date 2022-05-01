@@ -16,6 +16,14 @@ type GetConfigBody struct {
 	Resource string `json:"resource" binding:"required"`
 }
 
+// @Summary 取得写入行为描述
+// @Description 后端返回写入行为描述之接口
+// @Accept json
+// @Produce json
+// @Param resource query string true "特型卡名称 (如: car, poem 等)"
+// @Success 200 {object} string "{"data": data}"
+// @Failure 400 {object} string "Bad Request"
+// @Router /setting [get]
 func GetConfig(context *gin.Context) {
 	var body GetConfigBody
 

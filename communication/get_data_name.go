@@ -15,6 +15,14 @@ type GetDataNameBody struct {
 	Resource string `json:"resource" binding:"required"`
 }
 
+// @Summary 取得数据文件名
+// @Description 后端返回数据文件名之接口
+// @Accept json
+// @Produce json
+// @Param resource query string true "特型卡名称 (如: car, poem 等)"
+// @Success 200 {object} []string "文件名"
+// @Failure 400 {object} string "Bad Request"
+// @Router /dataname [get]
 func GetDataName(context *gin.Context) {
 	var body GetDataNameBody
 

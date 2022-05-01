@@ -16,6 +16,15 @@ type GetTemplateBody struct {
 	Type     string `json:"type" binding:"required"`
 }
 
+// @Summary 取得配置文件
+// @Description 后端返回配置文件之接口
+// @Accept json
+// @Produce json
+// @Param resource query string true "特型卡名称 (如: car, poem 等)"
+// @Param type query string true "下载信息类型 (intent, garbage, pattern)"
+// @Success 200 {object} []string "{"data": data}"
+// @Failure 400 {object} string "Bad Request"
+// @Router /pattern [get]
 func GetTemplate(context *gin.Context) {
 	var body GetTemplateBody
 

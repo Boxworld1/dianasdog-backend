@@ -15,6 +15,14 @@ type GetKeyBody struct {
 	Resource string `json:"resource" binding:"required"`
 }
 
+// @Summary 取得数据键值
+// @Description 后端返回某一数据类型键值之接口
+// @Accept json
+// @Produce json
+// @Param resource query string true "特型卡名称 (如: car, poem 等)"
+// @Success 200 {object} []string "{"data": data}"
+// @Failure 400 {object} string "Bad Request"
+// @Router /key [get]
 func GetKey(context *gin.Context) {
 	var body GetKeyBody
 

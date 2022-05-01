@@ -17,6 +17,15 @@ type GetItemBody struct {
 	Key      string `json:"key" binding:"required"`
 }
 
+// @Summary 取得单一数据
+// @Description 后端返回某一条数据之接口
+// @Accept json
+// @Produce json
+// @Param resource query string true "特型卡名称 (如: car, poem 等)"
+// @Param key query string true "索引值 (默认为 item.key)"
+// @Success 200 {object} string "{"data": data}"
+// @Failure 400 {object} string "Bad Request"
+// @Router /item [get]
 func GetItem(context *gin.Context) {
 	var body GetItemBody
 

@@ -22,7 +22,7 @@ type LoginBody struct {
 // @Produce json
 // @Param username query string true "用户名"
 // @Success 200 {object} string "{"password": "pwd"}"
-// @Failure 400 {object} string "Error: Bad Request"
+// @Failure 400 {object} string "Bad Request"
 // @Router /login [post]
 func PostLogin(context *gin.Context) {
 	var body LoginBody
