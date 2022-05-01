@@ -20,8 +20,6 @@ import (
 
 var myJson *jsonvalue.V
 var picCount int
-var redisStr string
-var esStr string
 
 func isSpecial(key string) bool {
 	if key == "item" || key == "tag" || key == "tab" {
@@ -30,7 +28,7 @@ func isSpecial(key string) bool {
 	return false
 }
 
-func dfs(data *etree.Element, keySlice []string, path []interface{}, res string, docid string, itemSetting getter.ItemSetting) {
+func dfs(data *etree.Element, keySlice []string, path []interface{}, res string, docid string, itemSetting getter.ItemSetting, esStr *string) {
 
 	// Json Tree 索引记录
 	pathList := path
@@ -60,7 +58,7 @@ func dfs(data *etree.Element, keySlice []string, path []interface{}, res string,
 
 				// 写入倒排引擎(Es)的数据
 				if itemSetting.DumpInvertIdx {
-					esStr = esStr + value.Text() + " "
+					*esStr += value.Text() + " "
 				}
 
 				// 数据写入词典(Dict)
@@ -79,7 +77,7 @@ func dfs(data *etree.Element, keySlice []string, path []interface{}, res string,
 				tmpPath := append(pathList, cnt)
 				doc := etree.NewDocument()
 				doc.SetRoot(value.Copy())
-				dfs(doc.Root(), keySlice[idx+1:], tmpPath, res, docid, itemSetting)
+				dfs(doc.Root(), keySlice[idx+1:], tmpPath, res, docid, itemSetting, esStr)
 			}
 			break
 		}
@@ -93,8 +91,8 @@ func StoreItem(data *etree.Element, resource string, docid string, itemSettings 
 	es := database.EsClient
 
 	// 先初始化要传入 Redis 和 ES 的值
-	redisStr = ""
-	esStr = ""
+	redisStr := ""
+	esStr := ""
 
 	// 图片计数器
 	picCount = 0
@@ -111,7 +109,7 @@ func StoreItem(data *etree.Element, resource string, docid string, itemSettings 
 		var path []interface{} = make([]interface{}, 0)
 
 		// 递归查找
-		dfs(data, keySlice, path, resource, docid, itemSetting)
+		dfs(data, keySlice, path, resource, docid, itemSetting, &esStr)
 	}
 
 	// 将传入 redis 的数据变为 json
