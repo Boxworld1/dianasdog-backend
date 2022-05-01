@@ -43,6 +43,7 @@ func GetConfig(resource string) ([]ItemSetting, error) {
 
 		var item ItemSetting
 		item.ItemPath = key.String()
+		item.IsPic = false
 
 		// 读取此路径下的 dump 信息
 		value.ForEach(func(key, value gjson.Result) bool {

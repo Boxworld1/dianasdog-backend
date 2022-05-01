@@ -10,6 +10,12 @@
             "dump_digest": "true",
             "dump_invert_idx": "false",
             "dump_dict": "true"
+        },
+        "display.item.mytest": {
+            "dump_digest": "true",
+            "dump_invert_idx": "false",
+            "dump_dict": "true",
+            "is_picture": "true"
         }
     }
 }

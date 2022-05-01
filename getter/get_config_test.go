@@ -33,7 +33,7 @@ func TestGetConfig(t *testing.T) {
 	ans := [][]bool{{true, true, true}, {true, false, true}}
 
 	// 配置数量错误
-	if len(itemSettings) != 2 {
+	if len(itemSettings) != 3 {
 		t.Error("配置数量有误", len(itemSettings))
 	} else {
 		for _, item := range itemSettings {
