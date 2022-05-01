@@ -1,4 +1,4 @@
-// @title	GoSearch
+// @title	PostSearch
 // @description	后端搜索接口
 // @auth	ryl		2022/4/27	16:30
 // @param	context	*gin.Context
@@ -15,7 +15,15 @@ type SearchBody struct {
 	Query string `json:"query" binding:"required"`
 }
 
-func GoSearch(context *gin.Context) {
+// @Summary 搜索系统接口
+// @Description 后端搜索系统接口
+// @Accept json
+// @Produce json
+// @Param query query string true "要搜索的句子"
+// @Success 200 {object} string "OK"
+// @Failure 400 {object} string "Bad Request"
+// @Router /search [post]
+func PostSearch(context *gin.Context) {
 	var body SearchBody
 
 	// 检查收到信息的格式是否正确

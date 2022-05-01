@@ -25,6 +25,16 @@ type ConfigJson struct {
 	Setting  map[string]interface{} `json:"write_setting" binding:"required"`
 }
 
+// @Summary 发送写入行为描述
+// @Description 后端接收写入行为描述之接口
+// @Accept mpfd
+// @Produce json
+// @Param resource formData string true "特型卡名称 (如: car, poem 等)"
+// @Param file formData file false "文件形式上传之数据"
+// @Param data formData string false "数据内容 (JSON 格式)"
+// @Success 200 {object} string "OK"
+// @Failure 400 {object} string "Bad Request"
+// @Router /setting [post]
 func PostConfig(context *gin.Context) {
 	var body ConfigBody
 	var err error
