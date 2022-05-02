@@ -20,7 +20,7 @@ func Search(query string) []map[string]interface{} {
 
 	// Query 理解
 	result := QueryUnderstanding(intentList, query)
-
+	fmt.Println(result)
 	// es搜索
 	var docIdList []string
 

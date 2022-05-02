@@ -21,7 +21,7 @@ func TestSearch(t *testing.T) {
 	database.SetToRedis(database.RedisClient, "test@宝马", "{\"Test\": \"测试成功\"}")
 
 	// 搜索测试
-	result := Search("宝马的价格是多少")
+	result := Search("白居易")
 
 	if result == nil {
 		t.Error("搜索失败")
