@@ -24,7 +24,7 @@ func SetupRouter() *gin.Engine {
 	// 写入配置上传
 	router.POST("/setting", PostConfig)
 	// es测试接口
-	router.POST("/search", TestesSearch)
+	router.POST("/testes", TestesSearch)
 
 	// 数据下载
 	router.GET("/data", GetData)
