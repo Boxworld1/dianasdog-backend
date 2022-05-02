@@ -28,7 +28,7 @@ func isSpecial(key string) bool {
 	return false
 }
 
-func dfs(data *etree.Element, keySlice []string, path []interface{}, res string, docid string, itemSetting getter.ItemSetting, esStr *string) {
+func dfs(data *etree.Element, keySlice []string, path []interface{}, res string, docid string, itemSetting getter.ItemSetting) {
 
 	// Json Tree 索引记录
 	pathList := path
@@ -55,17 +55,6 @@ func dfs(data *etree.Element, keySlice []string, path []interface{}, res string,
 						myJson.SetString(value.Text()).At("item", pathList...)
 					}
 				}
-
-				// 写入倒排引擎(Es)的数据
-				if itemSetting.DumpInvertIdx {
-					*esStr += value.Text() + " "
-				}
-
-				// 数据写入词典(Dict)
-				if itemSetting.DumpDict {
-					fmt.Println("insert to dict", value.Text())
-					database.InsertToDict(res, docid, keyValue, value.Text())
-				}
 			}
 			break
 		}
@@ -77,7 +66,7 @@ func dfs(data *etree.Element, keySlice []string, path []interface{}, res string,
 				tmpPath := append(pathList, cnt)
 				doc := etree.NewDocument()
 				doc.SetRoot(value.Copy())
-				dfs(doc.Root(), keySlice[idx+1:], tmpPath, res, docid, itemSetting, esStr)
+				dfs(doc.Root(), keySlice[idx+1:], tmpPath, res, docid, itemSetting)
 			}
 			break
 		}
@@ -106,10 +95,25 @@ func StoreItem(data *etree.Element, resource string, docid string, itemSettings 
 
 		// 根据路径选取对应数据
 		keySlice := strings.Split(itemSetting.ItemPath, ".")
-		var path []interface{} = make([]interface{}, 0)
+		path := strings.Replace(itemSetting.ItemPath, ".", "/", -1)
+		var pathList []interface{} = make([]interface{}, 0)
 
-		// 递归查找
-		dfs(data, keySlice, path, resource, docid, itemSetting, &esStr)
+		// 递归查找(Redis)
+		dfs(data, keySlice, pathList, resource, docid, itemSetting)
+
+		for _, value := range data.FindElements(path) {
+			// 写入倒排引擎(Es)的数据
+			if itemSetting.DumpInvertIdx {
+				esStr = esStr + value.Text() + " "
+			}
+
+			// 数据写入词典(Dict)
+			if itemSetting.DumpDict {
+				fmt.Println("insert to dict", value.Text())
+				database.InsertToDict(resource, docid, keySlice[len(keySlice)-1], value.Text())
+			}
+		}
+
 	}
 
 	// 将传入 redis 的数据变为 json
