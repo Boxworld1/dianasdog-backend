@@ -21,7 +21,6 @@ var EsClient *elastic.Client
 type Doc struct {
 	DocID   string `json:"DocID"`
 	Content string `json:"content"`
-	Keyword string `json:"keyword"`
 }
 
 // 全局初始化
@@ -36,13 +35,8 @@ func init() {
 // @title		InsertToEs
 // @description	向指定的特型（resourceName）中添加数据
 // @auth		wzq				2022/4/26		20:39
-// @param		resourceName	string			特型卡类型
-// @param		docid			string			item 编号
-// @param		content		    string			存入文档的内容
-// @return		ID				string			存入数据的id（与docID相同）
-// @return		err				error			错误值
-func InsertToEs(resourceName string, client *elastic.Client, docId string, content string, keyword string) (string, error) {
-	doc := Doc{DocID: docId, Content: content, Keyword: keyword}
+func InsertToEs(resourceName string, client *elastic.Client, docId string, content string) (string, error) {
+	doc := Doc{DocID: docId, Content: content}
 	put1, err := client.Index().
 		Index(resourceName).
 		BodyJson(doc).
@@ -59,11 +53,6 @@ func InsertToEs(resourceName string, client *elastic.Client, docId string, conte
 // @title		UpdateToEs
 // @description	向指定的特型（resourceName）中指定的文档更新数据
 // @auth		wzq				2022/4/26		20:39
-// @param		resourceName	string			特型卡类型
-// @param		docId			string			item 编号
-// @param		newContent		string			存入文档的内容
-// @return		result			string			result
-// @return		err				error			错误值
 func UpdateToEs(resourceName string, client *elastic.Client, docId string, newContent string) (string, error) {
 	put2, err := client.Update().
 		Index(resourceName).
@@ -83,13 +72,7 @@ func SearchFromEs(resourceName string, client *elastic.Client, content string) (
 	var err error
 	var put4 *elastic.SearchResult
 	matchQuery := elastic.NewMatchPhraseQuery("content", content)
-	matchQuery2 := elastic.NewMatchPhraseQuery("keyword", content)
-	reScorer := elastic.NewQueryRescorer(matchQuery2)
-	reScorer.QueryWeight(1)
-	reScorer.RescoreQueryWeight(10)
-	ReScorer := elastic.Rescorer(reScorer)
-	reScore := elastic.NewRescore().Rescorer(ReScorer)
-	put4, err = client.Search(resourceName).Query(matchQuery).Rescorer(reScore).Size(50).Do(context.Background())
+	put4, err = client.Search(resourceName).Query(matchQuery).Size(5).Do(context.Background())
 	if err != nil {
 		print(err.Error())
 		return nil, err
