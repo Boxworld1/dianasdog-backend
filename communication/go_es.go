@@ -6,7 +6,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func TestesSearch(context *gin.Context) {
+// @Summary es 测试接口
+// @Description 检查 es 数据之测试接口
+// @Accept json
+// @Produce json
+// @Param query query string true "要搜索的句子"
+// @Success 200 {object} string "OK"
+// @Failure 400 {object} string "Bad Request"
+// @Router /testes [post]
+func PostEsTest(context *gin.Context) {
 	var body SearchBody
 
 	// 检查收到信息的格式是否正确

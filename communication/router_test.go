@@ -1,6 +1,6 @@
 // @title	TestRouter
 // @description	此函数的用途为检查 SetupRouter 函数的正确性
-// @auth	ryl		2022/4/27	-:00
+// @auth	ryl		2022/5/2
 // @param	t		*testing.T	testing 用参数
 
 package communication
@@ -34,8 +34,8 @@ func TestRouter(t *testing.T) {
 		format int
 		param  []MapStruct
 	}{
-		// 测试句子搜索功能
-		{[]int{0}, 0, []MapStruct{
+		// 测试句子、ES 搜索功能
+		{[]int{0, 12}, 0, []MapStruct{
 			{"content", `{"query": "apple"}`},
 		}},
 		// 测试登录功能（合法用户）
@@ -243,6 +243,7 @@ func TestRouter(t *testing.T) {
 		{"GET", "/item"},
 		{"GET", "/category"},
 		{"GET", "/key"},
+		{"POST", "/testes"},
 	}
 
 	// 开启 router
