@@ -21,6 +21,7 @@ var EsClient *elastic.Client
 type Doc struct {
 	DocID   string `json:"DocID"`
 	Content string `json:"content"`
+	Keyword string `json:"keyword"`
 }
 
 // 全局初始化
@@ -40,8 +41,8 @@ func init() {
 // @param		content		    string			存入文档的内容
 // @return		ID				string			存入数据的id（与docID相同）
 // @return		err				error			错误值
-func InsertToEs(resourceName string, client *elastic.Client, docId string, content string) (string, error) {
-	doc := Doc{DocID: docId, Content: content}
+func InsertToEs(resourceName string, client *elastic.Client, docId string, content string, keyword string) (string, error) {
+	doc := Doc{DocID: docId, Content: content, Keyword: keyword}
 	put1, err := client.Index().
 		Index(resourceName).
 		BodyJson(doc).
@@ -82,7 +83,13 @@ func SearchFromEs(resourceName string, client *elastic.Client, content string) (
 	var err error
 	var put4 *elastic.SearchResult
 	matchQuery := elastic.NewMatchPhraseQuery("content", content)
-	put4, err = client.Search(resourceName).Query(matchQuery).Size(5).Do(context.Background())
+	matchQuery2 := elastic.NewMatchPhraseQuery("keyword", content)
+	reScorer := elastic.NewQueryRescorer(matchQuery2)
+	reScorer.QueryWeight(1)
+	reScorer.RescoreQueryWeight(10)
+	ReScorer := elastic.Rescorer(reScorer)
+	reScore := elastic.NewRescore().Rescorer(ReScorer)
+	put4, err = client.Search(resourceName).Query(matchQuery).Rescorer(reScore).Size(50).Do(context.Background())
 	if err != nil {
 		print(err.Error())
 		return nil, err
