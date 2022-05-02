@@ -11,14 +11,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type GetTemplateBody struct {
-	Resource string `json:"resource" binding:"required"`
-	Type     string `json:"type" binding:"required"`
-}
-
 // @Summary 取得配置文件
 // @Description 后端返回配置文件之接口
-// @Accept json
 // @Produce json
 // @Param resource query string true "特型卡名称 (如: car, poem 等)"
 // @Param type query string true "下载信息类型 (intent, garbage, pattern)"
@@ -26,24 +20,21 @@ type GetTemplateBody struct {
 // @Failure 400 {object} string "Bad Request"
 // @Router /pattern [get]
 func GetTemplate(context *gin.Context) {
-	var body GetTemplateBody
 
 	// 检查收到信息的格式是否正确
-	err := context.ShouldBindJSON(&body)
+	res, ok1 := context.GetQuery("resource")
+	wordType, ok2 := context.GetQuery("type")
 
 	// 若不是，则返回错误
-	if err != nil {
+	if !ok1 || !ok2 {
 		context.JSON(400, gin.H{
-			"err": err.Error(),
+			"err": "wrong param",
 		})
 		return
 	}
 
-	// 取得文件
-	wordType := body.Type
-	res := body.Resource
-
 	var data []string
+	var err error
 
 	switch wordType {
 	case "pattern":
