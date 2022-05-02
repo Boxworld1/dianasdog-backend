@@ -19,7 +19,6 @@ type GetDataBody struct {
 
 // @Summary 取得数据
 // @Description 后端返回数据之接口
-// @Accept json
 // @Produce mpfd
 // @Param resource query string true "特型卡名称 (如: car, poem 等)"
 // @Param filename query string true "文件名"
@@ -27,20 +26,20 @@ type GetDataBody struct {
 // @Failure 400 {object} string "Bad Request"
 // @Router /data [get]
 func GetData(context *gin.Context) {
-	var body GetDataBody
 
 	// 检查收到信息的格式是否正确
-	if err := context.ShouldBindJSON(&body); err != nil {
+	resource, ok1 := context.GetQuery("resource")
+	filename, ok2 := context.GetQuery("filename")
+
+	// 若不是，则返回错误
+	if !ok1 || !ok2 {
 		context.JSON(400, gin.H{
-			"err": err.Error(),
+			"err": "wrong param",
 		})
 		return
 	}
 
 	// 若无错误，则继续
-	resource := body.Resource
-	filename := body.Filename
-
 	data, err := database.GetFile(database.DataClient, resource, filename)
 
 	// 不存在此特型卡类型或文件

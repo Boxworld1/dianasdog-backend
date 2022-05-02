@@ -12,14 +12,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type GetItemBody struct {
-	Resource string `json:"resource" binding:"required"`
-	Key      string `json:"key" binding:"required"`
-}
-
 // @Summary 取得单一数据
 // @Description 后端返回某一条数据之接口
-// @Accept json
 // @Produce json
 // @Param resource query string true "特型卡名称 (如: car, poem 等)"
 // @Param key query string true "索引值 (默认为 item.key)"
@@ -27,19 +21,20 @@ type GetItemBody struct {
 // @Failure 400 {object} string "Bad Request"
 // @Router /item [get]
 func GetItem(context *gin.Context) {
-	var body GetItemBody
 
 	// 检查收到信息的格式是否正确
-	if err := context.ShouldBindJSON(&body); err != nil {
+	resource, ok1 := context.GetQuery("resource")
+	key, ok2 := context.GetQuery("key")
+
+	// 若不是，则返回错误
+	if !ok1 || !ok2 {
 		context.JSON(400, gin.H{
-			"err": err.Error(),
+			"err": "wrong param",
 		})
 		return
 	}
 
 	// 若无错误，则继续
-	resource := body.Resource
-	key := body.Key
 	docid := resource + "@" + key
 
 	data, err := database.GetFile(database.DocidClient, resource, docid)

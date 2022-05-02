@@ -46,9 +46,6 @@ const docTemplate = `{
         "/data": {
             "get": {
                 "description": "后端返回数据之接口",
-                "consumes": [
-                    "application/json"
-                ],
                 "produces": [
                     "multipart/form-data"
                 ],
@@ -146,9 +143,6 @@ const docTemplate = `{
         "/dataname": {
             "get": {
                 "description": "后端返回数据文件名之接口",
-                "consumes": [
-                    "application/json"
-                ],
                 "produces": [
                     "application/json"
                 ],
@@ -184,9 +178,6 @@ const docTemplate = `{
         "/item": {
             "get": {
                 "description": "后端返回某一条数据之接口",
-                "consumes": [
-                    "application/json"
-                ],
                 "produces": [
                     "application/json"
                 ],
@@ -226,9 +217,6 @@ const docTemplate = `{
         "/key": {
             "get": {
                 "description": "后端返回某一数据类型键值之接口",
-                "consumes": [
-                    "application/json"
-                ],
                 "produces": [
                     "application/json"
                 ],
@@ -299,9 +287,6 @@ const docTemplate = `{
         "/pattern": {
             "get": {
                 "description": "后端返回配置文件之接口",
-                "consumes": [
-                    "application/json"
-                ],
                 "produces": [
                     "application/json"
                 ],
@@ -436,9 +421,6 @@ const docTemplate = `{
         "/setting": {
             "get": {
                 "description": "后端返回写入行为描述之接口",
-                "consumes": [
-                    "application/json"
-                ],
                 "produces": [
                     "application/json"
                 ],

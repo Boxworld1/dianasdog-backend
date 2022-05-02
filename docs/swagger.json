@@ -38,9 +38,6 @@
         "/data": {
             "get": {
                 "description": "后端返回数据之接口",
-                "consumes": [
-                    "application/json"
-                ],
                 "produces": [
                     "multipart/form-data"
                 ],
@@ -138,9 +135,6 @@
         "/dataname": {
             "get": {
                 "description": "后端返回数据文件名之接口",
-                "consumes": [
-                    "application/json"
-                ],
                 "produces": [
                     "application/json"
                 ],
@@ -176,9 +170,6 @@
         "/item": {
             "get": {
                 "description": "后端返回某一条数据之接口",
-                "consumes": [
-                    "application/json"
-                ],
                 "produces": [
                     "application/json"
                 ],
@@ -218,9 +209,6 @@
         "/key": {
             "get": {
                 "description": "后端返回某一数据类型键值之接口",
-                "consumes": [
-                    "application/json"
-                ],
                 "produces": [
                     "application/json"
                 ],
@@ -291,9 +279,6 @@
         "/pattern": {
             "get": {
                 "description": "后端返回配置文件之接口",
-                "consumes": [
-                    "application/json"
-                ],
                 "produces": [
                     "application/json"
                 ],
@@ -428,9 +413,6 @@
         "/setting": {
             "get": {
                 "description": "后端返回写入行为描述之接口",
-                "consumes": [
-                    "application/json"
-                ],
                 "produces": [
                     "application/json"
                 ],

@@ -18,8 +18,8 @@ import (
 	"github.com/beevik/etree"
 )
 
-var myJson *jsonvalue.V
-var picCount int
+// var myJson *jsonvalue.V
+// var picCount int
 
 func isSpecial(key string) bool {
 	if key == "item" || key == "tag" || key == "tab" {
@@ -28,7 +28,8 @@ func isSpecial(key string) bool {
 	return false
 }
 
-func dfs(data *etree.Element, keySlice []string, path []interface{}, res string, docid string, itemSetting getter.ItemSetting) {
+func dfs(data *etree.Element, keySlice []string, path []interface{}, res string, docid string,
+	itemSetting getter.ItemSetting, myJson *jsonvalue.V, picCount *int) {
 
 	// Json Tree 索引记录
 	pathList := path
@@ -48,8 +49,8 @@ func dfs(data *etree.Element, keySlice []string, path []interface{}, res string,
 				if itemSetting.DumpDigest {
 					// 若为图片
 					if itemSetting.IsPic {
-						myJson.SetString(value.Text()).At("picture", picCount)
-						picCount++
+						myJson.SetString(value.Text()).At("picture", *picCount)
+						*picCount++
 					} else {
 						// 然后插入 Json
 						myJson.SetString(value.Text()).At("item", pathList...)
@@ -66,7 +67,7 @@ func dfs(data *etree.Element, keySlice []string, path []interface{}, res string,
 				tmpPath := append(pathList, cnt)
 				doc := etree.NewDocument()
 				doc.SetRoot(value.Copy())
-				dfs(doc.Root(), keySlice[idx+1:], tmpPath, res, docid, itemSetting)
+				dfs(doc.Root(), keySlice[idx+1:], tmpPath, res, docid, itemSetting, myJson, picCount)
 			}
 			break
 		}
@@ -84,10 +85,10 @@ func StoreItem(data *etree.Element, resource string, docid string, itemSettings 
 	esStr := ""
 
 	// 图片计数器
-	picCount = 0
+	picCount := 0
 
 	// 初始化 json
-	myJson = jsonvalue.NewObject()
+	myJson := jsonvalue.NewObject()
 	myJson.SetString(resource).At("type")
 
 	// 根据配置信息写入数据库
@@ -99,7 +100,7 @@ func StoreItem(data *etree.Element, resource string, docid string, itemSettings 
 		var pathList []interface{} = make([]interface{}, 0)
 
 		// 递归查找(Redis)
-		dfs(data, keySlice, pathList, resource, docid, itemSetting)
+		dfs(data, keySlice, pathList, resource, docid, itemSetting, myJson, &picCount)
 
 		for _, value := range data.FindElements(path) {
 			// 写入倒排引擎(Es)的数据
