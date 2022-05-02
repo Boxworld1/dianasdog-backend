@@ -24,7 +24,7 @@ func SetupRouter() *gin.Engine {
 	// 写入配置上传
 	router.POST("/setting", PostConfig)
 	// es测试接口
-	router.POST("/testes", TestesSearch)
+	router.POST("/testes", PostEsTest)
 
 	// 数据下载
 	router.GET("/data", GetData)
@@ -40,5 +40,6 @@ func SetupRouter() *gin.Engine {
 	router.GET("/category", GetCategory)
 	// 取得某个特型卡对应 item 中的所有键值
 	router.GET("/key", GetKey)
+
 	return router
 }

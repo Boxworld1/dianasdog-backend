@@ -18,11 +18,8 @@ import (
 	"github.com/beevik/etree"
 )
 
-// var myJson *jsonvalue.V
-// var picCount int
-
 func isSpecial(key string) bool {
-	if key == "item" || key == "tag" || key == "tab" {
+	if key == "item" || key == "tag" || key == "tab" || key == "chapter_info" {
 		return true
 	}
 	return false
