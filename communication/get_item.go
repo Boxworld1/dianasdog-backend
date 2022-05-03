@@ -37,7 +37,7 @@ func GetItem(context *gin.Context) {
 	// 若无错误，则继续
 	docid := resource + "@" + key
 
-	data, err := database.GetFile(database.DocidClient, resource, docid)
+	data, err := database.GetDocid(database.DocidClient, resource, docid)
 
 	// 不存在此特型卡类型或文件
 	if err != nil {

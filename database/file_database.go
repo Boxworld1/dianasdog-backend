@@ -11,25 +11,19 @@ import (
 )
 
 // 文件数据库接口
-var DocidClient *sql.DB
 var DataClient *sql.DB
 var ConfigClient *sql.DB
 
 func init() {
 	// 创建数据库
-	CreateDatabase("docid")
 	CreateDatabase("data")
 	CreateDatabase("config")
 
 	// 开启数据库
-	DocidClient, _ = sql.Open("mysql", GenUrl("docid"))
 	DataClient, _ = sql.Open("mysql", GenUrl("data"))
 	ConfigClient, _ = sql.Open("mysql", GenUrl("config"))
 
 	inittask := "SET NAMES utf8 "
-
-	// 生成 docid 数据库（每个特型卡只有一个对应文件）
-	DocidClient.Exec(inittask)
 
 	// 生成源数据数据库（每个特型卡有多个对应文件）
 	DataClient.Exec(inittask)
@@ -101,35 +95,6 @@ func GetFile(db *sql.DB, tableName string, filename string) ([]byte, error) {
 		return nil, errors.New("No data with filename = " + filename)
 	}
 	return data, err
-}
-
-type DataItem struct {
-	Name string
-	Data []byte
-}
-
-// 取出表格下的所有文件名
-func GetAllFile(db *sql.DB, tableName string) ([]DataItem, error) {
-	// 按文件名查找
-	task := "SELECT filename, data FROM " + tableName
-	rows, err := db.Query(task)
-
-	// 对应表格不存在
-	if err != nil {
-		return nil, err
-	}
-
-	// 取出数据
-	var result []DataItem = make([]DataItem, 0)
-	for rows.Next() {
-		var name string
-		var data []byte
-		err = rows.Scan(&name, &data)
-		result = append(result, DataItem{name, data})
-	}
-	rows.Close()
-
-	return result, err
 }
 
 // 删除特定名字的文件

@@ -20,7 +20,7 @@ func DeleteItem(resource string, docid string, opType int) error {
 	database.DeleteFromES(resource, database.EsClient, docid)
 	// 在数据记录中删除数据
 	if opType == 0 {
-		database.DeleteFile(database.DocidClient, resource, docid)
+		database.DeleteDocid(database.DocidClient, resource, docid)
 	}
 
 	return nil

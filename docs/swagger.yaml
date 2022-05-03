@@ -52,7 +52,8 @@ paths:
     post:
       consumes:
       - multipart/form-data
-      description: 后端接收 XML 数据之接口
+      description: 后端接收 XML 数据之接口。若为插入，则需要有 data 或 file 中的一个；若为删除，则需要 key 或 filename
+        中的一个。（若同时出现则两者都删除）
       parameters:
       - description: '特型卡名称 (如: car, poem 等)'
         in: formData
@@ -76,6 +77,10 @@ paths:
         in: formData
         name: file
         type: file
+      - description: '要删除的 key (即不含 resource 的 docid, 如: mytest@test 中的 test)'
+        in: formData
+        name: key
+        type: string
       produces:
       - application/json
       responses:
@@ -324,4 +329,27 @@ paths:
           schema:
             type: string
       summary: 发送写入行为描述
+  /testes:
+    post:
+      consumes:
+      - application/json
+      description: 检查 es 数据之测试接口
+      parameters:
+      - description: 要搜索的句子
+        in: query
+        name: query
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: es 测试接口
 swagger: "2.0"

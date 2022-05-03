@@ -28,7 +28,7 @@ func SetData(resource string, filename string, content []byte) error {
 	}
 
 	// 文件拆包（多线程）
-	go setup.UnpackXmlData(content, resource, "insert", itemSettings)
+	go setup.UnpackXmlData(content, resource, "insert", itemSettings, filename)
 
 	// 无论正确与否都返回 err 的内容
 	return nil

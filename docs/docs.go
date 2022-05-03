@@ -82,7 +82,7 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "后端接收 XML 数据之接口",
+                "description": "后端接收 XML 数据之接口。若为插入，则需要有 data 或 file 中的一个；若为删除，则需要 key 或 filename 中的一个。（若同时出现则两者都删除）",
                 "consumes": [
                     "multipart/form-data"
                 ],
@@ -121,6 +121,12 @@ const docTemplate = `{
                         "type": "file",
                         "description": "文件形式上传之数据",
                         "name": "file",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "要删除的 key (即不含 resource 的 docid, 如: mytest@test 中的 test)",
+                        "name": "key",
                         "in": "formData"
                     }
                 ],
@@ -477,6 +483,41 @@ const docTemplate = `{
                         "description": "数据内容 (JSON 格式)",
                         "name": "data",
                         "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/testes": {
+            "post": {
+                "description": "检查 es 数据之测试接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "es 测试接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "要搜索的句子",
+                        "name": "query",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {

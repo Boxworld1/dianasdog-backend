@@ -5,6 +5,7 @@
 // @param	resource	string		特型卡类型
 // @param	opType		string		操作类型（insert/delete）
 // @param	itemSettings	[]getter.ItemSetting	写入行为
+// @param filename	string		文件名
 // @return  err			error		non-nil when fileName is wrong
 
 package setup
@@ -16,7 +17,7 @@ import (
 	"github.com/beevik/etree"
 )
 
-func UnpackXmlData(data []byte, resource string, opType string, itemSettings []getter.ItemSetting) error {
+func UnpackXmlData(data []byte, resource string, opType string, itemSettings []getter.ItemSetting, filename string) error {
 
 	// 将数据放入 etree 中
 	doc := etree.NewDocument()
@@ -28,7 +29,7 @@ func UnpackXmlData(data []byte, resource string, opType string, itemSettings []g
 	}
 
 	// 新建表格
-	database.CreateFileTable(database.DocidClient, resource)
+	database.CreateDocidTable(database.DocidClient, resource)
 
 	// 按 item 划分 etree
 	root := doc.SelectElement("DOCUMENT")
@@ -42,7 +43,7 @@ func UnpackXmlData(data []byte, resource string, opType string, itemSettings []g
 		itemDoc := etree.NewDocument()
 		itemDoc.SetRoot(item)
 		str, _ := itemDoc.WriteToBytes()
-		database.InsertFile(database.DocidClient, resource, docid, str)
+		database.InsertDocid(database.DocidClient, resource, docid, str, filename)
 
 		// 检查是否有此特型卡
 		cnt, err := database.CountCategory(database.CategoryClient, resource)
