@@ -486,6 +486,41 @@
                     }
                 }
             }
+        },
+        "/testes": {
+            "post": {
+                "description": "检查 es 数据之测试接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "es 测试接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "要搜索的句子",
+                        "name": "query",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         }
     }
 }
