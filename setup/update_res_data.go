@@ -17,7 +17,7 @@ import (
 func UpdateResData(resource string, itemSettings []getter.ItemSetting) error {
 
 	// 查找特型卡类型下的所有数据
-	data, err := database.GetAllFile(database.DocidClient, resource)
+	data, err := database.GetAllDocid(database.DocidClient, resource)
 
 	// 若特型卡类型错误
 	if err != nil {

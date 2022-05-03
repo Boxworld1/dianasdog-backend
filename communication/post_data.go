@@ -60,7 +60,7 @@ func PostData(context *gin.Context) {
 		data = []byte(content)
 
 		if len(filename) <= 0 {
-			msg = "invaild filename!"
+			filename = "."
 		}
 
 	} else if body.File != nil {
@@ -86,16 +86,13 @@ func PostData(context *gin.Context) {
 
 	// 否则按照操作类型进行操作
 	switch typ {
-	// 写入文件
+	// 插入/更新文件
 	case "insert":
 		if err := setter.SetData(res, filename, data); err != nil {
 			msg = err.Error()
 		}
 	// 删除条目
 	case "delete":
-		err = nil
-	// 更新条目
-	case "update":
 		err = nil
 	}
 

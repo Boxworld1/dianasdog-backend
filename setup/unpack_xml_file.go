@@ -22,7 +22,7 @@ func UnpackXmlFile(filename string, resource string, opType string, itemSettings
 		return err
 	}
 
-	UnpackXmlData(data, resource, opType, itemSettings)
+	UnpackXmlData(data, resource, opType, itemSettings, filename)
 
 	return nil
 }
