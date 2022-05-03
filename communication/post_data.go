@@ -20,7 +20,7 @@ type DataBody struct {
 	Filename string                `form:"filename"`
 	File     *multipart.FileHeader `form:"file"`
 	Data     string                `form:"data"`
-	KeyList  []string              `form:"keylist"`
+	Key      string                `form:"key"`
 }
 
 // @Summary 发送 XML 数据
@@ -53,7 +53,7 @@ func PostData(context *gin.Context) {
 	typ := body.Type
 	res := body.Resource
 	filename := body.Filename
-	keylist := body.KeyList
+	key := body.Key
 	var data []byte
 
 	// 取得对应的数据内容
@@ -79,8 +79,8 @@ func PostData(context *gin.Context) {
 		msg = "insert form data error: wrong parameters!"
 	}
 
-	// 若删除时既没有 keylist 也没有 filename
-	if len(filename) <= 0 && len(keylist) <= 0 {
+	// 若删除时既没有 key 也没有 filename
+	if len(filename) <= 0 && len(key) <= 0 {
 		msg = "invaild parameter for delete operation"
 	}
 
@@ -105,11 +105,9 @@ func PostData(context *gin.Context) {
 		if len(filename) > 0 && filename != "." {
 			go setup.DeleteFileData(res, filename)
 		}
-		// 若 keylist 合法则
-		if len(keylist) > 0 {
-			for _, key := range keylist {
-				setup.DeleteItem(res, res+"@"+key, 0)
-			}
+		// 若 key 合法则
+		if len(key) > 0 {
+			setup.DeleteItem(res, res+"@"+key, 0)
 		}
 	}
 
