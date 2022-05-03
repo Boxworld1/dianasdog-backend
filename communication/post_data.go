@@ -24,7 +24,7 @@ type DataBody struct {
 }
 
 // @Summary 发送 XML 数据
-// @Description 后端接收 XML 数据之接口。若为插入，则需要有 data 或 file 中的一个；若为删除，则需要 keylist 或 filename 中的一个。（若同时出现则两者都删除）
+// @Description 后端接收 XML 数据之接口。若为插入，则需要有 data 或 file 中的一个；若为删除，则需要 key 或 filename 中的一个。（若同时出现则两者都删除）
 // @Accept mpfd
 // @Produce json
 // @Param resource formData string true "特型卡名称 (如: car, poem 等)"
@@ -32,7 +32,7 @@ type DataBody struct {
 // @Param data formData string false "数据内容"
 // @Param filename formData string false "文件名"
 // @Param file formData file false "文件形式上传之数据"
-// @Param keylist formData []string false "要删除的 key 列表 (即不含 resource 的 docid, 如: mytest@test 中的 test)"
+// @Param key formData string false "要删除的 key (即不含 resource 的 docid, 如: mytest@test 中的 test)"
 // @Success 200 {object} string "OK"
 // @Failure 400 {object} string "Bad Request"
 // @Router /data [post]
