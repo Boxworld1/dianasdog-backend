@@ -6,6 +6,7 @@
 package communication
 
 import (
+	"dianasdog/database"
 	"dianasdog/setter"
 	"dianasdog/setup"
 	"io/ioutil"
@@ -104,6 +105,7 @@ func PostData(context *gin.Context) {
 		// 若文件名合法则
 		if len(filename) > 0 && filename != "." {
 			go setup.DeleteFileData(res, filename)
+			database.DeleteFile(database.DataClient, res, filename)
 		}
 		// 若 key 合法则
 		if len(key) > 0 {
