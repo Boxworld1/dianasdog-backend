@@ -25,6 +25,7 @@ func TestUserSignup(t *testing.T) {
 	var user User
 	user.Name = "tester"
 	user.Password = "pwd"
+	user.Level = "3"
 	err := UserSignup(user)
 	if err != nil {
 		t.Error(err)

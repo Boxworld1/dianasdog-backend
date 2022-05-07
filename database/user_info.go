@@ -10,6 +10,7 @@ import (
 type User struct {
 	Name     string `json:"name"`
 	Password string `json:"password"`
+	Level    string `json:"level"`
 }
 
 func EncodePassword(password string) (string, error) {
@@ -49,16 +50,16 @@ func init() {
 
 func CreateTableForUserinfo() error {
 	createTask := `CREATE TABLE IF NOT EXISTS ` + "UserInfo" + `( 
-		username VARCHAR(100) not null, userpassword VARCHAR(500) not null,  PRIMARY KEY (username)
+		username VARCHAR(100) not null, userpassword VARCHAR(500) not null, userlevel VARCHAR(10) not null,  PRIMARY KEY (username)
 	)DEFAULT CHARSET=utf8;
 	`
 	_, err := UserInfoClient.Exec(createTask)
 	return err
 }
 
-func InsertPwdIntoSQL(encodedPassword string, username string) error {
+func InsertPwdIntoSQL(encodedPassword string, username string, userlevel string) error {
 	fmt.Println("正在将一条用户信息插入sql")
-	insertTask := "INSERT IGNORE INTO " + "UserInfo" + "(username, userpassword) values('" + username + "','" + encodedPassword + "')"
+	insertTask := "INSERT IGNORE INTO " + "UserInfo" + "(username, userpassword, userlevel) values('" + username + "','" + encodedPassword + "','" + userlevel + "')"
 	_, err := UserInfoClient.Exec(insertTask)
 	if err != nil {
 		return err
@@ -74,7 +75,7 @@ func UserSignup(user User) error {
 	//	return err
 	//}
 	_ = CreateTableForUserinfo()
-	err := InsertPwdIntoSQL(user.Password, user.Name)
+	err := InsertPwdIntoSQL(user.Password, user.Name, user.Level)
 	if err != nil {
 		return err
 	}
