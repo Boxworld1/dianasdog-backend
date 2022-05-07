@@ -40,7 +40,7 @@ func PostLogin(context *gin.Context) {
 
 	// 取得 username 字段
 	username := body.Username
-	pwd, err := database.UserSignIn(username)
+	pwd, level, err := database.UserSignIn(username)
 
 	// 查找失败
 	if pwd == "None" || err != nil {
@@ -53,5 +53,6 @@ func PostLogin(context *gin.Context) {
 	// 返回结果
 	context.JSON(200, gin.H{
 		"password": pwd,
+		"level":    level,
 	})
 }
