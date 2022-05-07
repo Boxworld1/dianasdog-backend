@@ -34,8 +34,8 @@ func TestUserSignup(t *testing.T) {
 
 // test for function: SearchUser
 func TestSearchUser(t *testing.T) {
-	password, err := SearchUser("tester")
-	if password != "pwd" {
+	password, level, err := SearchUser("tester")
+	if password != "pwd" || level != "3" {
 		t.Error(password)
 		t.Error("查询的密码错误")
 	}
@@ -46,8 +46,8 @@ func TestSearchUser(t *testing.T) {
 
 // test for function: UserSignIn
 func TestUserSignIn(t *testing.T) {
-	res, err := UserSignIn("tester")
-	if res != "pwd" {
+	res, level, err := UserSignIn("tester")
+	if res != "pwd" || level != "3" {
 		t.Error("登陆失败")
 	}
 	if err != nil {

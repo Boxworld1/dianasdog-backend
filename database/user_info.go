@@ -46,21 +46,34 @@ func init() {
 	inittask := `SET NAMES utf8 `
 	UserInfoClient.Exec(inittask)
 	_ = CreateTableForUserinfo()
+	_ = CreateTableForUserLevel()
 }
 
 func CreateTableForUserinfo() error {
 	createTask := `CREATE TABLE IF NOT EXISTS ` + "UserInfo" + `( 
-		username VARCHAR(100) not null, userpassword VARCHAR(500) not null, userlevel VARCHAR(10) not null,  PRIMARY KEY (username)
+		username VARCHAR(100) not null, userpassword VARCHAR(500) not null,  PRIMARY KEY (username)
 	)DEFAULT CHARSET=utf8;
 	`
 	_, err := UserInfoClient.Exec(createTask)
 	return err
 }
-
+func CreateTableForUserLevel() error {
+	createTask := `CREATE TABLE IF NOT EXISTS ` + "UserLevel" + `( 
+		username VARCHAR(100) not null, userlevel VARCHAR(10) not null,  PRIMARY KEY (username)
+	)DEFAULT CHARSET=utf8;
+	`
+	_, err := UserInfoClient.Exec(createTask)
+	return err
+}
 func InsertPwdIntoSQL(encodedPassword string, username string, userlevel string) error {
 	fmt.Println("正在将一条用户信息插入sql")
-	insertTask := "INSERT IGNORE INTO " + "UserInfo" + "(username, userpassword, userlevel) values('" + username + "','" + encodedPassword + "','" + userlevel + "')"
+	insertTask := "INSERT IGNORE INTO " + "UserInfo" + "(username, userpassword) values('" + username + "','" + encodedPassword + "')"
 	_, err := UserInfoClient.Exec(insertTask)
+	if err != nil {
+		return err
+	}
+	insertTask = "INSERT IGNORE INTO " + "UserLevel" + "(username, userlevel) values('" + username + "','" + userlevel + "')"
+	_, err = UserInfoClient.Exec(insertTask)
 	if err != nil {
 		return err
 	}
@@ -82,29 +95,33 @@ func UserSignup(user User) error {
 	return nil //和前端商量一下，可能要返回个码
 }
 
-func SearchUser(username string) (string, error) {
+func SearchUser(username string) (string, string, error) {
 	selectTask := "select userpassword from UserInfo" + " where username='" + username + "'"
 	res := UserInfoClient.QueryRow(selectTask)
 	var password string
+	var level string
 	err := res.Scan(&password)
+	selectTask = "select userlevel from UserLevel" + " where username='" + username + "'"
+	res = UserInfoClient.QueryRow(selectTask)
+	err = res.Scan(&level)
+
 	if err == nil {
-		fmt.Println(password)
-		return password, err
+		return password, level, err
 	} else {
-		return "None", err
+		return "None", "None", err
 	}
 
 }
 
-func UserSignIn(username string) (string, error) {
+func UserSignIn(username string) (string, string, error) {
 	fmt.Println("验证用户信息")
 	//err := Init()
 	//if err != nil {
 	//	return "None", err
 	//}
-	EncodedPassword, err1 := SearchUser(username)
+	EncodedPassword, level, err1 := SearchUser(username)
 	if err1 != nil {
-		return "None", err1
+		return "None", "None", err1
 	}
-	return EncodedPassword, nil
+	return EncodedPassword, level, nil
 }
