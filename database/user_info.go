@@ -88,6 +88,7 @@ func SearchUser(username string) (string, error) {
 	var password string
 	err := res.Scan(&password)
 	if err == nil {
+		fmt.Println(password)
 		return password, err
 	} else {
 		return "None", err
