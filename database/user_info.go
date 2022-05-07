@@ -13,6 +13,11 @@ type User struct {
 	Level    string `json:"level"`
 }
 
+// EncodePassword
+// @title:	EncodePassword
+// @description: 加密一个密码
+// @param: password string 要加密的密码
+// @return: encodePWD,err string,error 加密后的密码,错误信息
 func EncodePassword(password string) (string, error) {
 	fmt.Println("正在加密")
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost) //加密处理
@@ -49,6 +54,11 @@ func init() {
 	_ = CreateTableForUserLevel()
 }
 
+// CreateTableForUserinfo
+// @title:	CreateTableForUserinfo
+// @description: 建立存储user用户名和密码的表
+// @param: do not need in-params
+// @return: err 错误信息
 func CreateTableForUserinfo() error {
 	createTask := `CREATE TABLE IF NOT EXISTS ` + "UserInfo" + `( 
 		username VARCHAR(100) not null, userpassword VARCHAR(500) not null,  PRIMARY KEY (username)
@@ -57,6 +67,12 @@ func CreateTableForUserinfo() error {
 	_, err := UserInfoClient.Exec(createTask)
 	return err
 }
+
+// CreateTableForUserLevel
+// @title:	CreateTableForUserLevel
+// @description: 建立存储user用户名和权限等级的表
+// @param: do not need in-params
+// @return: err 错误信息
 func CreateTableForUserLevel() error {
 	createTask := `CREATE TABLE IF NOT EXISTS ` + "UserLevel" + `( 
 		username VARCHAR(100) not null, userlevel VARCHAR(10) not null,  PRIMARY KEY (username)
@@ -65,6 +81,12 @@ func CreateTableForUserLevel() error {
 	_, err := UserInfoClient.Exec(createTask)
 	return err
 }
+
+// InsertPwdIntoSQL
+// @title:	InsertPwdIntoSQL
+// @description: 向数据库中添加一个用户的信息
+// @param: encodedPassword,username,userlevel string,string,string 分别是用户的密码，用户名，权限等级
+// @return: err 错误信息
 func InsertPwdIntoSQL(encodedPassword string, username string, userlevel string) error {
 	fmt.Println("正在将一条用户信息插入sql")
 	insertTask := "INSERT IGNORE INTO " + "UserInfo" + "(username, userpassword) values('" + username + "','" + encodedPassword + "')"
@@ -81,6 +103,11 @@ func InsertPwdIntoSQL(encodedPassword string, username string, userlevel string)
 	return nil
 }
 
+// UserSignup
+// @title:	UserSignup
+// @description: 向数据库中添加一个用户的信息
+// @param: user User 一个封装好的用户信息
+// @return: err 错误信息
 func UserSignup(user User) error {
 	fmt.Println("注册用户信息")
 	//err := Init()
@@ -95,6 +122,11 @@ func UserSignup(user User) error {
 	return nil //和前端商量一下，可能要返回个码
 }
 
+// SearchUser
+// @title:	SearchUser
+// @description: 根据用户名查找一个用户的密码和权限等级
+// @param: username string  用户名
+// @return: password, level, err  string, string, error 分别是密码，权限等级和错误信息
 func SearchUser(username string) (string, string, error) {
 	selectTask := "select userpassword from UserInfo" + " where username='" + username + "'"
 	res := UserInfoClient.QueryRow(selectTask)
@@ -113,6 +145,11 @@ func SearchUser(username string) (string, string, error) {
 
 }
 
+// UserSignIn
+// @title:	UserSignIn
+// @description: 根据用户名查找一个用户的密码和权限等级
+// @param: username string  用户名
+// @return: EncodedPassword, level, err  string, string, error 分别是密码，权限等级和错误信息
 func UserSignIn(username string) (string, string, error) {
 	fmt.Println("验证用户信息")
 	//err := Init()
