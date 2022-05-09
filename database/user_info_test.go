@@ -23,7 +23,7 @@ func TestCreateTableForUserinfo(t *testing.T) {
 // test for function: UserSignup
 func TestUserSignup(t *testing.T) {
 	var user User
-	user.Name = "tester"
+	user.Name = "tester1"
 	user.Password = "pwd"
 	user.Level = "3"
 	err := UserSignup(user)
@@ -34,7 +34,7 @@ func TestUserSignup(t *testing.T) {
 
 // test for function: SearchUser
 func TestSearchUser(t *testing.T) {
-	password, level, err := SearchUser("tester")
+	password, level, err := SearchUser("tester1")
 	if password != "pwd" || level != "3" {
 		t.Error(password)
 		t.Error("查询的密码错误")
@@ -46,7 +46,7 @@ func TestSearchUser(t *testing.T) {
 
 // test for function: UserSignIn
 func TestUserSignIn(t *testing.T) {
-	res, level, err := UserSignIn("tester")
+	res, level, err := UserSignIn("tester1")
 	if res != "pwd" || level != "3" {
 		t.Error("登陆失败")
 	}
@@ -57,7 +57,7 @@ func TestUserSignIn(t *testing.T) {
 
 // test for function: DeleteUser
 func TestDeleteUser(t *testing.T) {
-	err := DeleteUser("tester")
+	err := DeleteUser("tester1")
 	if err != nil {
 		t.Error(err)
 	}

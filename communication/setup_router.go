@@ -25,6 +25,10 @@ func SetupRouter() *gin.Engine {
 	router.POST("/setting", PostConfig)
 	// es测试接口
 	router.POST("/testes", PostEsTest)
+	// 删除用户
+	router.POST("/userDelete", DeleteUser)
+	// 添加用户
+	router.POST("/userAdd", AddUser)
 
 	// 数据下载
 	router.GET("/data", GetData)
