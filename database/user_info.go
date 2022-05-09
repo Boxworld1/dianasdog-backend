@@ -162,3 +162,66 @@ func UserSignIn(username string) (string, string, error) {
 	}
 	return EncodedPassword, level, nil
 }
+
+// DeleteUser
+// @title:	DeleteUser
+// @description: 根据用户名删除一个用户
+// @param: username string  用户名
+// @return: err  error 错误信息
+func DeleteUser(username string) error {
+	fmt.Println("正在删除一条用户信息")
+	deleteTask := "DELETE FROM " + "UserInfo" + " where username='" + username + "'"
+	_, err := UserInfoClient.Exec(deleteTask)
+	if err != nil {
+		return err
+	}
+	deleteTask = "DELETE FROM " + "UserLevel" + " where username='" + username + "'"
+	_, err = UserInfoClient.Exec(deleteTask)
+	if err != nil {
+		return err
+	}
+	fmt.Println("删除完毕")
+	return nil
+}
+
+func AllUser() ([]User, error) {
+	fmt.Println("取出所有用户信息")
+	var result []User
+	selectTask := "select username from UserInfo"
+	rows, err := UserInfoClient.Query(selectTask)
+	if err != nil {
+		return result, err
+	}
+	for rows.Next() {
+		var user User
+		var username string
+		err = rows.Scan(&username)
+		user.Name = username
+		result = append(result, user)
+	}
+	selectTask1 := "select userpassword from UserInfo"
+	rows1, err := UserInfoClient.Query(selectTask1)
+	if err != nil {
+		return result, err
+	}
+	i := 0
+	for rows1.Next() {
+		var userpassword string
+		err = rows1.Scan(&userpassword)
+		result[i].Password = userpassword
+		i = i + 1
+	}
+	selectTask2 := "select userlevel from UserLevel"
+	rows2, err := UserInfoClient.Query(selectTask2)
+	if err != nil {
+		return result, err
+	}
+	j := 0
+	for rows2.Next() {
+		var userlevel string
+		err = rows2.Scan(&userlevel)
+		result[j].Level = userlevel
+		j = j + 1
+	}
+	return result, err
+}
