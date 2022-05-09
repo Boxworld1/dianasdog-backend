@@ -51,6 +51,7 @@ func GetItem(context *gin.Context) {
 	doc := etree.NewDocument()
 	doc.ReadFromBytes(data)
 	str, _ := doc.WriteToString()
+	str = "<DOCUMENT>" + str + "</DOCUMENT>"
 
 	// 正常返回结果
 	context.JSON(200, gin.H{

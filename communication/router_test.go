@@ -38,14 +38,6 @@ func TestRouter(t *testing.T) {
 		{[]int{0, 12}, 0, []MapStruct{
 			{"content", `{"query": "apple"}`},
 		}},
-		// 测试登录功能（合法用户）
-		{[]int{4}, 0, []MapStruct{
-			{"content", `{"username": "tester"}`},
-		}},
-		// 测试登录功能（非法用户）
-		{[]int{}, 0, []MapStruct{
-			{"content", `{"username": "hksjdahfjasdljgfpqwejgjksadjg"}`},
-		}},
 		// 测试配置文件上传
 		{[]int{2}, 0, []MapStruct{
 			{"content", `{
@@ -243,6 +235,18 @@ func TestRouter(t *testing.T) {
 			{"resource", "testcalfa"},
 			{"key", "3"},
 		}},
+		// 测试新增用户
+		{[]int{14, 15}, 0, []MapStruct{
+			{"content", `{"username": "mytest", "userpassword": "mytest", "userlevel": "87"}`},
+		}},
+		// 测试登录功能/ 删除用户（合法用户）
+		{[]int{15}, 0, []MapStruct{
+			{"content", `{"username": "tester"}`},
+		}},
+		// 测试登录功能/ 删除用户（非法用户）
+		{[]int{15}, 0, []MapStruct{
+			{"content", `{"username": "hksjdahfjasdljgfpqwejgjksadjg"}`},
+		}},
 	}
 
 	// 定义要测试的接口
@@ -252,14 +256,20 @@ func TestRouter(t *testing.T) {
 		{"POST", "/pattern"},
 		{"POST", "/data"},
 		{"POST", "/login"},
+
 		{"GET", "/setting"},
 		{"GET", "/dataname"},
 		{"GET", "/pattern"},
 		{"GET", "/data"},
 		{"GET", "/item"},
+
 		{"GET", "/category"},
 		{"GET", "/key"},
 		{"POST", "/testes"},
+		{"GET", "/alluser"},
+		{"POST", "/useradd"},
+
+		{"POST", "/userdelete"},
 	}
 
 	// 开启 router
@@ -333,8 +343,8 @@ func TestRouter(t *testing.T) {
 				}
 			}
 
-			// 若为 GET "/category" 则
-			if key == 10 && w.Code == 200 {
+			// 若为 GET "/category" 或 "/alluser" 则
+			if (key == 10 || key == 13) && w.Code == 200 {
 				status = 1
 			}
 
