@@ -44,6 +44,8 @@ func SetupRouter() *gin.Engine {
 	router.GET("/category", GetCategory)
 	// 取得某个特型卡对应 item 中的所有键值
 	router.GET("/key", GetKey)
+	// 取得所有用户
+	router.GET("/AllUser", AllUser)
 
 	return router
 }

@@ -1,6 +1,7 @@
 package database
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -61,4 +62,13 @@ func TestDeleteUser(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
+}
+
+// test for function: AllUser
+func TestAllUser(t *testing.T) {
+	result, err := AllUser()
+	if err != nil {
+		t.Error(err)
+	}
+	fmt.Println(result)
 }

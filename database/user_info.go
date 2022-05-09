@@ -183,3 +183,45 @@ func DeleteUser(username string) error {
 	fmt.Println("删除完毕")
 	return nil
 }
+
+func AllUser() ([]User, error) {
+	fmt.Println("取出所有用户信息")
+	var result []User
+	selectTask := "select username from UserInfo"
+	rows, err := UserInfoClient.Query(selectTask)
+	if err != nil {
+		return result, err
+	}
+	for rows.Next() {
+		var user User
+		var username string
+		err = rows.Scan(&username)
+		user.Name = username
+		result = append(result, user)
+	}
+	selectTask1 := "select userpassword from UserInfo"
+	rows1, err := UserInfoClient.Query(selectTask1)
+	if err != nil {
+		return result, err
+	}
+	i := 0
+	for rows1.Next() {
+		var userpassword string
+		err = rows.Scan(&userpassword)
+		result[i].Password = userpassword
+		i = i + 1
+	}
+	selectTask2 := "select userlevel from UserLevel"
+	rows2, err := UserInfoClient.Query(selectTask2)
+	if err != nil {
+		return result, err
+	}
+	j := 0
+	for rows2.Next() {
+		var userlevel string
+		err = rows.Scan(&userlevel)
+		result[j].Level = userlevel
+		j = j + 1
+	}
+	return result, err
+}

@@ -83,3 +83,6 @@ func AddUser(context *gin.Context) {
 		"response": "succeed",
 	})
 }
+func AllUser(context *gin.Context) {
+
+}
