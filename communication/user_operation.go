@@ -14,12 +14,15 @@ import (
 type DeleteBody struct {
 	Username string `json:"username" binding:"required"`
 }
-type AddBody struct {
-	Username     string `json:"username" binding:"required"`
-	UserPassword string `json:"userpassword" binding:"required"`
-	UserLevel    string `json:"userlevel" binding:"required"`
-}
 
+// @Summary 删除用户接口
+// @Description 删除用户
+// @Accept json
+// @Produce json
+// @Param username query string true "用户名"
+// @Success 200 {object} string "OK"
+// @Failure 400 {object} string "Bad Request"
+// @Router /userdelete [post]
 func DeleteUser(context *gin.Context) {
 	var body DeleteBody
 
@@ -52,6 +55,22 @@ func DeleteUser(context *gin.Context) {
 	})
 }
 
+type AddBody struct {
+	Username     string `json:"username" binding:"required"`
+	UserPassword string `json:"userpassword" binding:"required"`
+	UserLevel    string `json:"userlevel" binding:"required"`
+}
+
+// @Summary 增加用户接口
+// @Description 增加用户
+// @Accept json
+// @Produce json
+// @Param username query string true "用户名"
+// @Param userpassword query string true "密码"
+// @Param userlevel query string true "用户等级"
+// @Success 200 {object} string "OK"
+// @Failure 400 {object} string "Bad Request"
+// @Router /useradd [post]
 func AddUser(context *gin.Context) {
 	var body AddBody
 	// 检查收到信息的格式是否正确
@@ -84,6 +103,12 @@ func AddUser(context *gin.Context) {
 	})
 }
 
+// @Summary 取得所有用户名
+// @Description 取得所有用户名
+// @Produce json
+// @Success 200 {object} string "{"data": ["name1", "name2"]}"
+// @Failure 400 {object} string "Bad Request"
+// @Router /alluser [post]
 func AllUser(context *gin.Context) {
 	data, err := database.AllUser()
 

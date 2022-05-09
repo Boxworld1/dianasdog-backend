@@ -8,6 +8,21 @@ info:
   title: 特型卡片搜索系统
   version: "1.0"
 paths:
+  /alluser:
+    post:
+      description: 取得所有用户名
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"data": ["name1", "name2"]}'
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: 取得所有用户名
   /category:
     get:
       description: 后端返回现有特型卡类型之接口
@@ -352,4 +367,60 @@ paths:
           schema:
             type: string
       summary: es 测试接口
+  /useradd:
+    post:
+      consumes:
+      - application/json
+      description: 增加用户
+      parameters:
+      - description: 用户名
+        in: query
+        name: username
+        required: true
+        type: string
+      - description: 密码
+        in: query
+        name: userpassword
+        required: true
+        type: string
+      - description: 用户等级
+        in: query
+        name: userlevel
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: 增加用户接口
+  /userdelete:
+    post:
+      consumes:
+      - application/json
+      description: 删除用户
+      parameters:
+      - description: 用户名
+        in: query
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: 删除用户接口
 swagger: "2.0"
