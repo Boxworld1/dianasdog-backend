@@ -207,7 +207,7 @@ func AllUser() ([]User, error) {
 	i := 0
 	for rows1.Next() {
 		var userpassword string
-		err = rows.Scan(&userpassword)
+		err = rows1.Scan(&userpassword)
 		result[i].Password = userpassword
 		i = i + 1
 	}
@@ -219,7 +219,7 @@ func AllUser() ([]User, error) {
 	j := 0
 	for rows2.Next() {
 		var userlevel string
-		err = rows.Scan(&userlevel)
+		err = rows2.Scan(&userlevel)
 		result[j].Level = userlevel
 		j = j + 1
 	}
