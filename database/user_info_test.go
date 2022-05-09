@@ -54,3 +54,11 @@ func TestUserSignIn(t *testing.T) {
 		t.Error(err)
 	}
 }
+
+// test for function: DeleteUser
+func TestDeleteUser(t *testing.T) {
+	err := DeleteUser("tester")
+	if err != nil {
+		t.Error(err)
+	}
+}

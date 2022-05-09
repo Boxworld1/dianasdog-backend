@@ -162,3 +162,24 @@ func UserSignIn(username string) (string, string, error) {
 	}
 	return EncodedPassword, level, nil
 }
+
+// DeleteUser
+// @title:	DeleteUser
+// @description: 根据用户名删除一个用户
+// @param: username string  用户名
+// @return: err  error 错误信息
+func DeleteUser(username string) error {
+	fmt.Println("正在删除一条用户信息")
+	deleteTask := "DELETE FROM " + "UserInfo" + " where username='" + username + "'"
+	_, err := UserInfoClient.Exec(deleteTask)
+	if err != nil {
+		return err
+	}
+	deleteTask = "DELETE FROM " + "UserLevel" + " where username='" + username + "'"
+	_, err = UserInfoClient.Exec(deleteTask)
+	if err != nil {
+		return err
+	}
+	fmt.Println("删除完毕")
+	return nil
+}
