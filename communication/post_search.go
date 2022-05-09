@@ -16,6 +16,7 @@ type SearchBody struct {
 }
 
 // @Summary 搜索系统接口
+// @Tags Search
 // @Description 后端搜索系统接口
 // @Accept json
 // @Produce json

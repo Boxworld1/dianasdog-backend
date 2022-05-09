@@ -21,10 +21,13 @@ const docTemplate = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/alluser": {
-            "post": {
+            "get": {
                 "description": "取得所有用户名",
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "User"
                 ],
                 "summary": "取得所有用户名",
                 "responses": {
@@ -49,6 +52,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Setting"
+                ],
                 "summary": "取得现有特型卡类型",
                 "responses": {
                     "200": {
@@ -71,6 +77,9 @@ const docTemplate = `{
                 "description": "后端返回数据之接口",
                 "produces": [
                     "multipart/form-data"
+                ],
+                "tags": [
+                    "Data"
                 ],
                 "summary": "取得数据",
                 "parameters": [
@@ -111,6 +120,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Data"
                 ],
                 "summary": "发送 XML 数据",
                 "parameters": [
@@ -175,6 +187,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Data"
+                ],
                 "summary": "取得数据文件名",
                 "parameters": [
                     {
@@ -209,6 +224,9 @@ const docTemplate = `{
                 "description": "后端返回某一条数据之接口",
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Data"
                 ],
                 "summary": "取得单一数据",
                 "parameters": [
@@ -249,6 +267,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Data"
+                ],
                 "summary": "取得数据键值",
                 "parameters": [
                     {
@@ -287,6 +308,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "User"
+                ],
                 "summary": "密码较验接口",
                 "parameters": [
                     {
@@ -318,6 +342,9 @@ const docTemplate = `{
                 "description": "后端返回配置文件之接口",
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Setting"
                 ],
                 "summary": "取得配置文件",
                 "parameters": [
@@ -361,6 +388,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Setting"
                 ],
                 "summary": "发送配置文件",
                 "parameters": [
@@ -421,6 +451,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Search"
+                ],
                 "summary": "搜索系统接口",
                 "parameters": [
                     {
@@ -452,6 +485,9 @@ const docTemplate = `{
                 "description": "后端返回写入行为描述之接口",
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Setting"
                 ],
                 "summary": "取得写入行为描述",
                 "parameters": [
@@ -485,6 +521,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Setting"
                 ],
                 "summary": "发送写入行为描述",
                 "parameters": [
@@ -533,6 +572,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Search"
+                ],
                 "summary": "es 测试接口",
                 "parameters": [
                     {
@@ -567,6 +609,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "User"
                 ],
                 "summary": "增加用户接口",
                 "parameters": [
@@ -616,6 +661,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "User"
                 ],
                 "summary": "删除用户接口",
                 "parameters": [

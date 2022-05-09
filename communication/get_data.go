@@ -18,6 +18,7 @@ type GetDataBody struct {
 }
 
 // @Summary 取得数据
+// @Tags Data
 // @Description 后端返回数据之接口
 // @Produce mpfd
 // @Param resource query string true "特型卡名称 (如: car, poem 等)"

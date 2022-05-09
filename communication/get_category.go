@@ -12,6 +12,7 @@ import (
 )
 
 // @Summary 取得现有特型卡类型
+// @Tags Setting
 // @Description 后端返回现有特型卡类型之接口
 // @Produce json
 // @Success 200 {object} string "{"data": data}"

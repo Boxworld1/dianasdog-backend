@@ -20,6 +20,7 @@ type TemplateBody struct {
 }
 
 // @Summary 发送配置文件
+// @Tags Setting
 // @Description 后端接收配置文件之接口
 // @Accept mpfd
 // @Produce json

@@ -7,6 +7,7 @@ import (
 )
 
 // @Summary es 测试接口
+// @Tags Search
 // @Description 检查 es 数据之测试接口
 // @Accept json
 // @Produce json

@@ -12,6 +12,7 @@ import (
 )
 
 // @Summary 取得数据文件名
+// @Tags Data
 // @Description 后端返回数据文件名之接口
 // @Produce json
 // @Param resource query string true "特型卡名称 (如: car, poem 等)"

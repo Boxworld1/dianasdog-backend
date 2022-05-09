@@ -9,7 +9,7 @@ info:
   version: "1.0"
 paths:
   /alluser:
-    post:
+    get:
       description: 取得所有用户名
       produces:
       - application/json
@@ -23,6 +23,8 @@ paths:
           schema:
             type: string
       summary: 取得所有用户名
+      tags:
+      - User
   /category:
     get:
       description: 后端返回现有特型卡类型之接口
@@ -38,6 +40,8 @@ paths:
           schema:
             type: string
       summary: 取得现有特型卡类型
+      tags:
+      - Setting
   /data:
     get:
       description: 后端返回数据之接口
@@ -64,6 +68,8 @@ paths:
           schema:
             type: string
       summary: 取得数据
+      tags:
+      - Data
     post:
       consumes:
       - multipart/form-data
@@ -108,6 +114,8 @@ paths:
           schema:
             type: string
       summary: 发送 XML 数据
+      tags:
+      - Data
   /dataname:
     get:
       description: 后端返回数据文件名之接口
@@ -131,6 +139,8 @@ paths:
           schema:
             type: string
       summary: 取得数据文件名
+      tags:
+      - Data
   /item:
     get:
       description: 后端返回某一条数据之接口
@@ -157,6 +167,8 @@ paths:
           schema:
             type: string
       summary: 取得单一数据
+      tags:
+      - Data
   /key:
     get:
       description: 后端返回某一数据类型键值之接口
@@ -180,6 +192,8 @@ paths:
           schema:
             type: string
       summary: 取得数据键值
+      tags:
+      - Data
   /login:
     post:
       consumes:
@@ -203,6 +217,8 @@ paths:
           schema:
             type: string
       summary: 密码较验接口
+      tags:
+      - User
   /pattern:
     get:
       description: 后端返回配置文件之接口
@@ -231,6 +247,8 @@ paths:
           schema:
             type: string
       summary: 取得配置文件
+      tags:
+      - Setting
     post:
       consumes:
       - multipart/form-data
@@ -270,6 +288,8 @@ paths:
           schema:
             type: string
       summary: 发送配置文件
+      tags:
+      - Setting
   /search:
     post:
       consumes:
@@ -293,6 +313,8 @@ paths:
           schema:
             type: string
       summary: 搜索系统接口
+      tags:
+      - Search
   /setting:
     get:
       description: 后端返回写入行为描述之接口
@@ -314,6 +336,8 @@ paths:
           schema:
             type: string
       summary: 取得写入行为描述
+      tags:
+      - Setting
     post:
       consumes:
       - multipart/form-data
@@ -344,6 +368,8 @@ paths:
           schema:
             type: string
       summary: 发送写入行为描述
+      tags:
+      - Setting
   /testes:
     post:
       consumes:
@@ -367,6 +393,8 @@ paths:
           schema:
             type: string
       summary: es 测试接口
+      tags:
+      - Search
   /useradd:
     post:
       consumes:
@@ -400,6 +428,8 @@ paths:
           schema:
             type: string
       summary: 增加用户接口
+      tags:
+      - User
   /userdelete:
     post:
       consumes:
@@ -423,4 +453,6 @@ paths:
           schema:
             type: string
       summary: 删除用户接口
+      tags:
+      - User
 swagger: "2.0"

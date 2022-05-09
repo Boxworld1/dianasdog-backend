@@ -13,6 +13,7 @@ import (
 )
 
 // @Summary 取得写入行为描述
+// @Tags Setting
 // @Description 后端返回写入行为描述之接口
 // @Produce json
 // @Param resource query string true "特型卡名称 (如: car, poem 等)"

@@ -16,6 +16,7 @@ type DeleteBody struct {
 }
 
 // @Summary 删除用户接口
+// @Tags User
 // @Description 删除用户
 // @Accept json
 // @Produce json
@@ -62,6 +63,7 @@ type AddBody struct {
 }
 
 // @Summary 增加用户接口
+// @Tags User
 // @Description 增加用户
 // @Accept json
 // @Produce json
@@ -104,11 +106,12 @@ func AddUser(context *gin.Context) {
 }
 
 // @Summary 取得所有用户名
+// @Tags User
 // @Description 取得所有用户名
 // @Produce json
 // @Success 200 {object} string "{"data": ["name1", "name2"]}"
 // @Failure 400 {object} string "Bad Request"
-// @Router /alluser [post]
+// @Router /alluser [get]
 func AllUser(context *gin.Context) {
 	data, err := database.AllUser()
 
