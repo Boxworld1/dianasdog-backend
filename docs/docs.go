@@ -20,11 +20,40 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/alluser": {
+            "get": {
+                "description": "取得所有用户名",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "取得所有用户名",
+                "responses": {
+                    "200": {
+                        "description": "{\"data\": [\"name1\", \"name2\"]}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/category": {
             "get": {
                 "description": "后端返回现有特型卡类型之接口",
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Setting"
                 ],
                 "summary": "取得现有特型卡类型",
                 "responses": {
@@ -48,6 +77,9 @@ const docTemplate = `{
                 "description": "后端返回数据之接口",
                 "produces": [
                     "multipart/form-data"
+                ],
+                "tags": [
+                    "Data"
                 ],
                 "summary": "取得数据",
                 "parameters": [
@@ -88,6 +120,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Data"
                 ],
                 "summary": "发送 XML 数据",
                 "parameters": [
@@ -152,6 +187,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Data"
+                ],
                 "summary": "取得数据文件名",
                 "parameters": [
                     {
@@ -186,6 +224,9 @@ const docTemplate = `{
                 "description": "后端返回某一条数据之接口",
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Data"
                 ],
                 "summary": "取得单一数据",
                 "parameters": [
@@ -226,6 +267,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Data"
+                ],
                 "summary": "取得数据键值",
                 "parameters": [
                     {
@@ -264,6 +308,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "User"
+                ],
                 "summary": "密码较验接口",
                 "parameters": [
                     {
@@ -295,6 +342,9 @@ const docTemplate = `{
                 "description": "后端返回配置文件之接口",
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Setting"
                 ],
                 "summary": "取得配置文件",
                 "parameters": [
@@ -338,6 +388,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Setting"
                 ],
                 "summary": "发送配置文件",
                 "parameters": [
@@ -398,6 +451,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Search"
+                ],
                 "summary": "搜索系统接口",
                 "parameters": [
                     {
@@ -429,6 +485,9 @@ const docTemplate = `{
                 "description": "后端返回写入行为描述之接口",
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Setting"
                 ],
                 "summary": "取得写入行为描述",
                 "parameters": [
@@ -462,6 +521,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Setting"
                 ],
                 "summary": "发送写入行为描述",
                 "parameters": [
@@ -510,12 +572,105 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Search"
+                ],
                 "summary": "es 测试接口",
                 "parameters": [
                     {
                         "type": "string",
                         "description": "要搜索的句子",
                         "name": "query",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/useradd": {
+            "post": {
+                "description": "增加用户",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "增加用户接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户名",
+                        "name": "username",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "密码",
+                        "name": "userpassword",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户等级",
+                        "name": "userlevel",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/userdelete": {
+            "post": {
+                "description": "删除用户",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "删除用户接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户名",
+                        "name": "username",
                         "in": "query",
                         "required": true
                     }

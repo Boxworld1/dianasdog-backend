@@ -15,8 +15,8 @@ type LoginBody struct {
 	Username string `json:"username" binding:"required"`
 }
 
-// PostLogin postlogin
 // @Summary 密码较验接口
+// @Tags User
 // @Description 后端密码接口
 // @Accept json
 // @Produce json

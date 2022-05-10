@@ -26,9 +26,9 @@ func SetupRouter() *gin.Engine {
 	// es测试接口
 	router.POST("/testes", PostEsTest)
 	// 删除用户
-	router.POST("/userDelete", DeleteUser)
+	router.POST("/userdelete", DeleteUser)
 	// 添加用户
-	router.POST("/userAdd", AddUser)
+	router.POST("/useradd", AddUser)
 
 	// 数据下载
 	router.GET("/data", GetData)
@@ -45,7 +45,7 @@ func SetupRouter() *gin.Engine {
 	// 取得某个特型卡对应 item 中的所有键值
 	router.GET("/key", GetKey)
 	// 取得所有用户
-	router.GET("/AllUser", AllUser)
+	router.GET("/alluser", AllUser)
 
 	return router
 }

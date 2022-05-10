@@ -26,6 +26,7 @@ type ConfigJson struct {
 }
 
 // @Summary 发送写入行为描述
+// @Tags Setting
 // @Description 后端接收写入行为描述之接口
 // @Accept mpfd
 // @Produce json

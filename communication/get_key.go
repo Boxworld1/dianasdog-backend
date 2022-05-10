@@ -12,6 +12,7 @@ import (
 )
 
 // @Summary 取得数据键值
+// @Tags Data
 // @Description 后端返回某一数据类型键值之接口
 // @Produce json
 // @Param resource query string true "特型卡名称 (如: car, poem 等)"

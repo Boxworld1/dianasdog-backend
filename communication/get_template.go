@@ -12,6 +12,7 @@ import (
 )
 
 // @Summary 取得配置文件
+// @Tags Setting
 // @Description 后端返回配置文件之接口
 // @Produce json
 // @Param resource query string true "特型卡名称 (如: car, poem 等)"

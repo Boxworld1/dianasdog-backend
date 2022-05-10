@@ -25,6 +25,7 @@ type DataBody struct {
 }
 
 // @Summary 发送 XML 数据
+// @Tags Data
 // @Description 后端接收 XML 数据之接口。若为插入，则需要有 data 或 file 中的一个；若为删除，则需要 key 或 filename 中的一个。（若同时出现则两者都删除）
 // @Accept mpfd
 // @Produce json

@@ -70,10 +70,6 @@ func UpdateToEs(resourceName string, client *elastic.Client, docId string, newCo
 // @title	SearchFromEs
 // @description	通过关键词搜索得到包含此关键词的docid
 // @auth	wzq		2022/4/26
-// @param	resourceName	string 	去哪个特型中查询
-// @param	client	*elastic.Client	esClient
-// @param	content	string			关键词
-// @return	result	[]Doc			符合要求的文档
 //按照内容去查找，不是精确查找，只要有匹配词就可以
 func SearchFromEs(resourceName string, client *elastic.Client, content string) ([]Doc, error) {
 	var typ Doc
@@ -98,9 +94,6 @@ func SearchFromEs(resourceName string, client *elastic.Client, content string) (
 // @title	FetchAllFromEs
 // @description 拿出特型中所有的数据
 // @auth	wzq		2022/4/26
-// @param	resourceName	string 	去哪个特型中查询
-// @param	client	*elastic.Client	esClient
-// @return	result	[]Doc			数据文档
 func FetchAllFromEs(resourceName string, client *elastic.Client) ([]Doc, error) { //拿到类型里的所有数据
 	var put3 *elastic.SearchResult
 	var err error
@@ -124,10 +117,6 @@ func FetchAllFromEs(resourceName string, client *elastic.Client) ([]Doc, error) 
 // @title	DeleteFromEs
 // @description 删除特型中的数据
 // @auth	wzq		2022/4/26
-// @param	resourceName	string 	去哪个特型中查询
-// @param	client	*elastic.Client	esClient
-// @param	docId   要删除的数据的docId
-// @return	result	[]Doc			数据文档
 func DeleteFromES(resourceName string, client *elastic.Client, docId string) { //指定想要删除的文档的docId
 	var err error
 	res, err := client.Delete().Index(resourceName).

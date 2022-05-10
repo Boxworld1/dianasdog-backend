@@ -13,6 +13,7 @@ import (
 )
 
 // @Summary 取得单一数据
+// @Tags Data
 // @Description 后端返回某一条数据之接口
 // @Produce json
 // @Param resource query string true "特型卡名称 (如: car, poem 等)"
@@ -51,6 +52,7 @@ func GetItem(context *gin.Context) {
 	doc := etree.NewDocument()
 	doc.ReadFromBytes(data)
 	str, _ := doc.WriteToString()
+	str = "<DOCUMENT>" + str + "</DOCUMENT>"
 
 	// 正常返回结果
 	context.JSON(200, gin.H{
