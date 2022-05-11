@@ -33,7 +33,7 @@ func PostEsTest(context *gin.Context) {
 	query := body.Query
 
 	// 开始搜索流程
-	result, _ := database.SearchFromEs("poem", database.EsClient, query)
+	result, _ := database.SearchFromEs("medicine", database.EsClient, query)
 
 	// 返回结果
 	context.JSON(200, gin.H{
