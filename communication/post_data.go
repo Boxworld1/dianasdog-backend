@@ -11,6 +11,7 @@ import (
 	"dianasdog/setup"
 	"io/ioutil"
 	"mime/multipart"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -62,6 +63,9 @@ func PostData(context *gin.Context) {
 	if len(body.Data) > 0 {
 		// 若是字符串
 		content := body.Data
+		content = strings.Replace(content, "\\n", "\n", -1)
+		content = strings.Replace(content, "\\t", "\t", -1)
+		content = strings.Replace(content, "\\r", "\r", -1)
 		data = []byte(content)
 
 		if len(filename) <= 0 {
