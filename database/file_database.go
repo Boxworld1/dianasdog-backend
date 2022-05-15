@@ -63,7 +63,9 @@ func GetFileName(db *sql.DB, tableName string) ([]string, error) {
 	for rows.Next() {
 		var name string
 		rows.Scan(&name)
-		names = append(names, name)
+		if name != "." {
+			names = append(names, name)
+		}
 	}
 	rows.Close()
 
