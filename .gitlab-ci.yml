@@ -36,4 +36,4 @@ deploy:
     - deployer dyno replace $CI_PROJECT_NAME "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" "$REGISTRY_USER" "$REGISTRY_PWD"
   only:
     - master
-    - 75-dev-fix-item-port-2
+    - 77-dev-remove-dot
